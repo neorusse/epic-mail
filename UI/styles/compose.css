@@ -10,19 +10,22 @@ body {
   font-family: Roboto, sans-serif;
 }
 
+a {
+  color: #211c19;
+}
+
 /***************************
 ****************************
 Form Styles
 ****************************
 ***************************/
-
 .form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   color: #211c19;
   max-width: 700px;
-  height: 580px;
+  height: 650px;
   box-shadow: 0 0 6px #211c19;
   padding: 0 20px;
   margin: 10px auto;
@@ -85,7 +88,7 @@ textarea {
 /* Extra Small devices (Phones, up to 480px) */
 @media only screen and (max-width: 47.9375em) {
   .form {
-    height: 700px;
+    height: 780px;
   }
 
   span {
