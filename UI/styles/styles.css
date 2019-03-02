@@ -1,6 +1,16 @@
 /***************************
 ****************************
-Base Styles
+Variable
+****************************
+***************************/
+
+:root {
+  --white-color: #fff;
+}
+
+/***************************
+****************************
+Reset Styles
 ****************************
 ***************************/
 
@@ -14,8 +24,14 @@ html {
   box-sizing: inherit;
 }
 
+/***************************
+****************************
+Base Styles
+****************************
+***************************/
+
 body {
-  background: #fff;
+  background: var(--white-color);
   font-family: Roboto, sans-serif;
   font-weight: 400;
   line-height: 1.5em;
@@ -86,8 +102,8 @@ Module Styles
 }
 
 .btn--hero {
-  background: #fff;
-  border: 1px solid #fff;
+  background: var(--white-color);
+  border: 1px solid var(--white-color);
   color: #242424;
   font-size: 1em;
   border-radius: 8px;
@@ -101,7 +117,7 @@ button a:hover {
 
 .btn--nav {
   background: #211c19;
-  color: #fff;
+  color: var(--white-color);
   line-height: 8px;
   font-size: 15px;
   padding: 0.6rem 1rem;
@@ -129,7 +145,7 @@ button a:hover {
   .btn--nav-join {
     display: inline-block;
     background: #211c19;
-    color: #fff;
+    color: var(--white-color);
     line-height: 8px;
     font-size: 15px;
     padding: 0.6rem 1rem;
@@ -274,14 +290,14 @@ Hero Module
 }
 
 .hero__body p {
-  color: #fff;
+  color: var(--white-color);
   margin-bottom: 2rem;
   font-weight: 400;
   font-size: 1.5rem;
 }
 
 .hero__body h1 {
-  color: #fff;
+  color: var(--white-color);
   margin-bottom: 1.5rem;
   font-family: Georgia, serif;
   font-weight: 700;
@@ -301,7 +317,7 @@ Hero Module
 Information Module
 *********************/
 .info {
-  background: #fff;
+  background: var(--white-color);
   padding: 3rem 0;
   min-height: 50%;
 }
@@ -395,7 +411,7 @@ Form Module
   padding: 3rem;
   margin: 0.7rem auto;
   border-radius: 0.45rem;
-  background: #ffffff;
+  background: var(--white-color) fff;
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
     0 5px 15px 0 rgba(0, 0, 0, 0.08);
 }
@@ -424,14 +440,13 @@ label {
   font-size: 0.9rem;
 }
 
-/* NOT */
 .form__select {
   width: 250px;
   color: gray;
   padding: 0.6rem 1rem;
   font-size: 1rem;
   border: 1px solid #d9cac0;
-  background: #fff;
+  background: var(--white-color);
   border-radius: 8px;
 }
 
@@ -439,7 +454,7 @@ input {
   padding: 0.6rem 1rem;
   font-size: 1.1rem;
   border: 1px solid #d9cac0;
-  background: #fff;
+  background: var(--white-color);
   border-radius: 8px;
 }
 
@@ -449,14 +464,13 @@ input {
 
 .form__submit-btn {
   background: #211c19;
-  color: #fff;
+  color: var(--white-color);
   padding: 0.8rem 1.2rem;
   line-height: 9px;
   font-weight: 500;
   font-size: 1.1rem;
 }
 
-/* NOT */
 .form__submit-btn-primary {
   width: 250px;
   margin-left: 65px;
@@ -485,6 +499,36 @@ input {
   padding-top: 6px;
 }
 
+.file-upload {
+  height: 170px;
+  width: 170px;
+  border-radius: 100px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid var(--white-color);
+  overflow: hidden;
+  transition: all 1s;
+  color: var(--white-color);
+  font-size: 80px;
+  margin-right: 10px;
+}
+
+.file-upload:hover {
+  color: #211c19;
+}
+
+input[type='file'] {
+  height: 170px;
+  width: 170px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
 /* Extra Small devices (Phones, up to 480px) */
 @media only screen and (max-width: 47.9375em) {
   .form-login {
@@ -507,7 +551,6 @@ input {
     font-size: 0.8rem;
   }
 
-  /* NOT */
   .form__select {
     width: 230px;
   }
@@ -528,7 +571,6 @@ input {
     font-size: 0.9rem;
   }
 
-  /* NOT */
   .form__submit-btn-primary {
     width: 250px;
     margin-left: 65px;
@@ -544,6 +586,20 @@ input {
   .form-redirect__admin {
     padding-bottom: 15px;
   }
+
+  .file-upload {
+    height: 150px;
+    width: 150px;
+    margin: 0 0 0 15px;
+    font-size: 60px;
+  }
+
+  input[type='file'] {
+    height: 130px;
+    width: 130px;
+    margin-right: 0;
+    padding-right: 0;
+  }
 }
 
 /********************
@@ -553,11 +609,11 @@ Footer Module
   padding-top: 2em;
   background: #4d473f;
   border: 1px solid #4d473f;
-  color: #fff;
+  color: var(--white-color);
 }
 
 .contact-info a {
-  color: #fff;
+  color: var(--white-color);
 }
 
 .contact-info a:hover {
@@ -575,7 +631,7 @@ Footer Module
 
 .footer__text-title {
   margin-bottom: 1.5rem;
-  color: #fff;
+  color: var(--white-color);
   font-weight: 400;
   font-size: 1.3rem;
 }
