@@ -239,15 +239,22 @@ Welcome Module
   min-height: 50%;
 }
 
-.welcome__text {
+.welcome__text,
+.welcome__text--title {
   color: #221f28;
   line-height: 1.7;
   text-align: center;
 }
 
-.welcome__text h2 {
+.welcome__text h2,
+.welcome__text--title {
   font-size: 2.6rem;
   margin-bottom: 0.5rem;
+}
+
+.welcome__text--title {
+  font-size: 2.2rem;
+  font-weight: bold;
 }
 
 .welcome__text p {
@@ -476,6 +483,11 @@ input {
   margin-left: 65px;
 }
 
+.form__submit-btn-secondary {
+  width: 250px;
+  margin-left: 130px;
+}
+
 .form-redirect p {
   color: #211c19;
   font-size: 15px;
@@ -572,8 +584,13 @@ input[type='file'] {
   }
 
   .form__submit-btn-primary {
-    width: 250px;
-    margin-left: 65px;
+    width: 232px;
+    margin-left: 0px;
+  }
+
+  .form__submit-btn-secondary {
+    width: 230px;
+    margin: 0 0 40px 47px;
   }
 
   .form-redirect__password {
