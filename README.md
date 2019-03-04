@@ -5,30 +5,30 @@ A web [app](https://neorusse.github.io/epic-mail/) that helps people exchange me
 
 ## Table of Content
 
-[Features](#features)
-[Optional Features](#optional-features)
-[Project Management](#project-management)
-[Technology Used](#technology-used)
-[Installation](#installation)
-[API End Points](#api-end-points)
-[License](#license)
-[Credits](#credits)
+[Features](#features)<br/>
+[Optional Features](#optional-features)<br/>
+[Project Management](#project-management)<br/>
+[Technology Used](#technology-used)<br/>
+[Installation](#installation)<br/>
+[API End Points](#api-end-points)<br/>
+[License](#license)<br/>
+[Credits](#credits)<br/>
 [Author](#author)
 
 ## Features
 
-Users can sign up.
-Users can login.
-Users can create groups.
-Users can send a message to individuals.
-Users can view their inbox and read messages.
-Users can retract sent messages.
+Users can sign up.<br/>
+Users can login.<br/>
+Users can create groups.<br/>
+Users can send a message to individuals.<br/>
+Users can view their inbox and read messages.<br/>
+Users can retract sent messages.<br/>
 Users can save an email as draft and send it later or delete it.
 
 ## Optional Features
 
-User can reset password.
-Integrate Twilio and deliver messages via SMS.
+User can reset password.<br/>
+Integrate Twilio and deliver messages via SMS.<br/>
 Users can upload a profile photo.
 
 ## Project Management
