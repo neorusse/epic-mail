@@ -42,19 +42,17 @@ h1,
 h2,
 h3,
 h4 {
-  color: #242424;
   font-weight: 100;
   font-family: Georgia, serif;
 }
 
 a {
-  color: #4d473f;
   text-decoration: none;
   transition-duration: 0.3s;
 }
 
 a:hover {
-  color: #a18c7c;
+  color: #adc4d6;
   transition-duration: 0.05s;
   text-decoration: none;
 }
@@ -94,7 +92,7 @@ Module Styles
   /* Basic Button Styles */
   display: block;
   text-align: center;
-  border: 2px solid #221f28;
+  border: 2px solid #0b1544;
   cursor: pointer;
   text-decoration: none;
   border-radius: 10px;
@@ -104,7 +102,7 @@ Module Styles
 .btn--hero {
   background: var(--white-color);
   border: 1px solid var(--white-color);
-  color: #242424;
+  color: #0b1544;
   font-size: 1em;
   border-radius: 8px;
   padding: 10px 20px;
@@ -112,11 +110,11 @@ Module Styles
 }
 
 button a:hover {
-  color: #211c19;
+  color: #adc4d6;
 }
 
 .btn--nav {
-  background: #211c19;
+  background: #0b1544;
   color: var(--white-color);
   line-height: 8px;
   font-size: 15px;
@@ -135,7 +133,7 @@ button a:hover {
 @media only screen and (max-width: 47.9375em) {
   .btn--nav-login {
     background: none;
-    color: #211c19;
+    color: #0b1544;
     font-weight: bold;
     border: none;
     line-height: 8px;
@@ -144,7 +142,7 @@ button a:hover {
 
   .btn--nav-join {
     display: inline-block;
-    background: #211c19;
+    background: #0b1544;
     color: var(--white-color);
     line-height: 8px;
     font-size: 15px;
@@ -156,7 +154,7 @@ button a:hover {
 Header Module
 *********************/
 .main-header {
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 2px solid #0b1544;
   width: 100%;
   height: auto;
 }
@@ -193,7 +191,7 @@ Navigation Module
   top: 10px;
   right: 20px;
   cursor: pointer;
-  color: #211c19;
+  color: #0b1544;
   font-size: 24px;
 }
 
@@ -235,13 +233,13 @@ Welcome Module
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #d6cec4;
+  background: #0b1544;
   min-height: 50%;
 }
 
 .welcome__text,
 .welcome__text--title {
-  color: #221f28;
+  color: #fff;
   line-height: 1.7;
   text-align: center;
 }
@@ -267,6 +265,11 @@ Welcome Module
 
 .welcome__text i {
   padding-left: 10px;
+  color: var(--white-color);
+}
+
+.welcome__text i:hover {
+  color: #adc4d6;
 }
 
 /* Extra Small devices (Phones, up to 480px) */
@@ -282,7 +285,7 @@ Welcome Module
 Hero Module
 *********************/
 .hero {
-  background: #211c19;
+  background: #0b1544;
   min-height: 500px;
   width: 100%;
   display: flex;
@@ -329,6 +332,10 @@ Information Module
   min-height: 50%;
 }
 
+.info-welcome {
+  background: #0b1544;
+}
+
 .info__img {
   text-align: center;
 }
@@ -370,7 +377,7 @@ Testimonial Module
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #d6cec4;
+  background: #adc4d6;
   min-height: 50%;
 }
 
@@ -419,12 +426,11 @@ Form Module
   margin: 0.7rem auto;
   border-radius: 0.45rem;
   background: var(--white-color) fff;
-  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
-    0 5px 15px 0 rgba(0, 0, 0, 0.08);
+  box-shadow: 0 5px 10px 0 #0b1544;
 }
 
 .form__title {
-  color: #221f28;
+  color: #0b1544;
   text-transform: uppercase;
   font-weight: 600;
   text-align: center;
@@ -445,6 +451,7 @@ label {
   font-weight: 600;
   text-transform: uppercase;
   font-size: 0.9rem;
+  color: #0b1544;
 }
 
 .form__select {
@@ -470,7 +477,7 @@ input {
 }
 
 .form__submit-btn {
-  background: #211c19;
+  background: #0b1544;
   color: var(--white-color);
   padding: 0.8rem 1.2rem;
   line-height: 9px;
@@ -489,7 +496,7 @@ input {
 }
 
 .form-redirect p {
-  color: #211c19;
+  color: #0b1544;
   font-size: 15px;
   font-weight: 400;
 }
@@ -528,7 +535,7 @@ input {
 }
 
 .file-upload:hover {
-  color: #211c19;
+  color: #adc4d6;
 }
 
 input[type='file'] {
@@ -624,7 +631,7 @@ Footer Module
 *********************/
 .footer {
   padding-top: 2em;
-  background: #4d473f;
+  background: #101c28;
   border: 1px solid #4d473f;
   color: var(--white-color);
 }
@@ -634,7 +641,7 @@ Footer Module
 }
 
 .contact-info a:hover {
-  color: #211c19;
+  color: #adc4d6;
 }
 
 .contact-info__social img {
