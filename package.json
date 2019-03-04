@@ -1,0 +1,54 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "A web app that helps people exchange messages/information over the internet",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha",
+    "server": "babel-node ./server/bin/www",
+    "server:prod": "node ./dist/bin/www",
+    "dev": "npm-run-all server",
+    "clean": "rimraf ./dist",
+    "build": "babel ./server --out-dir dist",
+    "prod": "npm-run-all clean build server:prod",
+    "watch": "nodemon"
+  },
+  "keywords": [
+    "Node.js",
+    "Express",
+    "RESTFul-API",
+    "Mocha"
+  ],
+  "author": "Russell Nyorere",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/polyfill": "^7.2.5",
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "chalk": "^2.4.2",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.4.0",
+    "morgan": "^1.9.1",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^2.6.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "eslint": "^5.15.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "prettier": "^1.16.4",
+    "nodemon": "^1.18.10"
+  }
+}
