@@ -8,10 +8,11 @@ body {
   margin: 0;
   padding: 0;
   font-family: Roboto, sans-serif;
+  background: gray;
 }
 
 a {
-  color: #211c19;
+  color: #0b1544;
 }
 
 /***************************
@@ -23,19 +24,13 @@ Form Styles
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #211c19;
+  color: #0b1544;
   max-width: 700px;
   height: 650px;
-  box-shadow: 0 0 6px #211c19;
+  box-shadow: 0 0 6px #0b1544;
   padding: 0 20px;
   margin: 10px auto;
   border-radius: 5px;
-}
-
-label {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
 }
 
 span {
@@ -57,8 +52,8 @@ select {
   width: 500px;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #a18c7c;
-  box-shadow: inset 0 1px 2px #211c19;
+  border: 1px solid #0b1544;
+  box-shadow: inset 0 1px 2px #0b1544;
   font-family: Cursive;
 }
 
@@ -67,7 +62,7 @@ textarea {
   padding: 10px;
   height: 200px;
   border-radius: 5px;
-  border: 1px solid #cbcbcb;
+  border: 1px solid #0b1544;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18);
 }
 .submit {
@@ -75,14 +70,14 @@ textarea {
   margin-left: 60px;
   padding: 10px;
   margin-top: 20px;
-  background: #211c19;
+  background: #0b1544;
   font-size: 17px;
   color: #fff;
   font-weight: 700;
 }
 
 .submit:hover {
-  background: #a18c7c;
+  background: #101c28;
 }
 
 /* Extra Small devices (Phones, up to 480px) */
