@@ -1,5 +1,15 @@
 /***************************
 ****************************
+Variable
+****************************
+***************************/
+
+:root {
+  --white-color: #fff;
+}
+
+/***************************
+****************************
 Base Styles
 ****************************
 ***************************/
@@ -8,11 +18,11 @@ body {
   margin: 0;
   padding: 0;
   font-family: Roboto, sans-serif;
-  background: gray;
+  background-image: url('../assets/imgs/emailbackgroung.jpg');
 }
 
 a {
-  color: #0b1544;
+  color: var(--white-color);
 }
 
 /***************************
@@ -24,10 +34,10 @@ Form Styles
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #0b1544;
+  color: var(--white-color);
   max-width: 700px;
   height: 650px;
-  box-shadow: 0 0 6px #0b1544;
+  box-shadow: 0 0 6px var(--white-color);
   padding: 0 20px;
   margin: 10px auto;
   border-radius: 5px;
@@ -52,8 +62,8 @@ select {
   width: 500px;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #0b1544;
-  box-shadow: inset 0 1px 2px #0b1544;
+  border: 1px solid var(--white-color);
+  box-shadow: inset 0 1px 2px var(--white-color);
   font-family: Cursive;
 }
 
@@ -62,7 +72,7 @@ textarea {
   padding: 10px;
   height: 200px;
   border-radius: 5px;
-  border: 1px solid #0b1544;
+  border: 1px solid var(--white-color);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.18);
 }
 .submit {
@@ -70,14 +80,14 @@ textarea {
   margin-left: 60px;
   padding: 10px;
   margin-top: 20px;
-  background: #0b1544;
+  background: var(--white-color);
   font-size: 17px;
-  color: #fff;
+  color: #fc3c3c;
   font-weight: 700;
 }
 
 .submit:hover {
-  background: #101c28;
+  background: #f8b500;
 }
 
 /* Extra Small devices (Phones, up to 480px) */
