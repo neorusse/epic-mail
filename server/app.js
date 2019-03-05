@@ -1,14 +1,13 @@
 /**
  * Module dependencies
  */
-
 import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-// Enables node runtime to recognise async/await and Promise
-import '@babel/polyfill';
+// importing routes
+import messages from './routes/message';
 
 // Initialize the Express App
 const app = new express();
@@ -23,10 +22,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Allows Cross Origin Resource Sharing
 app.use(cors());
 
-// Route Route
+// Root Route
 app.get('/', (req, res) => {
   res.status(200).send({ info: 'Welcome to EPICMail' });
 });
+
+// route handler
+app.use('/api/v1/messages', messages);
+
 
 // Catch 404 Error & forward to Error Handler
 app.use((req, res, next) => {
