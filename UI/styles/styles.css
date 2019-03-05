@@ -49,10 +49,11 @@ h4 {
 a {
   text-decoration: none;
   transition-duration: 0.3s;
+  color: #fc3c3c;
 }
 
 a:hover {
-  color: #adc4d6;
+  color: #1d0000;
   transition-duration: 0.05s;
   text-decoration: none;
 }
@@ -80,6 +81,7 @@ Layout Styles
 
   .col {
     flex: 1;
+    margin-left: 40px;
   }
 }
 
@@ -92,7 +94,7 @@ Module Styles
   /* Basic Button Styles */
   display: block;
   text-align: center;
-  border: 2px solid #0b1544;
+  border: 2px solid #f8b500;
   cursor: pointer;
   text-decoration: none;
   border-radius: 10px;
@@ -102,7 +104,7 @@ Module Styles
 .btn--hero {
   background: var(--white-color);
   border: 1px solid var(--white-color);
-  color: #0b1544;
+  color: #fc3c3c;
   font-size: 1em;
   border-radius: 8px;
   padding: 10px 20px;
@@ -110,11 +112,11 @@ Module Styles
 }
 
 button a:hover {
-  color: #adc4d6;
+  color: #f8b500;
 }
 
 .btn--nav {
-  background: #0b1544;
+  background: #f8b500;
   color: var(--white-color);
   line-height: 8px;
   font-size: 15px;
@@ -133,7 +135,7 @@ button a:hover {
 @media only screen and (max-width: 47.9375em) {
   .btn--nav-login {
     background: none;
-    color: #0b1544;
+    color: #f8b500;
     font-weight: bold;
     border: none;
     line-height: 8px;
@@ -142,7 +144,7 @@ button a:hover {
 
   .btn--nav-join {
     display: inline-block;
-    background: #0b1544;
+    background: #f8b500;
     color: var(--white-color);
     line-height: 8px;
     font-size: 15px;
@@ -154,7 +156,7 @@ button a:hover {
 Header Module
 *********************/
 .main-header {
-  border-bottom: 2px solid #0b1544;
+  border-bottom: 2px solid #fc3c3c;
   width: 100%;
   height: auto;
 }
@@ -191,7 +193,7 @@ Navigation Module
   top: 10px;
   right: 20px;
   cursor: pointer;
-  color: #0b1544;
+  color: #f8b500;
   font-size: 24px;
 }
 
@@ -233,13 +235,13 @@ Welcome Module
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #0b1544;
+  background: #fc3c3c;
   min-height: 50%;
 }
 
 .welcome__text,
 .welcome__text--title {
-  color: #fff;
+  color: #f8b500;
   line-height: 1.7;
   text-align: center;
 }
@@ -265,11 +267,11 @@ Welcome Module
 
 .welcome__text i {
   padding-left: 10px;
-  color: var(--white-color);
+  color: #f8b500;
 }
 
 .welcome__text i:hover {
-  color: #adc4d6;
+  color: #fc3c3c;
 }
 
 /* Extra Small devices (Phones, up to 480px) */
@@ -285,7 +287,7 @@ Welcome Module
 Hero Module
 *********************/
 .hero {
-  background: #0b1544;
+  background-image: url('../assets/imgs/emailbackgroung.jpg');
   min-height: 500px;
   width: 100%;
   display: flex;
@@ -333,7 +335,7 @@ Information Module
 }
 
 .info-welcome {
-  background: #0b1544;
+  background: var(--white-color);
 }
 
 .info__img {
@@ -377,7 +379,7 @@ Testimonial Module
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #adc4d6;
+  background: #f8b500;
   min-height: 50%;
 }
 
@@ -421,43 +423,37 @@ Form Module
 
 .form-login {
   display: flex;
-  width: 450px;
-  padding: 3rem;
-  margin: 0.7rem auto;
-  border-radius: 0.45rem;
-  background: var(--white-color) fff;
-  box-shadow: 0 5px 10px 0 #0b1544;
+  padding: 2.5rem;
+  margin: 0 auto;
+}
+
+.form-wrapper {
+  width: 350px;
+  margin: 0 auto;
 }
 
 .form__title {
-  color: #0b1544;
-  text-transform: uppercase;
-  font-weight: 600;
+  color: #fc3c3c;
+  font-weight: 500;
   text-align: center;
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  width: 350px;
 }
 
 .form__title-reset {
   text-transform: capitalize;
 }
 
-.form__field,
-.form__field--label {
-  margin: 0.8rem 0;
-}
-
-label {
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.9rem;
-  color: #0b1544;
+.form__field input {
+  margin: 0.7rem 0;
 }
 
 .form__select {
-  width: 250px;
+  width: 350px;
   color: gray;
   padding: 0.6rem 1rem;
+  margin-bottom: 10px;
   font-size: 1rem;
   border: 1px solid #d9cac0;
   background: var(--white-color);
@@ -465,19 +461,23 @@ label {
 }
 
 input {
-  padding: 0.6rem 1rem;
-  font-size: 1.1rem;
+  padding: 0.6rem 0;
+  font-size: 0.9rem;
   border: 1px solid #d9cac0;
-  background: var(--white-color);
-  border-radius: 8px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #f8b500;
+  outline: none;
+  width: 350px;
 }
 
-.form__submit {
+.form__submit a {
   margin-top: 30px;
+  width: 350px;
 }
 
 .form__submit-btn {
-  background: #0b1544;
+  background: #fc3c3c;
   color: var(--white-color);
   padding: 0.8rem 1.2rem;
   line-height: 9px;
@@ -486,29 +486,26 @@ input {
 }
 
 .form__submit-btn-primary {
-  width: 250px;
-  margin-left: 65px;
+  width: 350px;
 }
 
 .form__submit-btn-secondary {
-  width: 250px;
-  margin-left: 130px;
+  width: 350px;
 }
 
 .form-redirect p {
-  color: #0b1544;
+  color: #fc3c3c;
   font-size: 15px;
   font-weight: 400;
 }
 
 .form-redirect p:last-child,
 .form-redirect p:last-child i {
-  font-weight: 600;
+  font-weight: 550;
 }
 
 .form-redirect__password {
   float: right;
-  padding-right: 55px;
   margin-top: 8px;
 }
 
@@ -535,7 +532,7 @@ input {
 }
 
 .file-upload:hover {
-  color: #adc4d6;
+  color: #f8b500;
 }
 
 input[type='file'] {
@@ -551,36 +548,36 @@ input[type='file'] {
 /* Extra Small devices (Phones, up to 480px) */
 @media only screen and (max-width: 47.9375em) {
   .form-login {
-    width: 320px;
     padding: 0;
+  }
+
+  .form-wrapper {
+    width: 280px;
+  }
+
+  .form-wrapper--primary {
+    margin-top: 50px;
   }
 
   .form__title {
     margin: 1rem auto;
+    text-align: center;
     font-size: 1.3rem;
-  }
-
-  .form__field,
-  .form__field--label {
-    margin: 0.6rem 0;
-  }
-
-  label {
-    font-weight: 600;
-    font-size: 0.8rem;
+    width: 280px;
   }
 
   .form__select {
-    width: 230px;
+    width: 280px;
   }
 
   input {
-    padding: 0.6rem 1rem;
-    font-size: 1rem;
+    width: 280px;
+    font-size: 0.9rem;
   }
 
-  .form__submit {
-    margin: 15px auto;
+  .form__submit a {
+    margin-bottom: 15px;
+    width: 280px;
   }
 
   .form__submit-btn {
@@ -596,8 +593,7 @@ input[type='file'] {
   }
 
   .form__submit-btn-secondary {
-    width: 230px;
-    margin: 0 0 40px 47px;
+    margin: 0 0 40px 0;
   }
 
   .form-redirect__password {
@@ -631,8 +627,8 @@ Footer Module
 *********************/
 .footer {
   padding-top: 2em;
-  background: #101c28;
-  border: 1px solid #4d473f;
+  background: #fc3c3c;
+  border: 1px solid #fc3c3c;
   color: var(--white-color);
 }
 
@@ -641,7 +637,7 @@ Footer Module
 }
 
 .contact-info a:hover {
-  color: #adc4d6;
+  color: #f8b500;
 }
 
 .contact-info__social img {

@@ -1,5 +1,15 @@
 /***************************
 ****************************
+Variable
+****************************
+***************************/
+
+:root {
+  --white-color: #fff;
+}
+
+/***************************
+****************************
 Reset Styles
 ****************************
 ***************************/
@@ -21,7 +31,7 @@ Base Styles
 ***************************/
 
 body {
-  background: #fff;
+  background: var(--white-color);
   font-family: Roboto, sans-serif;
   font-weight: 400;
   line-height: 1.5em;
@@ -39,13 +49,13 @@ p {
 }
 
 a {
-  color: #4d473f;
+  color: #f8b500;
   text-decoration: none;
   transition-duration: 0.3s;
 }
 
 a:hover {
-  color: #a18c7c;
+  color: #fc3c3c;
   transition-duration: 0.05s;
   text-decoration: none;
 }
@@ -62,7 +72,7 @@ Layout Styles
   left: 0;
   height: 100%;
   width: 300px;
-  background: #0b1544;
+  background: #fc3c3c;
   transition-duration: 0.3s;
   z-index: 5;
 }
@@ -115,7 +125,7 @@ Sidebar Module
 
 #sidebar,
 #sidebar a {
-  color: #d6cec4;
+  color: var(--white-color);
 }
 
 .logo {
@@ -133,8 +143,8 @@ Sidebar Module
   text-align: center;
   font-weight: 500;
   text-transform: uppercase;
-  color: #d6cec4;
-  border: 2px solid #d6cec4;
+  color: var(--white-color);
+  border: 2px solid var(--white-color);
   display: block;
   margin: 0 50px 30px 50px;
   cursor: pointer;
@@ -157,7 +167,7 @@ Sidebar Module
 }
 
 .menu-segment li a:hover {
-  background: #4d473f;
+  background: #f8b500;
 }
 
 /********************
@@ -189,7 +199,7 @@ Header/Title Module
 .toggle-head {
   margin-left: 30px;
   padding: 5px 0;
-  border-bottom: 1px solid #d9cac0;
+  border-bottom: 1px solid #f8b500;
   overflow: hidden;
 }
 
@@ -205,6 +215,7 @@ Header/Title Module
   transition-delay: 0.5s;
   opacity: 0;
   margin-right: 0;
+  color: #f8b500;
 }
 
 /********************
@@ -222,14 +233,14 @@ Message List Module
 }
 
 .message-list__top {
-  color: #fff;
+  color: var(--white-color);
   text-shadow: 0px 0px 1px #ddd;
-  background-color: #0b1544;
+  background-color: #fc3c3c;
   padding: 15px;
 }
 
 .message-list__panel {
-  background-color: #adc4d6;
+  background-color: #f8b500;
 }
 
 /********************
@@ -347,22 +358,6 @@ Media Module
 }
 
 @media only screen and (max-width: 37.5em) {
-  .search-box {
-    float: none;
-    width: 100%;
-    margin-bottom: -110px;
-    margin-top: 70px;
-  }
-
-  .search-box input,
-  .search-box input:focus {
-    width: 100%;
-  }
-
-  .page-title {
-    margin-bottom: 50px;
-  }
-
   .main-nano-wrapper {
     position: absolute;
     top: 260px;

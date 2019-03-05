@@ -39,35 +39,27 @@
     <div class="container">
       <!-- Form Section Starts -->
       <div class="form-login flex">
-        <form action="/" method="POST">
-          <div class="container">
-            <h1 class="form__title">Register</h1>
-            <div class="form__field">
-              <label class="form__field--label" for="name">First Name</label>
-              <input type="text" name="fullName" placeholder="First Name">
-            </div>
-            <div class="form__field">
-              <label class="form__field--label" for="name">Last Name</label>
-              <input type="text" name="username" placeholder="Last Name">
-            </div>
-            <div class="form__field">
-              <label class="form__field--label" for="name">Email Address</label>
-              <input type="email" name="email" placeholder="Email">
-            </div>
-            <div class="form__field">
-              <label class="form__field--label" for="name">Password</label>
-              <input type="password" name="password" placeholder="*************">
-            </div>
-            <div class="form__field">
-              <label class="form__field--label" for="name">Mobile Phone</label>
-              <input type="number" name="phone" placeholder="Number">
-            </div>
-            <div class="form__submit">
-              <a class="btn form__submit-btn" href="./welcome.html">Join EPICMail</a>
-            </div>
+        <form action="/" method="POST" class="form-wrapper">
+          <h1 class="form__title">Sign up</h1>
+          <p>Create an EPICMail address</p>
+          <div class="form__field">
+            <input type="text" name="fullName" placeholder="First Name">
+            <input type="text" name="username" placeholder="Last Name">
+            <input type="email" name="email" placeholder="Email">
+            <input type="password" name="password" placeholder="password">
+            <input type="number" name="phone" placeholder="Number">
+          </div>
+          <div class="form__submit">
+            <a class="btn form__submit-btn" href="./welcome.html">Join EPICMail</a>
           </div>
         </form>
+        <div class="form-redirect">
+          <p class="form-redirect__admin"><a href="./login.html">Already have an account?
+              <i class="fa fa-hand-o-right">&nbsp;Sign in</i></a>
+          </p>
+        </div>
         <!-- Form Section Ends -->
+      </div>
       </div>
     </div>
   </main>

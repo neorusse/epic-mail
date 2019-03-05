@@ -7,7 +7,7 @@
   </linearGradient>
   <linearGradient id="b">
    <stop offset="0"/>
-   <stop stop-color="#ccc" offset="1"/>
+   <stop stop-color="#f8b500" offset="1"/>
   </linearGradient>
   <linearGradient id="i" x1="507.54" x2="505.22" y1="695.01" y2="435.03" gradientTransform="matrix(1 0 0 -1 0 1171.2)" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
   <linearGradient id="h" x1="507.54" x2="505.22" y1="701.01" y2="441.03" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
@@ -15,7 +15,7 @@
   <linearGradient id="f" x1="507.54" x2="505.22" y1="699.01" y2="439.03" gradientUnits="userSpaceOnUse" xlink:href="#a"/>
   <radialGradient id="c" cx="518.93" cy="498.97" r="218.5" gradientTransform="matrix(.0068182 .79641 -.90853 .0077781 968.72 124.34)" gradientUnits="userSpaceOnUse">
    <stop offset="0"/>
-   <stop stop-color="#f2f2f2" offset="1"/>
+   <stop stop-color="#fc3c3c" offset="1"/>
   </radialGradient>
   <radialGradient id="e" cx="488.89" cy="588.71" r="219.2" gradientTransform="matrix(-.0080035 1.2096 -1.5872 -.010502 1429.2 7.1997)" gradientUnits="userSpaceOnUse" xlink:href="#b"/>
   <radialGradient id="d" cx="459.33" cy="604.53" r="218.5" gradientTransform="matrix(-2.4718e-8 .47921 -.76138 -2.2834e-8 965.49 426.43)" gradientUnits="userSpaceOnUse" xlink:href="#b"/>

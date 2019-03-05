@@ -41,21 +41,20 @@
     <section class="info">
       <h2 class="welcome__text--title">Welcome Admin</h2>
       <div class="row container">
-        <div class="col welcome__text">
+        <div class="col form-wrapper">
           <h1 class="form__title">
             Create User Group
           </h1>
           <div class="form__field">
-            <label class="form__field--label" for="name">Name</label>
-            <input type="password" name="password" placeholder="Group">
+            <input type="text" name="group" placeholder="Group">
           </div>
           <div class="form__submit">
             <a class="btn form__submit-btn form__submit-btn-secondary" href="./create-usergroup.html">Create</a>
           </div>
         </div>
-        <div class="col welcome__text">
+        <div class="col">
           <form action="/" method="POST">
-            <div class="container">
+            <div class="form-wrapper form-wrapper--primary">
               <h1 class="form__title">Add existing Users to a Group</h1>
               <div class="form__field">
                 <label class="form__field--label" for="name">Group</label>
