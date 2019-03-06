@@ -1,42 +1,21 @@
-// DOM elements selection
-let displayInbox = document.querySelector('.inbox');
-let displaySentBox = document.querySelector('.sent-box');
-let displayDraftBox = document.querySelector('.draft-box');
-let displayDeleteBox = document.querySelector('.delete-box');
+// Variable declaration: Mailbox.
+const displayMessage = document.querySelector('#show-message');
+const messageTable = document.querySelector('.js-table');
+const messageRow = document.querySelectorAll('tr[data-href]');
 
+//Add an event listener to the document on complete load
+document.addEventListener('DOMContentLoaded', () => {
+  displayMessage.style.display = "none";
 
-// Display Inbox Messages
-const showInbox = () => {
-  displayInbox.style.display = 'block';
-  displaySentBox.style.display = 'none';
-  displayDraftBox.style.display = 'none';
-  displayDeleteBox.style.display = 'none';
-};
+  messageRow.forEach(row => {
+    row.addEventListener('click', () => {
+      window.location.href = row.dataset.href;
 
-// Display Sent Messages
-const showSentBox = () => {
-  displaySentBox.style.display = 'block';
-  displayInbox.style.display = 'none';
-  displayDraftBox.style.display = 'none';
-  displayDeleteBox.style.display = 'none';
-}
-
-// Display Draft Messages
-const showDraftBox = () => {
-  displayDraftBox.style.display = 'block';
-  displaySentBox.style.display = 'none';
-  displayInbox.style.display = 'none';
-  displayDeleteBox.style.display = 'none';
-}
-
-// Display Deleted Messages
-const showDeleteBox = () => {
-  displayDeleteBox.style.display = 'block';
-  displaySentBox.style.display = 'none';
-  displayInbox.style.display = 'none';
-  displayDraftBox.style.display = 'none';
-}
-
+      displayMessage.style.display = "block";
+      messageTable.style.display = "none";
+    });
+  });
+});
 
 // Mobile View Icon Controller
 jQuery(document).ready(function ($) {

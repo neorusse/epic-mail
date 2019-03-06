@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>EPICMail | Trash</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="../styles/mail.css">
+</head>
+
+<body class="bg-light">
+
+    <!-- Section: Mailbox -->
+    <aside id="sidebar">
+        <div class="logo">
+            <a href="./profile.html"><i class="fa fa-envelope"></i>EPICMail</a>
+        </div>
+        <a href="./compose.html" class="compose-button">Compose</a>
+        <ul class="menu-segment">
+            <li class="active"><a href="./mail.html">Inbox<span> (1)</span></a></li>
+            <li><a href="./sent.html">Sent</a></li>
+            <li><a href="./draft.html">Drafts</a></li>
+            <li><a href="./delete.html">Trash</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Start Here -->
+    <main class="main">
+        <div class="overlay"></div>
+        <h1 class="toggle-head">
+            <i class="fa fa-bars sidebar-toggle-btn js-trigger-toggle-sidebar"></i>
+        </h1>
+        <div id="main-nano-wrapper">
+                    <div class="message-list">
+                        <div class="message-list__top">Deleted Messages</div>
+                        <div class="message-list__panel">
+                            <table class="js-table">
+                                <tbody>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th>Message</th>
+                                        <th>Date</th>
+                                    </tr>
+                                    <tr data-href="#show-message">
+                                        <td table-data="Sender">Andela Fellowship</td>
+                                        <td table-data="Title">Congratulation, You ace the bootcamp. You are now an Andela Fellow</td>
+                                        <td table-data="Date">10:55am</td>
+                                    </tr>
+                                    <tr class="unread">
+                                        <td table-data="Sender">Udacity</td>
+                                        <td table-data="Title">You are invited to apply for Udacity Mentor Program</td>
+                                        <td table-data="Date">24 Feb</td>
+                                    </tr>
+                                    <tr>
+                                        <td table-data="Sender">PayStack Careers</td>
+                                        <td table-data="Title">This is to invite you to take PayStack Aptitude test</td>
+                                        <td table-data="Date">01/12/2018</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+            </div>
+    </main>
+    <!-- Footer -->
+    <script src='../scripts/jquery.js'></script>
+    <script src="../scripts/mail.js"></script>
+</body>
+
+</html>
