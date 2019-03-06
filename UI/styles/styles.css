@@ -49,11 +49,11 @@ h4 {
 a {
   text-decoration: none;
   transition-duration: 0.3s;
-  color: #fc3c3c;
+  color: #ff0000;
 }
 
 a:hover {
-  color: #1d0000;
+  color: #ffaf30;
   transition-duration: 0.05s;
   text-decoration: none;
 }
@@ -94,7 +94,7 @@ Module Styles
   /* Basic Button Styles */
   display: block;
   text-align: center;
-  border: 2px solid #f8b500;
+  border: 2px solid #1034a6;
   cursor: pointer;
   text-decoration: none;
   border-radius: 10px;
@@ -104,7 +104,7 @@ Module Styles
 .btn--hero {
   background: var(--white-color);
   border: 1px solid var(--white-color);
-  color: #fc3c3c;
+  color: #ff0000;
   font-size: 1em;
   border-radius: 8px;
   padding: 10px 20px;
@@ -112,11 +112,11 @@ Module Styles
 }
 
 button a:hover {
-  color: #f8b500;
+  color: #ffaf30;
 }
 
 .btn--nav {
-  background: #f8b500;
+  background: #1034a6;
   color: var(--white-color);
   line-height: 8px;
   font-size: 15px;
@@ -144,7 +144,7 @@ button a:hover {
 
   .btn--nav-join {
     display: inline-block;
-    background: #f8b500;
+    background: #1034a6;
     color: var(--white-color);
     line-height: 8px;
     font-size: 15px;
@@ -156,7 +156,6 @@ button a:hover {
 Header Module
 *********************/
 .main-header {
-  border-bottom: 2px solid #fc3c3c;
   width: 100%;
   height: auto;
 }
@@ -174,6 +173,7 @@ Logo Module
 /********************
 Navigation Module
 *********************/
+
 .navbar {
   font-size: 1em;
   padding-bottom: 10px;
@@ -193,7 +193,7 @@ Navigation Module
   top: 10px;
   right: 20px;
   cursor: pointer;
-  color: #f8b500;
+  color: #1034a6;
   font-size: 24px;
 }
 
@@ -235,13 +235,13 @@ Welcome Module
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fc3c3c;
+  background: #ffaf30;
   min-height: 50%;
 }
 
 .welcome__text,
 .welcome__text--title {
-  color: #f8b500;
+  color: #fff;
   line-height: 1.7;
   text-align: center;
 }
@@ -267,11 +267,11 @@ Welcome Module
 
 .welcome__text i {
   padding-left: 10px;
-  color: #f8b500;
+  color: #fff;
 }
 
 .welcome__text i:hover {
-  color: #fc3c3c;
+  color: #1034a6;
 }
 
 /* Extra Small devices (Phones, up to 480px) */
@@ -287,7 +287,8 @@ Welcome Module
 Hero Module
 *********************/
 .hero {
-  background-image: url('../assets/imgs/emailbackgroung.jpg');
+  background: #1034a6 url('../assets/imgs/email-background.jpg') no-repeat right
+    center/cover;
   min-height: 500px;
   width: 100%;
   display: flex;
@@ -302,14 +303,14 @@ Hero Module
 }
 
 .hero__body p {
-  color: var(--white-color);
+  color: #ff0000;
   margin-bottom: 2rem;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 1.5rem;
 }
 
 .hero__body h1 {
-  color: var(--white-color);
+  color: #ff0000;
   margin-bottom: 1.5rem;
   font-family: Georgia, serif;
   font-weight: 700;
@@ -334,8 +335,9 @@ Information Module
   min-height: 50%;
 }
 
+.info-bg,
 .info-welcome {
-  background: var(--white-color);
+  background: #ffaf30;
 }
 
 .info__img {
@@ -379,7 +381,7 @@ Testimonial Module
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f8b500;
+  background: #ffaf30;
   min-height: 50%;
 }
 
@@ -423,7 +425,7 @@ Form Module
 
 .form-login {
   display: flex;
-  padding: 2.5rem;
+  padding: 3rem;
   margin: 0 auto;
 }
 
@@ -433,12 +435,12 @@ Form Module
 }
 
 .form__title {
-  color: #fc3c3c;
+  color: #ff0000;
   font-weight: 500;
   text-align: center;
   margin-bottom: 1rem;
-  font-size: 1.4rem;
-  width: 350px;
+  font-size: 1.6rem;
+  width: 400px;
 }
 
 .form__title-reset {
@@ -450,7 +452,7 @@ Form Module
 }
 
 .form__select {
-  width: 350px;
+  width: 400px;
   color: gray;
   padding: 0.6rem 1rem;
   margin-bottom: 10px;
@@ -461,28 +463,40 @@ Form Module
 }
 
 input {
-  padding: 0.6rem 0;
-  font-size: 0.9rem;
+  padding: 0.7rem 0;
+  font-size: 1.2rem;
   border: 1px solid #d9cac0;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #f8b500;
+  border-bottom: 1px solid #1034a6;
   outline: none;
-  width: 350px;
+  width: 400px;
+}
+
+input:focus {
+  box-shadow: 0 0 5px #1034a6;
+  border: 1px solid #1034a6;
 }
 
 .form__submit a {
   margin-top: 30px;
-  width: 350px;
+  width: 400px;
 }
 
 .form__submit-btn {
-  background: #fc3c3c;
+  background: #ff0000;
+  border: 2px solid #ff0000;
   color: var(--white-color);
   padding: 0.8rem 1.2rem;
   line-height: 9px;
   font-weight: 500;
   font-size: 1.1rem;
+}
+
+form p {
+  color: #ff0000;
+  font-size: 18px;
+  margin: 20px 0;
 }
 
 .form__submit-btn-primary {
@@ -495,7 +509,7 @@ input {
 
 .form-redirect p {
   color: #fc3c3c;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 400;
 }
 
@@ -532,7 +546,7 @@ input {
 }
 
 .file-upload:hover {
-  color: #f8b500;
+  color: #1034a6;
 }
 
 input[type='file'] {
@@ -552,7 +566,7 @@ input[type='file'] {
   }
 
   .form-wrapper {
-    width: 280px;
+    width: 300px;
   }
 
   .form-wrapper--primary {
@@ -562,29 +576,28 @@ input[type='file'] {
   .form__title {
     margin: 1rem auto;
     text-align: center;
-    font-size: 1.3rem;
-    width: 280px;
+    width: 300px;
   }
 
   .form__select {
-    width: 280px;
+    width: 300px;
   }
 
   input {
-    width: 280px;
-    font-size: 0.9rem;
+    width: 300px;
+    font-size: 1.1rem;
   }
 
   .form__submit a {
     margin-bottom: 15px;
-    width: 280px;
+    width: 300px;
   }
 
   .form__submit-btn {
     padding: 0.8rem 1px;
     line-height: 2px;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   .form__submit-btn-primary {
@@ -627,8 +640,8 @@ Footer Module
 *********************/
 .footer {
   padding-top: 2em;
-  background: #fc3c3c;
-  border: 1px solid #fc3c3c;
+  background: #1034a6;
+  border: 1px solid #1034a6;
   color: var(--white-color);
 }
 

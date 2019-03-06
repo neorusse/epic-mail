@@ -49,13 +49,13 @@ p {
 }
 
 a {
-  color: #4d473f;
+  color: #ffaf30;
   text-decoration: none;
   transition-duration: 0.3s;
 }
 
 a:hover {
-  color: #a18c7c;
+  color: #ffaf30;
   transition-duration: 0.05s;
   text-decoration: none;
 }
@@ -72,7 +72,7 @@ Layout Styles
   left: 0;
   height: 100%;
   width: 300px;
-  background: #211c19;
+  background: #1034a6;
   transition-duration: 0.3s;
   z-index: 5;
 }
@@ -125,7 +125,7 @@ Sidebar Module
 
 #sidebar,
 #sidebar a {
-  color: #d6cec4;
+  color: #fff;
 }
 
 .logo {
@@ -143,8 +143,8 @@ Sidebar Module
   text-align: center;
   font-weight: 500;
   text-transform: uppercase;
-  color: #d6cec4;
-  border: 2px solid #d6cec4;
+  color: #fff;
+  border: 2px solid #fff;
   display: block;
   margin: 0 50px 30px 50px;
   cursor: pointer;
@@ -167,7 +167,7 @@ Sidebar Module
 }
 
 .menu-segment li a:hover {
-  background: #4d473f;
+  background: #ffaf30;
 }
 
 /********************
@@ -179,7 +179,6 @@ Overlay Module
   left: -10px;
   right: 0;
   bottom: 100%;
-  background: rgba(0, 0, 0, 0.4);
   z-index: 5;
   opacity: 0;
   transition-duration: 0s;
@@ -227,12 +226,12 @@ Message List Module
 .message-list__top {
   color: var(--white-color);
   text-shadow: 0px 0px 1px #ddd;
-  background-color: #211c19;
+  background-color: #1034a6;
   padding: 15px;
 }
 
 .message-list__panel {
-  background-color: #a18c7c;
+  background-color: #ffaf30;
 }
 
 .unread {
@@ -273,7 +272,7 @@ td {
 }
 
 tr:nth-child(even) {
-  background-color: #d6cec4;
+  background-color: #b3e5fc;
 }
 
 /********************
