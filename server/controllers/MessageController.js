@@ -1,6 +1,6 @@
 import MessageModel from '../models/Messages'
 
-const Message = {
+class Message {
 
   /**
   * Create an Email
@@ -8,7 +8,7 @@ const Message = {
   * @param {object} res
   * @returns {object} email object
   */
-  createMail(req, res) {
+  static createMail(req, res) {
     const { subject, message, parentMessageId, status } = req.body;
 
     if (!subject && !message && !parentMessageId && !status) {
@@ -17,7 +17,7 @@ const Message = {
 
     const email = MessageModel.create(req.body);
     return res.status(201).send(email);
-  },
+  }
 
   /**
   * Get all sent email
@@ -25,10 +25,10 @@ const Message = {
   * @param {object} res
   * @returns {object} An Array of sent mails
   */
-  getAllSentMails(req, res) {
+  static getAllSentMails(req, res) {
     const emails = MessageModel.getSentMail();
     return res.status(200).send(emails);
-  },
+  }
 
   /**
   * Get one sent email
@@ -36,13 +36,13 @@ const Message = {
   * @param {object} res
   * @returns {object} email object
   */
-  getASentMail(req, res) {
+  static getASentMail(req, res) {
     const email = MessageModel.getOneSentMail(req.params.id);
     if(!email) {
       return res.status(404).send({ 'message': 'email not found' });
     }
     return res.status(200).send(email);
-  },
+  }
 
   /**
   * Delete a sent email
@@ -50,7 +50,7 @@ const Message = {
   * @param {object} res
   * @returns {void} return status code 204
   */
-  deleteASentMail(req, res) {
+  static deleteASentMail(req, res) {
     const email = MessageModel.getOneSentMail(req.params.id);
     if (!email) {
       return res.status(404).send({ 'message': 'email not found' });

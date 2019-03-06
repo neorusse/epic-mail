@@ -11,7 +11,7 @@ import chalk from 'chalk';
 dotenv.config();
 
 // Start our App
-app.set('port', process.env.PORT || 1040);
+app.set('port', process.env.PORT || 1091);
 
 const server = http.createServer(app);
 
