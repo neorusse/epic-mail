@@ -1,4 +1,5 @@
 import uuid from 'uuid';
+import moment from 'moment';
 
 class Message {
   /**
@@ -16,7 +17,7 @@ class Message {
   create(mail) {
     const newMail = {
       id: uuid.v4(),
-      createdOn: Date(),
+      createdOn: moment(new Date()),
       subject: mail.subject,
       message: mail.message,
       parentMessageId: mail.parentMessageId,
@@ -57,7 +58,7 @@ class Message {
   * @param {uuid} id
   */
   deleteMail(id) {
-    const sent = this.getASentMail(id);
+    const sent = this.getOneSentMail(id);
     const index = this.sentMail.indexOf(sent);
     this.sentMail.splice(index, 1);
     return {};

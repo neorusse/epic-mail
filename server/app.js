@@ -8,6 +8,7 @@ import cors from 'cors';
 
 // importing routes
 import messages from './routes/message';
+import users from './routes/user'
 
 // Initialize the Express App
 const app = new express();
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 
 // route handler
 app.use('/api/v1/messages', messages);
+app.use('/api/v1/auth', users);
 
 
 // Catch 404 Error & forward to Error Handler
