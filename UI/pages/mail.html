@@ -1,136 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <title>EPICMail</title>
+  <title>EPICMail | Inbox</title>
   <meta name="viewport" content="width=device-width">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
   <link rel="stylesheet" href="../styles/mail.css">
 </head>
-
 <body>
-  <aside id="sidebar" class="nano">
-    <div class="nano-content">
-      <div class="logo">
-        <a href="./profile.html"><i class="fa fa-envelope"></i>EPICMail</a>
-      </div>
-      <a href="./compose.html" class="compose-button">Compose</a>
-      <ul class="menu-segment">
-        <li class="active"><a href="#" onclick="showInbox()">Inbox<span> (1)</span></a></li>
-        <li><a href="#" onclick="showSentBox()">Sent</a></li>
-        <li><a href="#" onclick="showDraftBox()">Drafts</a></li>
-        <li><a href="#" onclick="showDeleteBox()">Trash</a></li>
-      </ul>
+  <!-- Aside Starts -->
+  <aside id="sidebar">
+    <div class="logo">
+      <a href="./profile.html"><i class="fa fa-envelope"></i>EPICMail</a>
+    </div>
+    <a href="./compose.html" class="compose-button">Compose</a>
+    <ul class="menu-segment">
+      <li class="active"><a href="./mail.html">Inbox<span> (1)</span></a></li>
+      <li><a href="./sent.html">Sent</a></li>
+      <li><a href="./draft.html">Drafts</a></li>
+      <li><a href="./delete.html">Trash</a></li>
+    </ul>
   </aside>
-  <!-- Aside Ends -->
 
+  <!-- Main Start Here -->
   <main class="main">
     <div class="overlay"></div>
     <h1 class="toggle-head">
       <i class="fa fa-bars sidebar-toggle-btn js-trigger-toggle-sidebar"></i>
     </h1>
-    <div id="main-nano-wrapper" class="nano">
-      <div class="nano-content">
-        <div class="message-list inbox">
-          <div class="message-list__top">Inbox Messages</div>
-          <div class="message-list__panel">
-            <table>
+    <div id="main-nano-wrapper">
+      <div class="message-list">
+        <div class="message-list__top">Inbox Messages</div>
+        <div class="message-list__panel">
+          <table class="js-table">
+            <tbody>
               <tr>
-                <th>Check</th>
                 <th>Subject</th>
+                <th>Message</th>
                 <th>Date</th>
               </tr>
-              <tr>
-                <td><input type="checkbox" name=""></td>
-                <td>Andela BootCamp Invite</td>
-                <td>01/02/2019</td>
+              <tr data-href="#show-message">
+                <td table-data="Sender">Andela Fellowship</td>
+                <td table-data="Title">Congratulation, You ace the bootcamp. You are now an Andela Fellow</td>
+                <td table-data="Date">10:55am</td>
+              </tr>
+              <tr class="unread">
+                <td table-data="Sender">Udacity</td>
+                <td table-data="Title">You are invited to apply for Udacity Mentor Program</td>
+                <td table-data="Date">24 Feb</td>
               </tr>
               <tr>
-                <td><input type="checkbox" name=""></td>
-                <td>Andela Learning Community, ALC</td>
-                <td>01/02/2019</td>
+                <td table-data="Sender">PayStack Careers</td>
+                <td table-data="Title">This is to invite you to take PayStack Aptitude test</td>
+                <td table-data="Date">01/12/2018</td>
               </tr>
-              <tr>
-                <td><input type="checkbox" name=""></td>
-                <td>Udacity Mentorship Program</td>
-                <td>01/03/2019</td>
-              </tr>
-            </table>
-          </div>
+            </tbody>
+          </table>
         </div>
-        <!-- Sent content -->
-        <div class="message-list sent-box">
-          <div class="message-list__top">Sent Messages</div>
-          <div class="message-list__panel">
-            <table>
-              <tr>
-                <th>Check</th>
-                <th>Subject</th>
-                <th>Date</th>
-              </tr>
-              <tr>
-                <td><input type="checkbox" name=""></td>
-                <td>Confirmation of BootCamp Availability</td>
-                <td>12/02/2019</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" name=""></td>
-                <td>Please Confirm Order</td>
-                <td>2/02/2019</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <!-- Draft content -->
-        <div class="message-list draft-box">
-          <div class="message-list__top">Draft Messages</div>
-          <div class="message-list__panel">
-            <table>
-              <tr>
-                <th>Check</th>
-                <th>Subject</th>
-                <th>Date</th>
-              </tr>
-              <tr>
-                <td><input type="checkbox" name=""></td>
-                <td>My BootCamp Experience</td>
-                <td>05/02/2019</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" name=""></td>
-                <td>Reflections on EPIC Values</td>
-                <td>21/02/2019</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <!-- Delete Box -->
-        <div class="message-list delete-box">
-          <div class="message-list__top">Deleted Messages</div>
-          <div class="message-list__panel">
-            <table>
-              <tr>
-                <th>Check</th>
-                <th>Subject</th>
-                <th>Date</th>
-              </tr>
-              <tr>
-                <td><input type="checkbox" name=""></td>
-                <td>Free US Visa</td>
-                <td>25/02/2019</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" name=""></td>
-                <td>Free Iphone Today</td>
-                <td>13/02/2019</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <a href="#" class="load-more-link">Show more messages</a>
+      </div>
+
+      <!-- Message Thread -->
+      <div id="show-message" class="message-view">
+        <div><a href="./mail.html"><span class="btn"><i class="fa fa-arrow-left"></i> Inbox</i></span></a></div>
+        <h2 class="message-title">Bootcamp Interview</h2>
+        <span>From: Andela fellowship@andela.com</span>
+        <p>To: neorusse@gmail.com</p>
+        <p>You are welcome to Andela Bootcamp Cycle 42. As you were previously informed, the programme kicks off on
+          Monday, March
+          11th 2019. <br>Here are some important things you will need to take note of: If you have any questions or need
+          more information,<br> kindly reach out to the LFs on Slack (preferably) or via email (only
+          if you are unable to access Slack). We look forward to seeing you at Bootcamp.
+          <br>Regards,<br>
+          The Andela Talent Development Team
+        </p>
+        <hr>
+        <h2 class="message-title">Udacity Mentor Program</h2>
+        <span>From: Udacity mentorship@udacity.com</span>
+        <p>To: info@ecodenenergy.com</p>
+        <p>You are welcome to Andela Bootcamp Cycle 42. As you were previously informed, the programme kicks off on
+          Monday,
+          March
+          11th 2019. <br>Here are some important things you will need to take note of: If you have any questions or need
+          more
+          information,<br> kindly reach out to the LFs on Slack (preferably) or via email (only
+          if you are unable to access Slack). We look forward to seeing you at Bootcamp.
+          <br>Regards,<br>
+          The Andela Talent Development Team
+        </p>
+        <hr>
+        <h2 class="message-title">Udacity Mentor Program</h2>
+        <span>From: Udacity mentorship@udacity.com</span>
+        <p>To: info@ecodenenergy.com</p>
+        <p>You are welcome to Andela Bootcamp Cycle 42. As you were previously informed, the programme kicks off on
+          Monday,
+          March
+          11th 2019. <br>Here are some important things you will need to take note of: If you have any questions or need
+          more
+          information,<br> kindly reach out to the LFs on Slack (preferably) or via email (only
+          if you are unable to access Slack). We look forward to seeing you at Bootcamp.
+          <br>Regards,<br>
+          The Andela Talent Development Team
+        </p>
       </div>
     </div>
   </main>

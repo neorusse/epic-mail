@@ -49,13 +49,13 @@ p {
 }
 
 a {
-  color: #f8b500;
+  color: #4d473f;
   text-decoration: none;
   transition-duration: 0.3s;
 }
 
 a:hover {
-  color: #fc3c3c;
+  color: #a18c7c;
   transition-duration: 0.05s;
   text-decoration: none;
 }
@@ -72,7 +72,7 @@ Layout Styles
   left: 0;
   height: 100%;
   width: 300px;
-  background: #fc3c3c;
+  background: #211c19;
   transition-duration: 0.3s;
   z-index: 5;
 }
@@ -125,7 +125,7 @@ Sidebar Module
 
 #sidebar,
 #sidebar a {
-  color: var(--white-color);
+  color: #d6cec4;
 }
 
 .logo {
@@ -143,8 +143,8 @@ Sidebar Module
   text-align: center;
   font-weight: 500;
   text-transform: uppercase;
-  color: var(--white-color);
-  border: 2px solid var(--white-color);
+  color: #d6cec4;
+  border: 2px solid #d6cec4;
   display: block;
   margin: 0 50px 30px 50px;
   cursor: pointer;
@@ -167,7 +167,7 @@ Sidebar Module
 }
 
 .menu-segment li a:hover {
-  background: #f8b500;
+  background: #4d473f;
 }
 
 /********************
@@ -199,7 +199,7 @@ Header/Title Module
 .toggle-head {
   margin-left: 30px;
   padding: 5px 0;
-  border-bottom: 1px solid #f8b500;
+  border-bottom: 1px solid #d9cac0;
   overflow: hidden;
 }
 
@@ -215,32 +215,46 @@ Header/Title Module
   transition-delay: 0.5s;
   opacity: 0;
   margin-right: 0;
-  color: #f8b500;
 }
 
 /********************
 Message List Module
 *********************/
-.sent-box,
-.draft-box,
-.delete-box {
-  display: none;
-}
-
 .message-list {
-  margin-top: 15px;
-  margin-left: 15px;
+  margin: 15px;
 }
 
 .message-list__top {
   color: var(--white-color);
   text-shadow: 0px 0px 1px #ddd;
-  background-color: #fc3c3c;
+  background-color: #211c19;
   padding: 15px;
 }
 
 .message-list__panel {
-  background-color: #f8b500;
+  background-color: #a18c7c;
+}
+
+.unread {
+  font-weight: bold;
+}
+
+.message-view {
+  line-height: 2;
+  margin-left: 20px;
+  overflow-y: scroll;
+  height: 500px;
+}
+
+.message-title {
+  font-size: 25px;
+  margin-bottom: 0.6rem;
+  line-height: 1.1;
+}
+
+.btn {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 /********************
@@ -259,70 +273,12 @@ td {
 }
 
 tr:nth-child(even) {
-  background-color: #e7e4ef;
-}
-
-/********************
-More Message Module
-*********************/
-.load-more-link {
-  display: block;
-  text-align: center;
-  margin: 30px 0 100px 0;
-}
-
-/********************
-Nano Scroll Module
-*********************/
-
-.nano {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.nano > .nano-content {
-  position: absolute;
-  overflow: scroll;
-  overflow-x: hidden;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.nano > .nano-content:focus {
-  outline: none;
-}
-
-.nano > .nano-content::-webkit-scrollbar {
-  visibility: hidden;
-}
-
-.has-scrollbar > .nano-content::-webkit-scrollbar {
-  visibility: visible;
+  background-color: #d6cec4;
 }
 
 /********************
 Media Module
 *********************/
-
-@media only screen and (min-width: 93em) {
-  .overlay {
-    display: none;
-  }
-}
-
-@media only screen and (max-width: 93.75em) {
-  .show-message .main {
-    margin-right: 0;
-  }
-  .show-message #message {
-    left: 50%;
-    width: 50%;
-  }
-}
 
 @media only screen and (max-width: 65em) {
   #sidebar {
@@ -347,14 +303,6 @@ Media Module
   .show-sidebar .main {
     transform: translateX(280px);
   }
-
-  .show-message .main {
-    margin-right: 0;
-  }
-  .show-message #message {
-    left: 20%;
-    width: 80%;
-  }
 }
 
 @media only screen and (max-width: 37.5em) {
@@ -363,29 +311,5 @@ Media Module
     top: 260px;
     bottom: 0;
     height: auto;
-  }
-
-  .col-1 {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 120px;
-    width: auto;
-  }
-
-  .col-2 {
-    right: 0;
-    left: auto;
-    width: 120px;
-  }
-
-  .date {
-    padding-left: 0;
-    position: static;
-  }
-
-  .subject {
-    display: none;
   }
 }
