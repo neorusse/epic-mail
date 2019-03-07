@@ -16,25 +16,15 @@ class Helper {
   }
 
   /**
-  * comparePassword
-  * @param {string} hashPassword
-  * @param {string} password
-  * @returns {Boolean} return True or False
-  */
-  static comparePassword(hashPassword, password) {
-    return bcrypt.compareSync(password, hashPassword);
-  }
-
-  /**
   * Generate Token
   * @param {string} id
   * @returns {string} token
   */
 
-  static generateToken(id) {
+  static generateToken(email) {
     const token = jwt.sign(
       {
-        userId: id,
+        userEmail: email,
       },
       process.env.JWT_KEY,
       { expiresIn: '7h' }
@@ -47,11 +37,11 @@ class Helper {
    */
   static infoValidator(data) {
     const schema = Joi.object().keys({
-      first_name: Joi.string().required(),
-      last_name: Joi.string().required(),
-      user_id: Joi.string().required(),
-      password: Joi.required(),
-      mobile_number: Joi.string().regex(/^\d{3}\d{4}\d{4}$/).required(),
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+      mobileNumber: Joi.string().regex(/^\d{3}\d{4}\d{4}$/).required(),
     });
 
     return Joi.validate(data, schema);
@@ -68,7 +58,6 @@ class Helper {
 
     return Joi.validate(data, schema);
   }
-
 
   /**
    * Error Handler
