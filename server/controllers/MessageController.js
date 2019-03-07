@@ -1,62 +1,155 @@
-import MessageModel from '../models/Messages'
+import Messages from '../db/mockdb'
 
 class Message {
 
   /**
-  * Create an Email
-  * @param {object} req
-  * @param {object} res
-  * @returns {object} email object
-  */
-  static createMail(req, res) {
-    const { subject, message, parentMessageId, status } = req.body;
+   * Get all received emails
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} List of all received emails
+   */
 
-    if (!subject && !message && !parentMessageId && !status) {
-      return res.status(400).send({ 'message': 'All fields are required'});
+  static allReceivedEmails(req, res) {
+    if (!Messages) {
+      return res.status(404).json({
+        message: 'Messages not found in database',
+      });
     }
-
-    const email = MessageModel.create(req.body);
-    return res.status(201).send(email);
+    return res.status(200).json({
+      success: 'true',
+      message: 'All Emails retrieved successfully',
+      Messages,
+    });
   }
 
   /**
-  * Get all sent email
-  * @param {object} req
-  * @param {object} res
-  * @returns {object} An Array of sent mails
-  */
-  static getAllSentMails(req, res) {
-    const emails = MessageModel.getSentMail();
-    return res.status(200).send(emails);
+   * Get all unread emails
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} List of all unread emails
+   */
+
+  static allUnreadEmails(req, res) {
+    const unreadMessages = Messages.find(message => message.status === 'unread');
+    if (unreadMessages) {
+      return res.status(200).json({
+        success: 'true',
+        message: 'All unread emails retrieved',
+        unreadMessages,
+      });
+    }
+    return res.status(404).json({
+      message: 'Not found in database',
+    });
   }
 
   /**
-  * Get one sent email
-  * @param {object} req
-  * @param {object} res
-  * @returns {object} email object
-  */
-  static getASentMail(req, res) {
-    const email = MessageModel.getOneSentMail(req.params.id);
-    if(!email) {
-      return res.status(404).send({ 'message': 'email not found' });
+   * Get all sent emails
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} List of all sent emails
+   */
+
+  static allSentEmails(req, res) {
+    const sentMessages = Messages.find(message => message.status === 'sent');
+    if (sentMessages) {
+      return res.status(200).json({
+        success: 'true',
+        message: 'All sent emails retrieved',
+        sentMessages,
+      });
     }
-    return res.status(200).send(email);
+    return res.status(404).json({
+      message: 'Not found in database',
+    });
   }
 
   /**
-  * Delete a sent email
+   * Get a specific sent email
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} one sent
+   */
+  static getAsentMail(req, res) {
+    const id = parseInt(req.params.id, 10);
+
+    Messages.map((message) => {
+      if (message.id === id) {
+        return res.status(200).json({
+          success: 'true',
+          message: 'Mail retrieved successfully',
+          message,
+        });
+      }
+    });
+    return res.status(404).json({
+      success: 'false',
+      message: 'Mail does not exist',
+    });
+  }
+
+  /**
+  * Delete a mail
   * @param {object} req
   * @param {object} res
-  * @returns {void} return status code 204
+  * @returns {object} JSON response
   */
-  static deleteASentMail(req, res) {
-    const email = MessageModel.getOneSentMail(req.params.id);
-    if (!email) {
-      return res.status(404).send({ 'message': 'email not found' });
+  static deleteMail(req, res) {
+
+    const id = parseInt(req.params.id, 10);
+
+    Messages.map((message, index) => {
+      if (message.id === id) {
+        Messages.splice(index, 1);
+        return res.status(200).json({
+          success: 'true',
+          message: 'Email deleted successfully',
+        });
+      }
+    });
+    return res.status(404).json({
+      success: 'false',
+      message: 'Mail not found',
+    });
+  }
+
+  /**
+   * send an Email
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} created object
+   */
+
+  static sendEmail(req, res) {
+    const { subject, message } = req.body;
+    if (!subject) {
+      return res.status(400).json({
+        success: 'false',
+        message: 'Subject is required',
+      });
     }
-    const deleteMail = MessageModel.deleteMail(req.params.id);
-    return res.status(204).send(deleteMail);
+    if (!message) {
+      return res.status(400).json({
+        success: 'false',
+        message: 'Message is required',
+      });
+    }
+
+    const mail = {
+      id: Messages.length + 1,
+      subject,
+      message,
+      createdOn: new Date(),
+      parentMessageId: 1,
+      status: 'sent',
+    };
+
+    Messages.push(mail);
+    return res.status(201).json({
+      success: 'true',
+      message: 'Mail sent successfully',
+      mail
+    });
   }
 }
 

@@ -25,7 +25,7 @@ app.use(cors());
 
 // Root Route
 app.get('/', (req, res) => {
-  res.status(200).send({ info: 'Welcome to EPICMail' });
+  res.status(200).json({ info: 'Welcome to EPICMail' });
 });
 
 // route handler

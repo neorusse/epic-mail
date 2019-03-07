@@ -1,20 +1,26 @@
 import express from 'express';
-import message from '../controllers/MessageController';
+import MessageController from '../controllers/MessageController';
 
 const router = express.Router();
 
 // Message Routes
 
 // Create a mail
-router.post('/', message.createMail);
+router.post('/', MessageController.sendEmail);
+
+// Get all received emails
+router.get('/', MessageController.allReceivedEmails);
+
+// Get all unread mails
+router.get('/unread', MessageController.allUnreadEmails);
 
 // Get all sent mails
-router.get('/', message.getAllSentMails);
+router.get('/sent', MessageController.allSentEmails);
 
 // Get a single sent mail
-router.get('/:id', message.getASentMail);
+router.get('/:id', MessageController.getAsentMail);
 
 // delete a product
-router.delete('/:id', message.deleteASentMail);
+router.delete('/:id', MessageController.deleteMail);
 
 module.exports = router;

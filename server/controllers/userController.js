@@ -1,4 +1,4 @@
-import userModel from '../models/Users'
+import usersDb from '../db/users'
 import Helper from '../helpers/Helper'
 
 class User {
@@ -17,12 +17,29 @@ class User {
       return Helper.dataMsgValidator(res, dataValidator.error);
     }
 
-    const user = userModel.create(req.body);
-    const token = Helper.generateToken(user.newUser.user_id);
+    const newUser = {
+      id: usersDb.length + 1,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      mobileNumber: req.body.mobileNumber
+    };
+
+    // Hash password
+    const hashPassword = Helper.hashPassword(newUser.password);
+    newUser.password = hashPassword;
+
+    // Push new user to database
+    usersDb.push(newUser);
+
+    // Generate token
+    const token = Helper.generateToken(newUser.email);
+
     return res.status(201).send({
-      message: 'Authentication Successful',
-      user,
-      token,
+      message: `Authentication Successful, ${newUser.email} for new user: ${newUser.firstName} successfully created`,
+      user: newUser,
+      token
     });
   }
 
@@ -32,7 +49,7 @@ class User {
   * @param {object} res
   * @returns {object} User object and token
   */
-  static userLogin(req, res) {
+  static userSignin(req, res) {
     const emailObject = { email: req.body.email };
     const emailValidator = Helper.emailValidator(emailObject);
     if (!req.body.email || !req.body.password) {
@@ -42,21 +59,10 @@ class User {
       return res.status(400).send({ message: 'Please enter a valid email address' });
     }
 
-    // find userPassword from JS Data Structure
-    const registeredUser = userModel.getAUser(req.body.user_id)
-    console.log(registeredUser);
-
-    // Compare usermail from JS Data Structure and
-    if (!Helper.comparePassword(registeredUser.password, req.body.password)) {
-      return res
-        .status(400)
-        .send({ message: 'Authentication failed' });
-    }
-
-    const token = Helper.generateToken(registeredUser.newUser.user_id);
+    const token = Helper.generateToken(req.body.email);
       return res.status(201).send({
-        message: 'Authentication Successful',
-        token: token
+        message: 'Authenticated, user signin successful',
+        token
     });
   }
 }
