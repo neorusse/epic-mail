@@ -49,13 +49,13 @@ p {
 }
 
 a {
-  color: #ffaf30;
+  color: #fff;
   text-decoration: none;
   transition-duration: 0.3s;
 }
 
 a:hover {
-  color: #ffaf30;
+  color: #3399ff;
   transition-duration: 0.05s;
   text-decoration: none;
 }
@@ -150,6 +150,36 @@ Sidebar Module
   cursor: pointer;
 }
 
+button {
+  float: right;
+  margin: 20px;
+}
+
+button a {
+  font-size: 17px;
+}
+
+.btn {
+  display: block;
+  text-align: center;
+  border: 2px solid #1034a6;
+  background: #1034a6;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.3s ease 0s;
+  padding: 7px;
+}
+
+.btn-arrow {
+  font-size: 20px;
+  color: #1034a6;
+}
+
+.btn-arrow:hover {
+  color: #7d7d7d;
+}
+
 .menu-segment {
   padding: 0 50px 0 70px;
 }
@@ -167,7 +197,7 @@ Sidebar Module
 }
 
 .menu-segment li a:hover {
-  background: #ffaf30;
+  background: #3399ff;
 }
 
 /********************
@@ -198,7 +228,6 @@ Header/Title Module
 .toggle-head {
   margin-left: 30px;
   padding: 5px 0;
-  border-bottom: 1px solid #d9cac0;
   overflow: hidden;
 }
 
@@ -214,6 +243,7 @@ Header/Title Module
   transition-delay: 0.5s;
   opacity: 0;
   margin-right: 0;
+  color: #7d7d7d;
 }
 
 /********************
@@ -231,7 +261,7 @@ Message List Module
 }
 
 .message-list__panel {
-  background-color: #ffaf30;
+  background-color: #7d7d7d;
 }
 
 .unread {
@@ -272,7 +302,7 @@ td {
 }
 
 tr:nth-child(even) {
-  background-color: #b3e5fc;
+  background-color: #d3d3d3;
 }
 
 /********************
