@@ -35,7 +35,7 @@ body {
   font-family: Roboto, sans-serif;
   font-weight: 400;
   line-height: 1.5em;
-  color: #4a4a4a;
+  color: #111;
 }
 
 h1,
@@ -49,11 +49,11 @@ h4 {
 a {
   text-decoration: none;
   transition-duration: 0.3s;
-  color: #ff0000;
+  color: #1034a6;
 }
 
 a:hover {
-  color: #ffaf30;
+  color: #7d7d7d;
   transition-duration: 0.05s;
   text-decoration: none;
 }
@@ -83,6 +83,14 @@ Layout Styles
     flex: 1;
     margin-left: 40px;
   }
+
+  .wrap {
+    min-height: calc(100vh - 284px);
+  }
+
+  .wrapper {
+    min-height: calc(100vh - 188px);
+  }
 }
 
 /***************************
@@ -104,7 +112,7 @@ Module Styles
 .btn--hero {
   background: var(--white-color);
   border: 1px solid var(--white-color);
-  color: #ff0000;
+  color: #1034a6;
   font-size: 1em;
   border-radius: 8px;
   padding: 10px 20px;
@@ -112,7 +120,7 @@ Module Styles
 }
 
 button a:hover {
-  color: #ffaf30;
+  color: #7d7d7d;
 }
 
 .btn--nav {
@@ -135,7 +143,7 @@ button a:hover {
 @media only screen and (max-width: 47.9375em) {
   .btn--nav-login {
     background: none;
-    color: #f8b500;
+    color: #1034a6;
     font-weight: bold;
     border: none;
     line-height: 8px;
@@ -235,7 +243,7 @@ Welcome Module
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ffaf30;
+  background: #7d7d7d;
   min-height: 50%;
 }
 
@@ -287,8 +295,12 @@ Welcome Module
 Hero Module
 *********************/
 .hero {
-  background: #1034a6 url('../assets/imgs/email-background.jpg') no-repeat right
-    center/cover;
+  background-color: #1034a6;
+  background-image: url('../assets/imgs/email-background.svg');
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50%;
   min-height: 500px;
   width: 100%;
   display: flex;
@@ -303,14 +315,14 @@ Hero Module
 }
 
 .hero__body p {
-  color: #ff0000;
+  color: #fff;
   margin-bottom: 2rem;
   font-weight: 500;
   font-size: 1.5rem;
 }
 
 .hero__body h1 {
-  color: #ff0000;
+  color: #fff;
   margin-bottom: 1.5rem;
   font-family: Georgia, serif;
   font-weight: 700;
@@ -337,7 +349,7 @@ Information Module
 
 .info-bg,
 .info-welcome {
-  background: #ffaf30;
+  background: #7d7d7d;
 }
 
 .info__img {
@@ -381,7 +393,7 @@ Testimonial Module
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ffaf30;
+  background: #7d7d7d;
   min-height: 50%;
 }
 
@@ -435,7 +447,6 @@ Form Module
 }
 
 .form__title {
-  color: #ff0000;
   font-weight: 500;
   text-align: center;
   margin-bottom: 1rem;
@@ -453,7 +464,7 @@ Form Module
 
 .form__select {
   width: 400px;
-  color: gray;
+  color: #7d7d7d;
   padding: 0.6rem 1rem;
   margin-bottom: 10px;
   font-size: 1rem;
@@ -468,14 +479,14 @@ input {
   border: 1px solid #d9cac0;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid #1034a6;
+  border-bottom: 1px solid #7d7d7d;
   outline: none;
   width: 400px;
 }
 
 input:focus {
-  box-shadow: 0 0 5px #1034a6;
-  border: 1px solid #1034a6;
+  box-shadow: 0 0 5px #7d7d7d;
+  border: 1px solid #7d7d7d;
 }
 
 .form__submit a {
@@ -484,8 +495,8 @@ input:focus {
 }
 
 .form__submit-btn {
-  background: #ff0000;
-  border: 2px solid #ff0000;
+  background: #1034a6;
+  border: 2px solid #1034a6;
   color: var(--white-color);
   padding: 0.8rem 1.2rem;
   line-height: 9px;
@@ -494,7 +505,6 @@ input:focus {
 }
 
 form p {
-  color: #ff0000;
   font-size: 18px;
   margin: 20px 0;
 }
@@ -508,14 +518,15 @@ form p {
 }
 
 .form-redirect p {
-  color: #fc3c3c;
   font-size: 17px;
   font-weight: 400;
 }
 
 .form-redirect p:last-child,
-.form-redirect p:last-child i {
+.form-redirect p:last-child i,
+.form-redirect p:last-child a {
   font-weight: 550;
+  color: #111;
 }
 
 .form-redirect__password {
