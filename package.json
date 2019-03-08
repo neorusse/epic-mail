@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "nyc --require @babel/register mocha --timeout 10000 server/tests/**/*spec.js --exit",
+    "test": "nyc --reporter=html --reporter=text --require @babel/register mocha --timeout 10000 server/tests/**/*spec.js --exit",
     "start": "babel-node ./server/bin/www",
     "start:prod": "node ./dist/bin/www",
     "dev": "npm-run-all start",
