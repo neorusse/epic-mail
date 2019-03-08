@@ -18,7 +18,7 @@ class Message {
     return res.status(200).json({
       success: 'true',
       message: 'All Emails retrieved successfully',
-      Messages,
+      data: Messages
     });
   }
 
@@ -35,7 +35,7 @@ class Message {
       return res.status(200).json({
         success: 'true',
         message: 'All unread emails retrieved',
-        unreadMessages,
+        data: unreadMessages
       });
     }
     return res.status(404).json({
@@ -56,7 +56,7 @@ class Message {
       return res.status(200).json({
         success: 'true',
         message: 'All sent emails retrieved',
-        sentMessages,
+        data: sentMessages
       });
     }
     return res.status(404).json({
@@ -78,13 +78,9 @@ class Message {
         return res.status(200).json({
           success: 'true',
           message: 'Mail retrieved successfully',
-          message,
+          data: message
         });
       }
-    });
-    return res.status(404).json({
-      success: 'false',
-      message: 'Mail does not exist',
     });
   }
 
@@ -92,7 +88,7 @@ class Message {
   * Delete a mail
   * @param {object} req
   * @param {object} res
-  * @returns {object} JSON response
+  * @returns {void} status code 204
   */
   static deleteMail(req, res) {
 
@@ -101,15 +97,11 @@ class Message {
     Messages.map((message, index) => {
       if (message.id === id) {
         Messages.splice(index, 1);
-        return res.status(200).json({
+        return res.status(204).json({
           success: 'true',
           message: 'Email deleted successfully',
         });
       }
-    });
-    return res.status(404).json({
-      success: 'false',
-      message: 'Mail not found',
     });
   }
 
@@ -148,7 +140,7 @@ class Message {
     return res.status(201).json({
       success: 'true',
       message: 'Mail sent successfully',
-      mail
+      data: mail
     });
   }
 }

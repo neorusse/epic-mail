@@ -39,7 +39,7 @@ class User {
     return res.status(201).send({
       message: `Authentication Successful, ${newUser.email} for new user: ${newUser.firstName} successfully created`,
       user: newUser,
-      token
+      token: token
     });
   }
 
@@ -60,9 +60,9 @@ class User {
     }
 
     const token = Helper.generateToken(req.body.email);
-      return res.status(201).send({
+      return res.status(200).send({
         message: 'Authenticated, user signin successful',
-        token
+        token: token
     });
   }
 }
