@@ -1,6 +1,7 @@
 # EPIC-Mail [App](https://neorusse.github.io/epic-mail/)
 
 ## Project Description
+
 A web [app](https://neorusse.github.io/epic-mail/) that helps people exchange messages/information over the internet.
 
 ## Table of Content
@@ -33,7 +34,7 @@ Users can upload a profile photo.
 
 ## Project Management
 
-Project is managed with [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2314418).
+Project is managed with [Pivotal Tracker](https://www.pivotaltracker.com) and can be accessed via this link [EPICMail](https://www.pivotaltracker.com/n/projects/2314418).
 
 ## Technology Used
 
@@ -41,11 +42,33 @@ Project is managed with [Pivotal Tracker](https://www.pivotaltracker.com/n/proje
 
 ## API End Points
 
+<table>
+
+<tr><th>HTTP VERB</th><th>ENDPOINT</th><th>FUNCTIONALITY</th></tr>
+<tr><td>POST</td> <td>api/v1/auth/signup</td>  <td>Enable user to signup</td></tr>
+
+<tr><td>POST</td> <td>api/v1/auth/signin</td>  <td>Enable user to signup</td></tr>
+
+<tr><td>POST</td> <td>api/v1/messages</td>  <td>Enable user to send email</td></tr>
+
+<tr><td>GET</td> <td>api/v1/messages</td> <td>Retrieve all received emails</td></tr>
+
+<tr><td>GET</td> <td>api/v1/messages/unread</td> <td>Retrieve all received unread emails</td></tr>
+
+<tr><td>GET</td> <td>api/v1/messages/sent</td> <td>Retrieve all received sent emails</td></tr>
+
+<tr><td>GET</td> <td>api/v1/messages/:id</td> <td>Retrieve a single sent email<td></tr>
+
+<tr><td>DELETE</td> <td>api/v1/messages/:id</td> <td>Delete an email<td></tr>
+
+</table>
+
 ## License
 
 ## Credits
 
+[Build A RESTful Api With Node.js And Express.js Part One - Ayobami Adelakun](https://medium.com/@purposenigeria/build-a-restful-api-with-node-js-and-express-js-d7e59c7a3dfb)
+
 ## Author
 
 [Russell Nyorere](https://neorusse.github.io/)
-

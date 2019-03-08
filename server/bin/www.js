@@ -11,10 +11,11 @@ import chalk from 'chalk';
 dotenv.config();
 
 // Start our App
-app.set('port', process.env.PORT || 1091);
+app.set('port', process.env.PORT || 109);
 
 const server = http.createServer(app);
 
 server.listen(app.get('port'), () => {
   console.log(`Server running on PORT ${chalk.blue(server.address().port)}`);
 });
+
