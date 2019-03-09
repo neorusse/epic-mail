@@ -6,6 +6,7 @@ import app from '../app';
 import http from 'http';
 import dotenv from 'dotenv';
 import chalk from 'chalk';
+import { hostname } from 'os';
 
 // import env variables from our .env file
 dotenv.config();
