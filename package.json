@@ -14,7 +14,8 @@
     "start:prod": "node ./build/bin/www",
     "dev": "npm-run-all start",
     "clean": "rimraf ./build",
-    "build": "babel ./server --out-dir build",
+    "babel-build": "babel ./server --out-dir build",
+    "build": "npm-run-all clean babel-build",
     "prod": "npm-run-all clean build start:prod",
     "watch": "nodemon"
   },
