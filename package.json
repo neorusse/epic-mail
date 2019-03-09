@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "A web app that helps people exchange messages/information over the internet",
-  "main": "server.js",
+  "main": "www.js",
   "directories": {
     "test": "tests"
   },
