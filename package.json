@@ -11,10 +11,10 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "start": "babel-node ./server/bin/www",
-    "start:prod": "node ./dist/bin/www",
+    "start:prod": "node ./build/bin/www",
     "dev": "npm-run-all start",
-    "clean": "rimraf ./dist",
-    "build": "babel ./server --out-dir dist",
+    "clean": "rimraf ./build",
+    "build": "babel ./server --out-dir build",
     "prod": "npm-run-all clean build start:prod",
     "watch": "nodemon"
   },
