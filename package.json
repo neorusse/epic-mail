@@ -7,8 +7,9 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text --require @babel/register mocha --timeout 10000 server/tests/**/*spec.js --exit",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "test": "mocha --timeout 10000 server/tests/**/*spec.js --require @babel/register --exit",
+    "coverage": "nyc --reporter=lcov --reporter=text npm test",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "start": "babel-node ./server/bin/www",
     "start:prod": "node ./dist/bin/www",
     "dev": "npm-run-all start",
