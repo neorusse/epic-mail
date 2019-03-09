@@ -7,9 +7,9 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha --timeout 10000 server/tests/**/*spec.js --require @babel/register --exit",
-    "coverage": "nyc --reporter=lcov --reporter=text npm test",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "test": "nyc --require @babel/register --reporter=html --reporter=text mocha --timeout 10000 server/tests/**/*spec.js --exit",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "start": "babel-node ./server/bin/www",
     "start:prod": "node ./dist/bin/www",
     "dev": "npm-run-all start",
@@ -17,6 +17,10 @@
     "build": "babel ./server --out-dir dist",
     "prod": "npm-run-all clean build start:prod",
     "watch": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neorusse/epic-mail.git"
   },
   "keywords": [
     "Node.js",
@@ -26,6 +30,10 @@
   ],
   "author": "Russell Nyorere",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neorusse/epic-mail/issues"
+  },
+  "homepage": "https://github.com/neorusse/epic-mail/#readme",
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "bcrypt": "^3.0.2",

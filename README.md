@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/neorusse/epic-mail.svg?branch=ch-integrating-test-coverage-164508533)](https://travis-ci.org/neorusse/epic-mail)
+
 # EPIC-Mail [App](https://neorusse.github.io/epic-mail/)
 
 ### Project Description
