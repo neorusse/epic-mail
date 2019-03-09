@@ -7,6 +7,8 @@ const { expect } = chai;
 
 chai.use(chaiHttp);
 
+let requester = supertest(app);
+
 // Payload for user signup POST route
 const signupPayload = {
   firstName: 'Russell',
@@ -23,8 +25,6 @@ const signinPayload = {
 }
 
 describe('Testing user signup and signin routes', () => {
-
-  let requester = supertest(app);
 
   it('should return status 201 when new user email is created', (done) => {
     requester
