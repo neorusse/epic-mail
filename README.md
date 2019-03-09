@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/neorusse/epic-mail.svg?branch=develop)](https://travis-ci.org/neorusse/epic-mail)[![Coverage Status](https://coveralls.io/repos/github/neorusse/epic-mail/badge.svg?branch=develop)](https://coveralls.io/github/neorusse/epic-mail?branch=develop)
-
-# EPIC-Mail [App](https://neorusse.github.io/epic-mail/)
+# EPIC-Mail [App](https://neorusse.github.io/epic-mail/) [![Build Status](https://travis-ci.org/neorusse/epic-mail.svg?branch=develop)](https://travis-ci.org/neorusse/epic-mail) [![Coverage Status](https://coveralls.io/repos/github/neorusse/epic-mail/badge.svg?branch=develop)](https://coveralls.io/github/neorusse/epic-mail?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/cb14e1d85580267e22b3/maintainability)](https://codeclimate.com/github/neorusse/epic-mail/maintainability)
 
 ### Project Description
 
 A web [app](https://neorusse.github.io/epic-mail/) that helps people exchange messages/information over the internet.
+As EPIC Andelans who work towards advancing human potential and giving back to the society,
+we wish to empower others by building a this app to help people communicate.
 
 ### Table of Content
 
@@ -41,6 +41,22 @@ Users can upload a profile photo.
 Project is managed with [Pivotal Tracker](https://www.pivotaltracker.com) and can be accessed via this link [EPICMail](https://www.pivotaltracker.com/n/projects/2314418).
 
 ### Technology Used
+
+Modern JavaScript features and technology was used for this [project](https://neorusse.github.io/epic-mail/).
+
+New features of ECMAScript 6 is also known as ES6 and ECMAScript 2015 such as const, let, arrow function, destructuring, array map and find method were adopted.
+
+NodeJS is a JavaScript runtime built on Chrome's V8 JavaScript engine. It allows you to run JavaScript on the server.
+
+ExpressJS is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.
+
+CSS - Cascading Style Sheets is a style sheet language used for describing the presentation of a document written in a markup language like HTML. CSS is a cornerstone technology of the World Wide Web, alongside HTML and JavaScript.
+
+HTML - Hypertext Markup Language is the standard markup language for creating web pages and web applications. With Cascading Style Sheets and JavaScript, it forms a triad of cornerstone technologies for the World Wide Web.
+
+Codes were written in accordance with [Airbnb JavaScript style guide](https://github.com/airbnb/javascript) and [Andela Best Practices](https://github.com/andela/bestpractices).
+
+SVG free stock images for [UI](https://neorusse.github.io/epic-mail/) design is gotten from [SVG Backgrounds](https://www.svgbackgrounds.com/).
 
 ### Installation
 
