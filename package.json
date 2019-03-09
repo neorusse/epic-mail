@@ -10,14 +10,13 @@
     "test": "nyc --require @babel/register --reporter=html --reporter=text mocha --timeout 10000 server/tests/**/*spec.js --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
-    "start": "babel-node ./server/bin/www",
-    "start:prod": "node ./build/bin/www",
-    "dev": "npm-run-all start",
+    "prod": "node ./build/bin/www.js",
     "clean": "rimraf ./build",
     "babel-build": "babel ./server --out-dir build",
     "build": "npm-run-all clean babel-build",
-    "prod": "npm-run-all clean build start:prod",
-    "watch": "nodemon"
+    "start": "npm-run-all build prod",
+    "watch": "nodemon",
+    "dev": "babel-node ./server/bin/www"
   },
   "repository": {
     "type": "git",
