@@ -12,7 +12,7 @@
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "prod": "node ./build/bin/www",
     "clean": "rimraf ./build",
-    "babel-build": "babel-node ./server --out-dir build",
+    "babel-build": "babel -d ./build ./server -s",
     "build": "npm-run-all clean babel-build",
     "start": "npm-run-all build prod",
     "watch": "nodemon",
