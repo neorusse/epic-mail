@@ -5,6 +5,7 @@ import express from 'express';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import swaggerUI from 'swagger-ui-express';
 
 // importing routes
 import messages from './routes/message';
@@ -27,6 +28,10 @@ app.use(cors());
 app.get('/', (req, res) => {
   res.status(200).json({ info: 'Welcome to EPICMail' });
 });
+
+// API Documentation
+const swaggerAPIDef = require('../apiDoc.json');
+app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerAPIDef));
 
 // route handler
 app.use('/api/v1/messages', messages);
