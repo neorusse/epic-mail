@@ -1,0 +1,392 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "A web app that helps people exchange messages/information over the internet",
+    "version": "1.0.0",
+    "title": "EPIC Mail",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "neorusse@gmail.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:9090",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "UserAuth",
+      "description": "Signup and signin"
+    },
+    {
+      "name": "Messages",
+      "description": "Receiving and sending of email"
+    }
+  ],
+  "schemes": ["https", "http"],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": ["UserAuth"],
+        "summary": "Create a new user",
+        "description": "Route for user signup",
+        "operationId": "createUser",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "a new user need supply these data to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Register"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Email for new user created successfully",
+            "schema": {
+              "$ref": "#/definitions/UserAuthResponse"
+            }
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": ["UserAuth"],
+        "summary": "User login",
+        "description": "Route for user to signin",
+        "operationId": "userSignin",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "user detials for account access",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Signin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authenticated, user signin successful",
+            "schema": {
+              "$ref": "#/definitions/UserAuthResponse"
+            }
+          }
+        }
+      }
+    },
+    "/messages": {
+      "post": {
+        "tags": ["Messages"],
+        "summary": "Send an email",
+        "description": "Route for sending email",
+        "operationId": "sendMessage",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "data needed to create a message",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sendMessage"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Mail sent successfully",
+            "schema": {
+              "$ref": "#/definitions/sendMessageResponse"
+            }
+          },
+          "400": {
+            "description": "All foelds are required"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Get all received emails",
+        "description": "Route to retrieve all received emails",
+        "operationId": "getMessages",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "All Emails retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/GetMessageResponse"
+            }
+          }
+        }
+      }
+    },
+    "/messages/unread": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Get all unread emails",
+        "description": "Route to retrieve all unread messages",
+        "operationId": "getUnreadMessages",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "All unread emails retrieved",
+            "schema": {
+              "$ref": "#/definitions/GetMessageResponse"
+            }
+          }
+        }
+      }
+    },
+    "/messages/sent": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Get all sent emails",
+        "description": "Route to retrieve all sent emails",
+        "operationId": "getsentMessages",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "All sent emails retrieved",
+            "schema": {
+              "$ref": "#/definitions/GetMessageResponse"
+            }
+          }
+        }
+      }
+    },
+    "/messages/{messageId}": {
+      "get": {
+        "tags": ["Messages"],
+        "summary": "Get a specific email",
+        "description": "Route to retrieve a message with the given id",
+        "operationId": "getMessage",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "ID of the message to retrieve",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mail retrieved successfully",
+            "schema": {
+              "$ref": "#/definitions/GetMessageResponse"
+            }
+          },
+          "404": {
+            "description": "Message with the given id not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Messages"],
+        "summary": "Delete an email",
+        "description": "Route to delete a message given its id",
+        "operationId": "deleteMessageById",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message with the given id has been deleted",
+            "schema": {
+              "$ref": "#/definitions/MessageResponseOnDelete"
+            }
+          },
+          "400": {
+            "description": "The given id is invalid"
+          },
+          "404": {
+            "description": "Message with the given id not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Register": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string",
+          "format": "password"
+        },
+        "mobileNumber": {
+          "type": "integer"
+        }
+      }
+    },
+    "Signin": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string",
+          "format": "password"
+        }
+      }
+    },
+    "UserAuthResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer"
+        },
+        "data": {
+          "type": "object",
+          "items": {
+            "properties": {
+              "token": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "sendMessage": {
+      "type": "object",
+      "properties": {
+        "subject": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "sendMessageResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "data": {
+          "type": "object",
+          "items": {
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "createdon": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "subject": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "parentMessageId": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "status": {
+                "type": "string",
+                "description": "Message status",
+                "enum": ["read", "unread", "sent"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "GetMessageResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "createdon": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "subject": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "senderId": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "receiverId": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "parentMessageId": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "status": {
+                "type": "string",
+                "description": "Message status",
+                "enum": ["read", "unread", "sent"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "MessageResponseOnDelete": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "messaage": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
