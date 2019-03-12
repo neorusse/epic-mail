@@ -133,7 +133,7 @@ Sidebar Module
   font-size: 40px;
   line-height: 40px;
   text-align: center;
-  margin: 50px 0;
+  margin: 30px 0;
   cursor: pointer;
 }
 
@@ -201,6 +201,40 @@ button a {
 }
 
 /********************
+Image Upload Module
+*********************/
+
+.file-upload {
+  height: 100px;
+  width: 100px;
+  border-radius: 100px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid var(--white-color);
+  overflow: hidden;
+  transition: all 1s;
+  color: var(--white-color);
+  font-size: 40px;
+  margin: 20px auto;
+}
+
+.file-upload:hover {
+  color: var(--white-color);
+}
+
+input[type='file'] {
+  height: 100px;
+  width: 100px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/********************
 Overlay Module
 *********************/
 .overlay {
@@ -261,7 +295,7 @@ Message List Module
 }
 
 .message-list__panel {
-  background-color: #7d7d7d;
+  background-color: #f2f2f2;
 }
 
 .unread {
@@ -302,7 +336,7 @@ td {
 }
 
 tr:nth-child(even) {
-  background-color: #d3d3d3;
+  background-color: #e6e6e6;
 }
 
 /********************
