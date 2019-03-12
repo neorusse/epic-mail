@@ -1,39 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Email | Compose</title>
-    <meta content="noindex, nofollow" name="robots" />
+    <meta charset="UTF-8" />
+    <title>EPICMail | Inbox</title>
+    <meta name="viewport" content="width=device-width" />
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link href="../styles/compose.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
+    />
+    <link rel="stylesheet" href="../styles/mail.css" />
   </head>
 
   <body>
-    <form action="" method="post" class="form">
+    <!-- Aside Starts -->
+    <aside id="sidebar">
+      <div class="file-upload">
+        <input type="file" name="photo" />
+        <i class="fa fa-arrow-up"></i>
+      </div>
+      <div class="logo">
+        <a href="#!"><i class="fa fa-envelope"></i>EPICMail</a>
+      </div>
+      <a href="#!" class="compose-button">Compose</a>
+      <ul class="menu-segment">
+        <li class="active">
+          <a href="./mail.html">Inbox<span> (1)</span></a>
+        </li>
+        <li><a href="./sent.html">Sent</a></li>
+        <li><a href="./draft.html">Drafts</a></li>
+        <li><a href="./delete.html">Trash</a></li>
+        <li><a href="./admin-profile.html">Manage Users</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Start Here -->
+    <main class="main">
       <button class="btn">
         <a href="./login.html">Logout</a>
       </button>
-      <span
-        ><h1>Email</h1>
-        <a href="./mail.html"
-          ><h2 class="back-btn"><i class="fa fa-hand-o-left"></i> Back</h2></a
-        ></span
-      >
-      <label class="form__field">
-        <span>Email :</span>&nbsp;
-        <input class="name" name="email" type="email" placeholder="Email" />
-      </label>
-      <label class="form__field">
-        <span>Subject :</span>&nbsp;
-        <input class="name" name="name" type="text" placeholder="Subject" />
-      </label>
-      <label class="form__field">
-        <span>Message :</span>&nbsp;
-        <textarea class="msg" name="msg"></textarea>
-      </label>
-      <input class="submit" name="submit" type="submit" value="Send" />
-    </form>
+      <div class="overlay"></div>
+      <h1 class="toggle-head">
+        <i class="fa fa-bars sidebar-toggle-btn js-trigger-toggle-sidebar"></i>
+      </h1>
+      <div id="main-nano-wrapper">
+        <div class="compose">
+          <form action="" method="post" class="form">
+            <label class="form__field">
+              <span class="form__field-span">Email :</span>&nbsp;
+              <input
+                class="name"
+                name="email"
+                type="email"
+                placeholder="Email"
+              />
+            </label>
+            <label class="form__field">
+              <span class="form__field-span">Subject :</span>&nbsp;
+              <input
+                class="name"
+                name="name"
+                type="text"
+                placeholder="Subject"
+              />
+            </label>
+            <label class="form__field">
+              <span class="form__field-span">Message :</span>&nbsp;
+              <textarea class="msg" name="msg"></textarea>
+            </label>
+            <input class="submit" name="submit" type="submit" value="Send" />
+          </form>
+        </div>
+      </div>
+    </main>
+    <script src="../scripts/jquery.js"></script>
+    <script src="../scripts/mail.js"></script>
   </body>
 </html>
