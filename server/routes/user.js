@@ -1,5 +1,5 @@
 import express from 'express';
-import user from '../controllers/userController';
+import user from '../controllers/UserController';
 
 const router = express.Router();
 
@@ -9,6 +9,6 @@ const router = express.Router();
 router.post('/signup', user.createUser);
 
 // User Sign in
-router.post('/signin', user.userSignin);
+router.post('/login', user.userSignin);
 
 module.exports = router;

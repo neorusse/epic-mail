@@ -1,4 +1,4 @@
-import Messages from '../db/mockdb'
+import Messages from '../mockdb/message'
 
 class Message {
 
@@ -10,15 +10,17 @@ class Message {
    */
 
   static allReceivedEmails(req, res) {
-    if (!Messages) {
-      return res.status(404).json({
-        message: 'Messages not found in database',
-      });
-    }
+    const receivedEmails = [];
+    Messages.forEach((email) => {
+      if (email.status === 'read' || email.status === 'unread') {
+        receivedEmails.push(email);
+      }
+    });
+
     return res.status(200).json({
       success: 'true',
-      message: 'All Emails retrieved successfully',
-      data: Messages
+      message: 'Mail retrieved successfully',
+      data: receivedEmails
     });
   }
 
@@ -30,16 +32,18 @@ class Message {
    */
 
   static allUnreadEmails(req, res) {
-    const unreadMessages = Messages.find(message => message.status === 'unread');
-    if (unreadMessages) {
-      return res.status(200).json({
-        success: 'true',
-        message: 'All unread emails retrieved',
-        data: unreadMessages
-      });
-    }
-    return res.status(404).json({
-      message: 'Not found in database',
+    const unreadEmails = [];
+
+    Messages.forEach((email) => {
+      if (email.status === 'unread') {
+        unreadEmails.push(email);
+      }
+    });
+
+    return res.status(200).json({
+      success: 'true',
+      message: 'Mail retrieved successfully',
+      data: unreadEmails
     });
   }
 
@@ -51,16 +55,19 @@ class Message {
    */
 
   static allSentEmails(req, res) {
-    const sentMessages = Messages.find(message => message.status === 'sent');
-    if (sentMessages) {
-      return res.status(200).json({
-        success: 'true',
-        message: 'All sent emails retrieved',
-        data: sentMessages
-      });
-    }
-    return res.status(404).json({
-      message: 'Not found in database',
+
+    const sentEmails = [];
+
+    Messages.forEach((email) => {
+      if (email.status === 'sent') {
+        sentEmails.push(email);
+      }
+    });
+
+    return res.status(200).json({
+      success: 'true',
+      message: 'All sent emails retrieved',
+      data: sentEmails
     });
   }
 
@@ -70,38 +77,45 @@ class Message {
    * @param {object} res
    * @returns {object} one sent
    */
-  static getAsentMail(req, res) {
+  static getASentMail(req, res) {
     const id = parseInt(req.params.id, 10);
 
-    Messages.map((message) => {
-      if (message.id === id) {
-        return res.status(200).json({
-          success: 'true',
-          message: 'Mail retrieved successfully',
-          data: message
-        });
-      }
+    const email = Messages.find(message => message.id === id);
+    if (!email) {
+      return res.status(404).json({
+        success: 'false',
+        error: 'Message not found in database',
+      });
+    }
+    return res.status(200).json({
+      success: 'true',
+      message: 'Mail retrieved successfully',
+      data: email
     });
   }
 
   /**
-  * Delete a mail
+  * Delete an Email
   * @param {object} req
   * @param {object} res
   * @returns {void} status code 204
   */
-  static deleteMail(req, res) {
+  static deleteEmail(req, res) {
 
     const id = parseInt(req.params.id, 10);
 
-    Messages.map((message, index) => {
-      if (message.id === id) {
-        Messages.splice(index, 1);
-        return res.status(204).json({
-          success: 'true',
-          message: 'Email deleted successfully',
-        });
-      }
+    const email = Messages.find(message => message.id === id);
+    if (!email) {
+      return res.status(404).json({
+        status: 404,
+        error: 'Message not found in database',
+      });
+    }
+    const index = Messages.indexOf(email);
+    Messages.splice(index, 1);
+    return res.status(204).json({
+      success: 'true',
+      message: 'Email deleted successfully'
     });
   }
 

@@ -39,6 +39,16 @@ const Messages = [
     parentMessageId: 3,
     status: 'unread',
   },
+  {
+    id: 5,
+    createdOn: new Date(),
+    subject: 'Konga Promo',
+    message: 'Your account have just been credited with $1,000 shopping voucher',
+    senderId: 4,
+    receiverId: 3,
+    parentMessageId: 3,
+    status: 'unread',
+  },
 ];
 
 export default Messages;
