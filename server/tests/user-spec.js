@@ -1,13 +1,10 @@
 import app from '../app';
-import supertest from 'supertest'
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 
 const { expect } = chai;
 
 chai.use(chaiHttp);
-
-let requester = supertest(app);
 
 // Payload for user signup POST route
 const signupPayload = {
@@ -27,7 +24,7 @@ const signinPayload = {
 describe('Testing user signup and signin routes', () => {
 
   it('should return status 201 when new user email is created', (done) => {
-    requester
+    chai.request(app)
       .post('/api/v1/auth/signup')
       .send(signupPayload)
       .end((err, res) => {
@@ -40,8 +37,8 @@ describe('Testing user signup and signin routes', () => {
   });
 
   it('should return status 200 when user signin is successful', (done) => {
-    requester
-      .post('/api/v1/auth/signin')
+    chai.request(app)
+      .post('/api/v1/auth/login')
       .send(signinPayload)
       .end((err, res) => {
         expect(res).to.have.status(200);

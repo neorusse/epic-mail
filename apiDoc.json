@@ -13,7 +13,7 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "localhost:9090",
+  "host": "russ-epic-mail.herokuapp.com",
   "basePath": "/api/v1",
   "tags": [
     {

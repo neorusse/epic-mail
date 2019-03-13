@@ -64,8 +64,8 @@ class Helper {
    */
 
   static dataMsgValidator(res, error) {
-    // send a 417 (Expected Failed) error response if validation fails
-    res.status(417).json({
+    // send a 400 (Bad Request) error response if validation fails
+    res.status(400).json({
       status: 'error',
       message: 'Please enter valid data in fields',
       error: error.details[0].message,

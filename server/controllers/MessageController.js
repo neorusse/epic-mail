@@ -1,4 +1,4 @@
-import Messages from '../db/mockdb'
+import Messages from '../mockdb/message'
 
 class Message {
 

@@ -1,4 +1,4 @@
-import usersDb from '../db/users'
+import usersDb from '../mockdb/user'
 import Helper from '../helpers/Helper'
 
 class User {
