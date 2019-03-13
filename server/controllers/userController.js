@@ -36,9 +36,8 @@ class User {
     // Generate token
     const token = Helper.generateToken(newUser.email);
 
-    return res.status(201).send({
+    return res.status(201).json({
       message: `Authentication Successful, ${newUser.email} for new user: ${newUser.firstName} successfully created`,
-      user: newUser,
       token: token
     });
   }
@@ -53,14 +52,14 @@ class User {
     const emailObject = { email: req.body.email };
     const emailValidator = Helper.emailValidator(emailObject);
     if (!req.body.email || !req.body.password) {
-      return res.status(400).send({ message: 'Some values are missing' });
+      return res.status(400).json({ message: 'Some values are missing' });
     }
     if (emailValidator.error) {
-      return res.status(400).send({ message: 'Please enter a valid email address' });
+      return res.status(400).json({ message: 'Please enter a valid email address' });
     }
 
     const token = Helper.generateToken(req.body.email);
-      return res.status(200).send({
+      return res.status(200).json({
         message: 'Authenticated, user signin successful',
         token: token
     });

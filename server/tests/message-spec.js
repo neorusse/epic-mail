@@ -94,6 +94,17 @@ describe('/GET/:id a sent message', () => {
       done();
       });
   });
+
+  it('should return error for invalid message id', (done) => {
+    requester
+      .get('/api/v1/messages/a')
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('error').equal('Message not found in database');
+        done();
+      });
+  });
 });
 
 // Test DELETE a mail route
@@ -105,6 +116,17 @@ describe('/DELETE/:id a message', () => {
         expect(res).to.have.status(204);
         expect(res.body).to.be.an('object');
       done();
+      });
+  });
+
+  it('should return error for invalid message id', (done) => {
+    requester
+      .delete('/api/v1/messages/a')
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('error').equal('Message not found in database');
+        done();
       });
   });
 });

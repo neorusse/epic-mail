@@ -10,15 +10,11 @@ class Message {
    */
 
   static allReceivedEmails(req, res) {
-    if (!Messages) {
-      return res.status(404).json({
-        message: 'Messages not found in database',
-      });
-    }
+    const receivedEmails = Messages.filter(email => (email.status === 'read' || email.status === 'unread'));
     return res.status(200).json({
       success: 'true',
-      message: 'All Emails retrieved successfully',
-      data: Messages
+      message: 'Mail retrieved successfully',
+      data: receivedEmails
     });
   }
 
@@ -39,7 +35,8 @@ class Message {
       });
     }
     return res.status(404).json({
-      message: 'Not found in database',
+      success: 'false',
+      error: 'Message not found in database'
     });
   }
 
@@ -60,7 +57,8 @@ class Message {
       });
     }
     return res.status(404).json({
-      message: 'Not found in database',
+      success: 'false',
+      error: 'Message not found in database'
     });
   }
 
@@ -73,14 +71,17 @@ class Message {
   static getAsentMail(req, res) {
     const id = parseInt(req.params.id, 10);
 
-    Messages.map((message) => {
-      if (message.id === id) {
-        return res.status(200).json({
-          success: 'true',
-          message: 'Mail retrieved successfully',
-          data: message
-        });
-      }
+    const email = Messages.find(message => message.id === id);
+    if (!email) {
+      return res.status(404).json({
+        success: 'false',
+        error: 'Message not found in database',
+      });
+    }
+    return res.status(200).json({
+      success: 'true',
+      message: 'Mail retrieved successfully',
+      data: email
     });
   }
 
@@ -94,14 +95,18 @@ class Message {
 
     const id = parseInt(req.params.id, 10);
 
-    Messages.map((message, index) => {
-      if (message.id === id) {
-        Messages.splice(index, 1);
-        return res.status(204).json({
-          success: 'true',
-          message: 'Email deleted successfully',
-        });
-      }
+    const email = Messages.find(message => message.id === id);
+    if (!email) {
+      return res.status(404).json({
+        status: 404,
+        error: 'Message not found in database',
+      });
+    }
+    const index = Messages.indexOf(email);
+    Messages.splice(index, 1);
+    return res.status(204).json({
+      success: 'true',
+      message: 'Email deleted successfully'
     });
   }
 

@@ -34,7 +34,6 @@ describe('Testing user signup and signin routes', () => {
         expect(res).to.have.status(201);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('message').to.be.a('string');
-        expect(res.body).to.have.property('user').to.be.an('object');
         expect(res.body).to.have.property('token').to.be.a('string');
       done();
       });
