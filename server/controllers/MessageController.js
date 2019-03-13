@@ -10,7 +10,13 @@ class Message {
    */
 
   static allReceivedEmails(req, res) {
-    const receivedEmails = Messages.filter(email => (email.status === 'read' || email.status === 'unread'));
+    const receivedEmails = [];
+    Messages.forEach((email) => {
+      if (email.status === 'read' || email.status === 'unread') {
+        receivedEmails.push(email);
+      }
+    });
+
     return res.status(200).json({
       success: 'true',
       message: 'Mail retrieved successfully',
@@ -26,17 +32,18 @@ class Message {
    */
 
   static allUnreadEmails(req, res) {
-    const unreadMessages = Messages.find(message => message.status === 'unread');
-    if (unreadMessages) {
-      return res.status(200).json({
-        success: 'true',
-        message: 'All unread emails retrieved',
-        data: unreadMessages
-      });
-    }
-    return res.status(404).json({
-      success: 'false',
-      error: 'Message not found in database'
+    const unreadEmails = [];
+
+    Messages.forEach((email) => {
+      if (email.status === 'unread') {
+        unreadEmails.push(email);
+      }
+    });
+
+    return res.status(200).json({
+      success: 'true',
+      message: 'Mail retrieved successfully',
+      data: unreadEmails
     });
   }
 
@@ -48,17 +55,19 @@ class Message {
    */
 
   static allSentEmails(req, res) {
-    const sentMessages = Messages.find(message => message.status === 'sent');
-    if (sentMessages) {
-      return res.status(200).json({
-        success: 'true',
-        message: 'All sent emails retrieved',
-        data: sentMessages
-      });
-    }
-    return res.status(404).json({
-      success: 'false',
-      error: 'Message not found in database'
+
+    const sentEmails = [];
+
+    Messages.forEach((email) => {
+      if (email.status === 'sent') {
+        sentEmails.push(email);
+      }
+    });
+
+    return res.status(200).json({
+      success: 'true',
+      message: 'All sent emails retrieved',
+      data: sentEmails
     });
   }
 
@@ -68,7 +77,7 @@ class Message {
    * @param {object} res
    * @returns {object} one sent
    */
-  static getAsentMail(req, res) {
+  static getASentMail(req, res) {
     const id = parseInt(req.params.id, 10);
 
     const email = Messages.find(message => message.id === id);
@@ -86,12 +95,12 @@ class Message {
   }
 
   /**
-  * Delete a mail
+  * Delete an Email
   * @param {object} req
   * @param {object} res
   * @returns {void} status code 204
   */
-  static deleteMail(req, res) {
+  static deleteEmail(req, res) {
 
     const id = parseInt(req.params.id, 10);
 

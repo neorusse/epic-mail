@@ -55,7 +55,7 @@ describe('/GET unread messages', () => {
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('success').to.be.a('string');
         expect(res.body).to.have.property('message').to.be.a('string');
-        expect(res.body).to.have.property('data').to.be.an('object');
+        expect(res.body).to.have.property('data').to.be.an('array');
       done();
       });
   });
@@ -71,7 +71,7 @@ describe('/GET sent messages', () => {
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('success').to.be.a('string');
         expect(res.body).to.have.property('message').to.be.a('string');
-        expect(res.body).to.have.property('data').to.be.an('object');
+        expect(res.body).to.have.property('data').to.be.an('array');
       done();
       });
   });

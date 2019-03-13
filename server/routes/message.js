@@ -18,9 +18,9 @@ router.get('/unread', MessageController.allUnreadEmails);
 router.get('/sent', MessageController.allSentEmails);
 
 // Get a single sent mail
-router.get('/:id', MessageController.getAsentMail);
+router.get('/:id', MessageController.getASentMail);
 
 // delete a product
-router.delete('/:id', MessageController.deleteMail);
+router.delete('/:id', MessageController.deleteEmail);
 
 module.exports = router;
