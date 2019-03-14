@@ -494,12 +494,22 @@ input:focus {
   font-size: 1.3rem;
 }
 
-.form__title {
+.form__title,
+.form__desc {
   color: #111;
   font-weight: 500;
   text-align: center;
   margin-bottom: 1rem;
   font-size: 1.4rem;
+  width: 400px;
+}
+
+.form__desc {
+  color: gray;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
   width: 400px;
 }
 
@@ -560,6 +570,15 @@ form p {
   }
 
   .form__title {
+    width: 300px;
+  }
+
+  .form__title-sm {
+    margin-top: 50px;
+  }
+
+  .form__desc {
+    font-size: 1.2rem;
     width: 300px;
   }
 

@@ -12,7 +12,7 @@ import { hostname } from 'os';
 dotenv.config();
 
 // Start our App
-app.set('port', process.env.PORT || 9090);
+app.set('port', process.env.PORT || 909);
 
 const server = http.createServer(app);
 
