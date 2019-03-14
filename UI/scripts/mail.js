@@ -5,6 +5,7 @@ const messageRow = document.querySelectorAll('tr[data-href]');
 
 //Add an event listener to the document on complete load
 document.addEventListener('DOMContentLoaded', () => {
+  // Displays email message for reading
   displayMessage.style.display = "none";
 
   messageRow.forEach(row => {
@@ -15,42 +16,41 @@ document.addEventListener('DOMContentLoaded', () => {
       messageTable.style.display = "none";
     });
   });
-});
 
-// Mobile View Icon Controller
-jQuery(document).ready(function ($) {
 
-  var cols = {};
+  // Mobile View Icon Controller
+  const showOverlay = () => {
+    document.body.classList.add('show-main-overlay')
+  }
 
-  messageIsOpen = false;
+  const hideOverlay = () => {
+    document.body.classList.remove('show-main-overlay')
+  }
 
-  cols.showOverlay = function () {
-    $('body').addClass('show-main-overlay');
-  };
-  cols.hideOverlay = function () {
-    $('body').removeClass('show-main-overlay');
-  };
+  const showSidebar = () => {
+    document.body.classList.add('show-sidebar')
+  }
 
-  cols.showSidebar = function () {
-    $('body').addClass('show-sidebar');
-  };
-  cols.hideSidebar = function () {
-    $('body').removeClass('show-sidebar');
-  };
+  const hideSidebar = () => {
+    document.body.classList.remove('show-sidebar')
+  }
 
-  // Show sidebar when trigger is clicked
+  // Show sidebar when hamburger icon is clicked
+  let showSidebarBtn = document.querySelector('.js-trigger-toggle-sidebar');
 
-  $('.js-trigger-toggle-sidebar').on('click', function () {
-    cols.showSidebar();
-    cols.showOverlay();
+  showSidebarBtn.addEventListener('click', () => {
+    showSidebar();
+    showOverlay();
   });
 
-  // When you click the overlay, close everything
+  // Hide sidebar when hamburger icon is clicked
+  let hideSidebarBtn = document.querySelector('.main > .overlay');
 
-  $('.main > .overlay').on('click', function () {
-    cols.hideOverlay();
-    cols.hideSidebar();
+  hideSidebarBtn.addEventListener('click', () => {
+    hideSidebar();
+    hideOverlay();
   });
 
 });
+
 
