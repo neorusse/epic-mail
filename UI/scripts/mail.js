@@ -17,40 +17,40 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-
-  // Mobile View Icon Controller
-  const showOverlay = () => {
-    document.body.classList.add('show-main-overlay')
-  }
-
-  const hideOverlay = () => {
-    document.body.classList.remove('show-main-overlay')
-  }
-
-  const showSidebar = () => {
-    document.body.classList.add('show-sidebar')
-  }
-
-  const hideSidebar = () => {
-    document.body.classList.remove('show-sidebar')
-  }
-
-  // Show sidebar when hamburger icon is clicked
-  let showSidebarBtn = document.querySelector('.js-trigger-toggle-sidebar');
-
-  showSidebarBtn.addEventListener('click', () => {
-    showSidebar();
-    showOverlay();
-  });
-
-  // Hide sidebar when hamburger icon is clicked
-  let hideSidebarBtn = document.querySelector('.main > .overlay');
-
-  hideSidebarBtn.addEventListener('click', () => {
-    hideSidebar();
-    hideOverlay();
-  });
-
 });
+
+// Mobile View Icon Controller
+const showOverlay = () => {
+  document.body.classList.add('show-main-overlay')
+}
+
+const hideOverlay = () => {
+  document.body.classList.remove('show-main-overlay')
+}
+
+const showSidebar = () => {
+  document.body.classList.add('show-sidebar')
+}
+
+const hideSidebar = () => {
+  document.body.classList.remove('show-sidebar')
+}
+
+// Show sidebar when hamburger icon is clicked
+let showSidebarBtn = document.querySelector('.js-trigger-toggle-sidebar');
+
+showSidebarBtn.addEventListener('click', () => {
+  showSidebar();
+  showOverlay();
+});
+
+// Hide sidebar when hamburger icon is clicked
+let hideSidebarBtn = document.querySelector('.main > .overlay');
+
+hideSidebarBtn.addEventListener('click', () => {
+  hideSidebar();
+  hideOverlay();
+});
+
 
 
