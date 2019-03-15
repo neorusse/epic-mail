@@ -16,6 +16,7 @@ we wish to empower others by building a this app to help people communicate.
 [Development](#development)<br/>
 [Testing](#testing)<br/>
 [API End Points](#api-end-points)<br/>
+[API Documentation](#api-documentation)<br/>
 [License](#license)<br/>
 [Credits](#credits)<br/>
 [Author](#author)
@@ -91,27 +92,28 @@ npm run coverage
 
 ### API End Points
 
-<table>
+#### API URL
 
-<tr><th>HTTP VERB</th><th>ENDPOINT</th><th>FUNCTIONALITY</th></tr>
-<tr><td>POST</td> <td>api/v1/auth/signup</td>  <td>Enable user to signup</td></tr>
+The API was hosted on Heroku and can be access via [EPICMail API](https://russ-epic-mail.herokuapp.com/)
 
-<tr><td>POST</td> <td>api/v1/auth/signin</td>  <td>Enable user to signup</td></tr>
+| S/N | HTTP VERB | ENDPOINT               | FUNCTIONALITY                       |
+| --: | --------- | ---------------------- | ----------------------------------- |
+|   1 | POST      | api/v1/auth/signup     | Enable user to signup               |
+|   2 | POST      | api/v1/auth/login      | Enable user to login                |
+|   3 | POST      | api/v1/messages        | Enable user to send email           |
+|   4 | GET       | api/v1/messages        | Retrieve all received emails        |
+|   5 | GET       | api/v1/messages/unread | Retrieve all received unread emails |
+|   6 | GET       | api/v1/messages/sent   | Retrieve all received sent emails   |
+|   7 | GET       | api/v1/messages/:id    | Retrieve a single sent email        |
+|   8 | DELETE    | api/v1/messages/:id    | Delete an email                     |
 
-<tr><td>POST</td> <td>api/v1/messages</td>  <td>Enable user to send email</td></tr>
+### API Documentation
 
-<tr><td>GET</td> <td>api/v1/messages</td> <td>Retrieve all received emails</td></tr>
-
-<tr><td>GET</td> <td>api/v1/messages/unread</td> <td>Retrieve all received unread emails</td></tr>
-
-<tr><td>GET</td> <td>api/v1/messages/sent</td> <td>Retrieve all received sent emails</td></tr>
-
-<tr><td>GET</td> <td>api/v1/messages/:id</td> <td>Retrieve a single sent email<td></tr>
-
-<tr><td>DELETE</td> <td>api/v1/messages/:id</td> <td>Delete an email<td></tr>
-      </table>
+API Documentation was done using Swagger, acccess via [EPICMail](https://russ-epic-mail.herokuapp.com/api-doc/)
 
 ### License
+
+[MIT](https://opensource.org/licenses/MIT)
 
 ### Credits
 
