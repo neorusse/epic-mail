@@ -75,6 +75,11 @@ Layout Styles
 
 /*Only display Navigation Links for Small Devices (tablets, 768px and up)*/
 @media (min-width: 48em) {
+  .container-web {
+    width: 70%;
+    margin: 0 auto;
+  }
+
   .row {
     display: flex;
   }
@@ -90,6 +95,13 @@ Layout Styles
 
   .wrapper {
     min-height: calc(100vh - 188px);
+  }
+}
+
+/* Extra Small devices (Phones, up to 480px) */
+@media only screen and (max-width: 47.9375em) {
+  .container {
+    width: 85%;
   }
 }
 
@@ -141,15 +153,6 @@ button a:hover {
 
 /* Extra Small devices (Phones, up to 480px) */
 @media only screen and (max-width: 47.9375em) {
-  .btn--nav-login {
-    background: none;
-    color: #1034a6;
-    font-weight: bold;
-    border: none;
-    line-height: 8px;
-    font-size: 18px;
-  }
-
   .btn--nav-join {
     display: inline-block;
     background: #1034a6;
@@ -157,6 +160,7 @@ button a:hover {
     line-height: 8px;
     font-size: 15px;
     padding: 0.6rem 1rem;
+    margin-top: 30px;
   }
 }
 
@@ -235,6 +239,13 @@ Navigation Module
   }
 }
 
+/* Extra Small devices (Phones, up to 480px) */
+@media only screen and (max-width: 47.9375em) {
+  .navbar {
+    padding-bottom: 30px;
+  }
+}
+
 /********************
 Welcome Module
 *********************/
@@ -289,6 +300,10 @@ Welcome Module
     font-weight: 600;
     margin-bottom: 0.2rem;
   }
+
+  .welcome__text--title {
+    line-height: 0;
+  }
 }
 
 /********************
@@ -341,9 +356,18 @@ Hero Module
 /********************
 Information Module
 *********************/
+
 .info {
-  background: var(--white-color);
   padding: 3rem 0;
+}
+
+.info-admin {
+  padding: 0 0 3rem 0;
+}
+
+.info,
+.info-admin {
+  background: var(--white-color);
   min-height: 50%;
 }
 
@@ -380,6 +404,15 @@ Information Module
 @media only screen and (max-width: 47.9375em) {
   .info__desc--title {
     margin-top: 2rem;
+  }
+
+  .info__desc--text {
+    font-size: 1.1rem;
+  }
+
+  .info__desc {
+    width: 85%;
+    margin: 0 auto;
   }
 
   .info__desc--text-bottom {
@@ -574,7 +607,7 @@ form p {
   }
 
   .form__title-sm {
-    margin-top: 50px;
+    margin-top: 10px;
   }
 
   .form__desc {
@@ -601,6 +634,10 @@ form p {
     line-height: 2px;
     font-weight: 500;
     font-size: 1.2rem;
+  }
+
+  .form__submit-btn-reset {
+    margin-bottom: 40px;
   }
 
   .form__submit-btn-primary {

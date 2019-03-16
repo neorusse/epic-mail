@@ -12,10 +12,6 @@
 <body>
   <!-- Aside Starts -->
   <aside id="sidebar">
-    <div class="file-upload">
-      <input type="file" name="photo" />
-      <i class="fa fa-arrow-up"></i>
-    </div>
     <div class="logo">
       <a href="#!"><i class="fa fa-envelope"></i>EPICMail</a>
     </div>
@@ -40,11 +36,11 @@
     </h1>
     <div id="main-nano-wrapper">
       <div class="message-list">
-        <div class="message-list__top">Inbox Messages</div>
+        <div class="message-list__top">Messages</div>
         <div class="message-list__panel">
           <table class="js-table">
             <tbody>
-              <tr data-href="#show-message">
+              <tr data-href="#show-message" class="tr">
                 <td table-data="Sender">Andela Fellowship</td>
                 <td table-data="Title">Congratulation, You ace the bootcamp. You are</td>
                 <td table-data="Date">20 Jan</td>
@@ -66,7 +62,7 @@
 
       <!-- Message Thread -->
       <div id="show-message" class="message-view">
-        <div><a href="./mail.html"><span class="btn-arrow"><i class="fa fa-hand-o-left"></i> Inbox</i></span></a></div>
+        <div><a href="./mail.html"><span class="btn-arrow"><i class="fa fa-caret-left"></i> Inbox</i></span></a></div>
         <h2 class="message-title">Bootcamp Interview</h2>
         <span>From: Andela fellowship@andela.com</span>
         <p>To: neorusse@gmail.com</p>
