@@ -40,7 +40,7 @@ app.use('/api/v1/auth', users);
 
 // Catch 404 Error & forward to Error Handler
 app.use((req, res, next) => {
-  const error = new Error('Not found');
+  const error = new Error('Route does not exist');
   error.status = 404;
   next(error);
 });

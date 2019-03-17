@@ -5,7 +5,6 @@ const Users = [
     lastName: 'Nyorere',
     email: 'russ@gmail.com',
     password: 'internet12',
-    mobileNumber: '08068908852'
   }
 ];
 
