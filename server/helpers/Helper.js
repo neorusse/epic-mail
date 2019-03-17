@@ -41,7 +41,6 @@ class Helper {
       lastName: Joi.string().required(),
       email: Joi.string().email().required(),
       password: Joi.string().required(),
-      mobileNumber: Joi.string().regex(/^\d{3}\d{4}\d{4}$/).required(),
     });
 
     return Joi.validate(data, schema);

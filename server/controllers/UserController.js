@@ -23,7 +23,6 @@ class User {
       lastName: req.body.lastName,
       email: req.body.email,
       password: req.body.password,
-      mobileNumber: req.body.mobileNumber
     };
 
     // Hash password
