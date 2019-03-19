@@ -1,7 +1,7 @@
-import usersDb from '../mockdb/user'
-import Helper from '../helpers/Helper'
+import db from '../models/dbQuery';
+import Helper from '../helpers/Helper';
 
-class User {
+const User = {
 
   /**
   * Create a User
@@ -9,7 +9,7 @@ class User {
   * @param {object} res
   * @returns {object} User object and token
   */
-  static createUser(req, res) {
+  async createUser(req, res) {
 
     // Validate information entered by user
     const dataValidator = Helper.infoValidator(req.body);
@@ -17,29 +17,34 @@ class User {
       return Helper.dataMsgValidator(res, dataValidator.error);
     }
 
-    const newUser = {
-      id: usersDb.length + 1,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      password: req.body.password,
-    };
-
     // Hash password
-    const hashPassword = Helper.hashPassword(newUser.password);
-    newUser.password = hashPassword;
+    const hashPassword = Helper.hashPassword(req.body.password);
 
-    // Push new user to database
-    usersDb.push(newUser);
+    // db query statement
+    const createQuery = `INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) returning id, first_name, last_name, email, role`;
 
-    // Generate token
-    const token = Helper.generateToken(newUser.email);
+    // values for db query
+    const values = [
+      req.body.first_name,
+      req.body.last_name,
+      req.body.email,
+      hashPassword,
+    ];
 
-    return res.status(201).json({
-      message: `Authentication Successful, ${newUser.email} for new user: ${newUser.firstName} successfully created`,
-      token: token
-    });
-  }
+    try {
+      const { rows } = await db.query(createQuery, values);
+      const token = Helper.generateToken(rows[0].id);
+      return res.status(201).json({
+        message: 'User registration successful',
+        token: token
+      });
+    } catch(error) {
+      if (error.routine === '_bt_check_unique') {
+        return res.status(400).json({ message: 'User with that EMAIL already exist' });
+      }
+      return res.status(400).json(error);
+    }
+  },
 
   /**
   * User Login
@@ -47,21 +52,40 @@ class User {
   * @param {object} res
   * @returns {object} User object and token
   */
-  static userSignin(req, res) {
-    const emailObject = { email: req.body.email };
-    const emailValidator = Helper.emailValidator(emailObject);
+  async userSignin(req, res) {
+
     if (!req.body.email || !req.body.password) {
       return res.status(400).json({ message: 'Some values are missing' });
     }
+
+    const emailObject = { email: req.body.email };
+    const emailValidator = Helper.emailValidator(emailObject);
+
     if (emailValidator.error) {
       return res.status(400).json({ message: 'Please enter a valid email address' });
     }
 
-    const token = Helper.generateToken(req.body.email);
-      return res.status(200).json({
-        message: 'Authenticated, user signin successful',
+    const retrieveEmail = 'SELECT * FROM users WHERE email = $1';
+
+    try {
+      const { rows } = await db.query(retrieveEmail, [req.body.email]);
+
+      if (!rows[0]) {
+        return res.status(400).json({ message: 'Authentication failed' });
+      }
+
+      if (!Helper.comparePassword(rows[0].password, req.body.password)) {
+        return res.status(400).json({ message: 'Authentication failed' });
+      }
+
+      const token = Helper.generateToken(rows[0].id);
+      return res.status(201).json({
+        message: 'Authentication Successful',
         token: token
-    });
+      });
+    } catch (error) {
+      return res.status(400).json(error);
+    }
   }
 }
 

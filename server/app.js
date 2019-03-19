@@ -2,6 +2,7 @@
  * Module dependencies
  */
 import express from 'express';
+import '@babel/polyfill';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -10,6 +11,7 @@ import swaggerUI from 'swagger-ui-express';
 // importing routes
 import messages from './routes/message';
 import users from './routes/user'
+import groups from './routes/group'
 
 // Initialize the Express App
 const app = new express();
@@ -36,6 +38,7 @@ app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerAPIDef));
 // route handler
 app.use('/api/v1/messages', messages);
 app.use('/api/v1/auth', users);
+app.use('/api/v1/groups', groups);
 
 
 // Catch 404 Error & forward to Error Handler

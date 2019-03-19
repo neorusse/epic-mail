@@ -1,6 +1,6 @@
-import Messages from '../mockdb/message'
+import db from '../models/dbQuery';
 
-class Message {
+const Message = {
 
   /**
    * Get all received emails
@@ -9,20 +9,22 @@ class Message {
    * @returns {object} List of all received emails
    */
 
-  static allReceivedEmails(req, res) {
-    const receivedEmails = [];
-    Messages.forEach((email) => {
-      if (email.status === 'read' || email.status === 'unread') {
-        receivedEmails.push(email);
-      }
-    });
+  async allReceivedEmails(req, res) {
 
-    return res.status(200).json({
-      success: 'true',
-      message: 'Mail retrieved successfully',
-      data: receivedEmails
-    });
-  }
+    const receiveQuery = `SELECT * FROM inbox WHERE receiver_id = $1`;
+
+    try {
+      const { rows, rowCount } = await db.query(receiveQuery, [req.user.id]);
+      return res.status(200).json({
+        success: 'true',
+        message: 'All sent emails retrieved',
+        data: rows,
+        count: rowCount
+      });
+    } catch (error) {
+      return res.status(400).json({ error: error });
+    }
+  },
 
   /**
    * Get all unread emails
@@ -31,7 +33,7 @@ class Message {
    * @returns {object} List of all unread emails
    */
 
-  static allUnreadEmails(req, res) {
+  async allUnreadEmails(req, res) {
     const unreadEmails = [];
 
     Messages.forEach((email) => {
@@ -45,7 +47,7 @@ class Message {
       message: 'Mail retrieved successfully',
       data: unreadEmails
     });
-  }
+  },
 
   /**
    * Get all sent emails
@@ -54,22 +56,22 @@ class Message {
    * @returns {object} List of all sent emails
    */
 
-  static allSentEmails(req, res) {
+  async allSentEmails(req, res) {
 
-    const sentEmails = [];
+    const sentQuery = `SELECT * FROM message WHERE sender_id = $1`;
 
-    Messages.forEach((email) => {
-      if (email.status === 'sent') {
-        sentEmails.push(email);
-      }
-    });
-
-    return res.status(200).json({
-      success: 'true',
-      message: 'All sent emails retrieved',
-      data: sentEmails
-    });
-  }
+    try {
+      const { rows, rowCount } = await db.query(sentQuery, [req.user.id]);
+      return res.status(200).json({
+        success: 'true',
+        message: 'All sent emails retrieved',
+        data: rows,
+        count: rowCount
+      });
+    } catch (error) {
+      return res.status(400).json({ error: error });
+    }
+  },
 
   /**
    * Get a specific sent email
@@ -77,22 +79,26 @@ class Message {
    * @param {object} res
    * @returns {object} one sent
    */
-  static getASentMail(req, res) {
-    const id = parseInt(req.params.id, 10);
+  async getASentMail(req, res) {
 
-    const email = Messages.find(message => message.id === id);
-    if (!email) {
-      return res.status(404).json({
-        success: 'false',
-        error: 'Message not found in database',
+    const id = req.params.id;
+
+    const sentQuery = `SELECT * FROM message WHERE id = $1 AND sender_id = $2`;
+
+    try {
+      const { rows } = await db.query(sentQuery, [id, req.user.id]);
+      if (!rows[0]) {
+        return res.status(404).json({ 'message': 'Email not found in database' });
+      }
+      return res.status(200).json({
+        success: 'true',
+        message: 'Email retrieved successfully',
+        data: rows[0],
       });
+    } catch (error) {
+      return res.status(400).json({ error: error });
     }
-    return res.status(200).json({
-      success: 'true',
-      message: 'Mail retrieved successfully',
-      data: email
-    });
-  }
+  },
 
   /**
   * Delete an Email
@@ -100,24 +106,24 @@ class Message {
   * @param {object} res
   * @returns {void} status code 204
   */
-  static deleteEmail(req, res) {
+  async deleteEmail(req, res) {
 
-    const id = parseInt(req.params.id, 10);
+    const id = req.params.id;
 
-    const email = Messages.find(message => message.id === id);
-    if (!email) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Message not found in database',
+    const deleteQuery = 'DELETE FROM message WHERE id = $1 AND sender_id = $2';
+    try {
+      const { rows } = await db.query(deleteQuery, [id, req.user.id]);
+      // if (!rows[0]) {
+      //   return res.status(404).json({ 'message': 'Email not found in database' });
+      // }
+      return res.status(204).json({
+        success: 'true',
+        'message': 'Email deleted successfully'
       });
+    } catch (error) {
+      return res.status(400).json({ error: error });
     }
-    const index = Messages.indexOf(email);
-    Messages.splice(index, 1);
-    return res.status(204).json({
-      success: 'true',
-      message: 'Email deleted successfully'
-    });
-  }
+  },
 
   /**
    * send an Email
@@ -126,7 +132,7 @@ class Message {
    * @returns {object} created object
    */
 
-  static sendEmail(req, res) {
+  async sendEmail(req, res) {
     const { subject, message } = req.body;
     if (!subject) {
       return res.status(400).json({
@@ -141,21 +147,26 @@ class Message {
       });
     }
 
-    const mail = {
-      id: Messages.length + 1,
-      subject,
-      message,
-      createdOn: new Date(),
-      parentMessageId: 1,
-      status: 'sent',
-    };
+    // db query statement
+    const messageQuery = `INSERT INTO message (subject, message, sender_id, status) VALUES ($1, $2, $3, $4) returning *`;
 
-    Messages.push(mail);
-    return res.status(201).json({
-      success: 'true',
-      message: 'Mail sent successfully',
-      data: mail
-    });
+    // values for db query
+    const values = [
+      req.body.subject,
+      req.body.message,
+      req.user.id,
+      req.body.status
+    ];
+
+    try {
+      const { rows } = await db.query(messageQuery, values);
+      return res.status(201).json({
+        message: 'Message sent successfully',
+        data: rows[0]
+      });
+    } catch (error) {
+      return res.status(400).json(error);
+    }
   }
 }
 

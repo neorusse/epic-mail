@@ -10,9 +10,8 @@ import { hostname } from 'os';
 
 // import env variables from our .env file
 dotenv.config();
-
 // Start our App
-app.set('port', process.env.PORT || 909);
+app.set('port', process.env.PORT || 3000);
 
 const server = http.createServer(app);
 
