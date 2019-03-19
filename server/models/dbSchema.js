@@ -15,7 +15,7 @@ const users = `DROP TABLE IF EXISTS users; DROP TYPE IF EXISTS user_role; Create
 
 const groups = `DROP TABLE IF EXISTS groups; DROP TYPE IF EXISTS user_type; Create TYPE user_type AS ENUM('user', 'admin'); CREATE TABLE IF NOT EXISTS groups (
    id SERIAL PRIMARY KEY,
-   name VARCHAR(20) NOT NULL,
+   group_name VARCHAR(20) NOT NULL,
    role user_type DEFAULT 'user',
    owner_id INT NOT NULL,
    created_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -53,13 +53,19 @@ const message = `DROP TABLE IF EXISTS message; DROP TYPE IF EXISTS message_statu
  );
 `;
 
-const inbox = `DROP TABLE IF EXISTS inbox; CREATE TABLE IF NOT EXISTS inbox (
+const sent = `DROP TABLE IF EXISTS sent; CREATE TABLE IF NOT EXISTS sent (
+    sender_id INT REFERENCES users (id) ON DELETE CASCADE,
+    message_id INT REFERENCES message (id) ON DELETE CASCADE,
+    created_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
+ );
+`;
+
+const inbox = `DROP TABLE IF EXISTS inbox; DROP TYPE IF EXISTS msg_status; Create TYPE msg_status AS ENUM('unread', 'read'); CREATE TABLE IF NOT EXISTS inbox (
     id SERIAL PRIMARY KEY,
     message_id INT REFERENCES message (id) ON DELETE CASCADE,
     receiver_id INT REFERENCES users (id) ON DELETE CASCADE,
     receiver_group_id INT REFERENCES user_group (id) ON DELETE CASCADE,
-    is_read BOOLEAN NOT NULL DEFAULT FALSE,
-    is_delete BOOLEAN NOT NULL DEFAULT FALSE
+    status msg_status default 'unread'
  );
 `;
 
@@ -69,6 +75,6 @@ VALUES('rurho', 'nyorere', 'admin@epicmail.com', 'ac1049kupa890', 'admin');`;
 const addUser = `INSERT INTO users (first_name, last_name, email, password)
 VALUES('rose', 'nyorere', 'user@epicmail.com', 'dc890kupa1049');`;
 
-const dbTables = `${users} ${groups} ${user_group} ${group_message} ${message} ${inbox} ${addAdmin} ${addUser}`;
+const dbTables = `${users} ${groups} ${user_group} ${group_message} ${message} ${inbox} ${sent} ${addAdmin} ${addUser}`;
 
 export default dbTables;

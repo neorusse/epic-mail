@@ -8,13 +8,13 @@ const Group = {
    * @returns {object} group
    */
   async createGroup(req, res) {
-    if (!req.body.name || !req.body.role ) {
+    if (!req.body.group_name || !req.body.role) {
       return res.status(400).send({ message: 'All fields are required' });
     }
     const createQuery = `INSERT INTO groups (name, role, owner_id) VALUES ($1, $2, $3) returning *`;
 
     const values = [
-      req.body.name,
+      req.body.group_name,
       req.body.role,
       req.user.id
     ];
@@ -25,6 +25,30 @@ const Group = {
         success: true,
         message: 'Group Created successfully',
         data: rows[0]
+      });
+    } catch (error) {
+      return res.status(400).json({ error: error });
+    }
+  },
+
+  /**
+   * Get all groups
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} all created group
+   */
+
+  async allGroups(req, res) {
+
+    const getQuery = `SELECT * FROM groups`;
+
+    try {
+      const { rows, rowCount } = await db.query(getQuery);
+      return res.status(200).json({
+        success: 'true',
+        message: 'All created groups retrieved successfully',
+        data: rows,
+        count: rowCount
       });
     } catch (error) {
       return res.status(400).json({ error: error });

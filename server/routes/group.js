@@ -9,8 +9,8 @@ const router = express.Router();
 // Create a group
 router.post('/', CheckAuth.verifyToken, GroupController.createGroup);
 
-// // Get all groups
-// router.get('/', GroupController.allGroups);
+// Get all groups
+router.get('/', GroupController.allGroups);
 
 // // Update a group
 // router.patch('/:id', GroupController.updateGroup);
