@@ -91,7 +91,7 @@ const Message = {
 
   async allReceivedEmails(req, res) {
 
-    const receiveQuery = `SELECT * FROM message JOIN inbox ON message.id = inbox.message_id WHERE receiver_id = $1`;
+    const receiveQuery = `SELECT * FROM message LEFT JOIN inbox ON message.id = inbox.message_id WHERE receiver_id = $1`;
 
     try {
       const { rows, rowCount } = await db.query(receiveQuery, [req.user.id]);
@@ -115,7 +115,7 @@ const Message = {
 
   async allUnreadEmails(req, res) {
 
-    const unreadQuery = `SELECT * FROM message JOIN inbox ON message.id = inbox.message_id WHERE (inbox.receiver_id, message.status) = ($1, $2)`;
+    const unreadQuery = `SELECT * FROM message LEFT JOIN inbox ON message.id = inbox.message_id WHERE (inbox.receiver_id, message.status) = ($1, $2)`;
 
     try {
       const { rows } = await db.query(unreadQuery, [req.user.id, 'sent']);
@@ -141,7 +141,7 @@ const Message = {
 
   async allSentEmails(req, res) {
 
-    const sentQuery = `SELECT * FROM message JOIN sent ON message.id = sent.message_id WHERE sent.sender_id = $1`;
+    const sentQuery = `SELECT * FROM message LEFT JOIN sent ON message.id = sent.message_id WHERE sent.sender_id = $1`;
 
     try {
       const { rows, rowCount } = await db.query(sentQuery, [req.user.id]);
