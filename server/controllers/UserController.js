@@ -21,7 +21,7 @@ const User = {
     const hashPassword = Helper.hashPassword(req.body.password);
 
     // db query statement
-    const createQuery = `INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) returning id, first_name, last_name, email, role`;
+    const createQuery = `INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) returning id, first_name, last_name, email`;
 
     // values for db query
     const values = [
@@ -42,7 +42,7 @@ const User = {
       if (error.routine === '_bt_check_unique') {
         return res.status(400).json({ message: 'User with that EMAIL already exist' });
       }
-      return res.status(400).json(error);
+      return res.status(400).json(error.message);
     }
   },
 

@@ -13,7 +13,7 @@ router.post('/', CheckAuth.verifyToken, MessageController.sendEmail);
 router.get('/', CheckAuth.verifyToken, MessageController.allReceivedEmails);
 
 // Get all unread emails
-router.get('/unread', MessageController.allUnreadEmails);
+router.get('/unread', CheckAuth.verifyToken, MessageController.allUnreadEmails);
 
 // Get all sent emails
 router.get('/sent', CheckAuth.verifyToken, MessageController.allSentEmails);

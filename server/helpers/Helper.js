@@ -51,7 +51,6 @@ class Helper {
       last_name: Joi.string().required(),
       email: Joi.string().email().required(),
       password: Joi.string().required(),
-      role: Joi.string()
     });
 
     return Joi.validate(data, schema);

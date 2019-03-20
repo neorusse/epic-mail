@@ -3,6 +3,86 @@ import db from '../models/dbQuery';
 const Message = {
 
   /**
+   * send an Email
+   * @param {object} req
+   * @param {object} res
+   * @returns {object} created object
+   */
+
+  async sendEmail(req, res) {
+    const { subject, message } = req.body;
+    if (!subject) {
+      return res.status(400).json({
+        success: 'false',
+        message: 'Subject is required',
+      });
+    }
+    if (!message) {
+      return res.status(400).json({
+        success: 'false',
+        message: 'Message is required',
+      });
+    }
+
+
+  try {
+
+    if (req.body.status === 'draft') {
+
+      // values for db query
+      const values = [
+        req.body.subject,
+        req.body.message,
+        req.body.parent_message_id,
+        req.user.id,
+        req.body.status
+      ];
+
+      const draftQuery = `INSERT INTO message (subject, message, parent_message_id, sender_id, status) VALUES ($1, $2, $3, $4, $5) returning *`
+      const { rows } = await db.query(draftQuery, values);
+      return res.status(201).json({
+        data: rows
+      });
+    }
+
+    const usersQuery = `SELECT * FROM users WHERE email = $1`;
+    const recipient = await db.query(usersQuery, [req.body.email])
+
+    if (!recipient.rows[0]) {
+      return res.status(400).json({ error: 'User not a registered member'})
+    }
+
+    const values = [
+      req.body.subject,
+      req.body.message,
+      req.body.parent_message_id,
+      req.user.id,
+      'sent'
+    ];
+
+    const messageQuery = `INSERT INTO message (subject, message, parent_message_id, sender_id, status) VALUES ($1, $2, $3, $4, $5) returning *`;
+    const { rows } = await db.query(messageQuery, values);
+
+    // Persist message to Sent box
+    const sentQuery = `INSERT INTO sent (sender_id, message_id) VALUES ($1, $2) returning *`;
+    const sentEmail = [req.user.id, rows[0].id]
+    await db.query(sentQuery, sentEmail);
+
+    // Persist message to Inbox
+    const inboxQuery = `INSERT INTO inbox (receiver_id, message_id) VALUES ($1, $2) returning *`;
+    const inboxEmail = [recipient.rows[0].id, rows[0].id];
+
+    await db.query(inboxQuery, inboxEmail);
+
+    return res.status(201).json({
+      data: rows[0]
+    });
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  },
+
+  /**
    * Get all received emails
    * @param {object} req
    * @param {object} res
@@ -11,7 +91,7 @@ const Message = {
 
   async allReceivedEmails(req, res) {
 
-    const receiveQuery = `SELECT * FROM message LEFT JOIN inbox ON inbox.receiver_id = message.id WHERE receiver_id = $1`;
+    const receiveQuery = `SELECT * FROM message JOIN inbox ON message.id = inbox.message_id WHERE receiver_id = $1`;
 
     try {
       const { rows, rowCount } = await db.query(receiveQuery, [req.user.id]);
@@ -35,10 +115,10 @@ const Message = {
 
   async allUnreadEmails(req, res) {
 
-    const unreadQuery = `SELECT * FROM inbox WHERE receiver_id = $1 AND status = unread`;
+    const unreadQuery = `SELECT * FROM message JOIN inbox ON message.id = inbox.message_id WHERE (inbox.receiver_id, message.status) = ($1, $2)`;
 
     try {
-      const { rows } = await db.query(unreadQuery, [req.user.id]);
+      const { rows } = await db.query(unreadQuery, [req.user.id, 'sent']);
       if (!rows[0]) {
         return res.status(404).json({ 'message': 'None found in database' });
       }
@@ -48,7 +128,7 @@ const Message = {
         data: rows[0],
       });
     } catch (error) {
-      return res.status(400).json({ error: error });
+      return res.status(400).json({ error: error.message });
     }
   },
 
@@ -61,7 +141,7 @@ const Message = {
 
   async allSentEmails(req, res) {
 
-    const sentQuery = `SELECT * FROM message WHERE sender_id = $1`;
+    const sentQuery = `SELECT * FROM message JOIN sent ON message.id = sent.message_id WHERE sent.sender_id = $1`;
 
     try {
       const { rows, rowCount } = await db.query(sentQuery, [req.user.id]);
@@ -72,7 +152,7 @@ const Message = {
         count: rowCount
       });
     } catch (error) {
-      return res.status(400).json({ error: error });
+      return res.status(400).json({ error: error.message });
     }
   },
 
@@ -99,7 +179,7 @@ const Message = {
         data: rows[0],
       });
     } catch (error) {
-      return res.status(400).json({ error: error });
+      return res.status(400).json({ error: error.message });
     }
   },
 
@@ -113,79 +193,28 @@ const Message = {
 
     const id = req.params.id;
 
-    const deleteQuery = 'DELETE FROM message WHERE id = $1 AND sender_id = $2';
     try {
-      const { rows } = await db.query(deleteQuery, [id, req.user.id]);
-      if (!rows[0]) {
-        return res.status(404).json({ 'message': 'Email not found in database' });
+      // delete from sent box
+      const deleteSentQuery = 'DELETE FROM sent WHERE (sender_id, message_id) = ($1, $2) returning *';
+      const deleteSent = await db.query(deleteSentQuery, [req.user.id, id]);
+
+      if (deleteSent.rows[0]) {
+        // delete from inbox
+        const deleteInbox = 'DELETE FROM inbox WHERE message_id = $1 returning *';
+        await db.query(deleteInbox, [id]);
       }
-      return res.status(204).json({
-        success: 'true',
-        'message': 'Email deleted successfully'
-      });
+
+      // delete from message table
+      const deleteQuery = 'DELETE FROM message WHERE (sender_id, id) = ($1, $2) returning *';
+      const deletedmessage = await db.query(deleteQuery, [req.user.id, id]);
+      if (deletedmessage.rows[0]) {
+        return res.status(200).json({
+          success: 'true',
+          'message': 'Email deleted successfully'
+        });
+      }
     } catch (error) {
-      return res.status(400).json({ error: error });
-    }
-  },
-
-  /**
-   * send an Email
-   * @param {object} req
-   * @param {object} res
-   * @returns {object} created object
-   */
-
-  async sendEmail(req, res) {
-    const { subject, message } = req.body;
-    if (!subject) {
-      return res.status(400).json({
-        success: 'false',
-        message: 'Subject is required',
-      });
-    }
-    if (!message) {
-      return res.status(400).json({
-        success: 'false',
-        message: 'Message is required',
-      });
-    }
-
-    // db query statement
-    const messageQuery = `INSERT INTO message (subject, message, sender_id, parent_message_id, status) VALUES ($1, $2, $3, $4, $5) returning *`;
-
-    // values for db query
-    const values = [
-      req.body.subject,
-      req.body.message,
-      req.user.id,
-      req.body.parent_message_id,
-      req.body.status
-    ];
-
-    try {
-      const { rows } = await db.query(messageQuery, values);
-
-      // Sent Email
-      const sentQuery = `INSERT INTO sent (sender_id, message_id) VALUES ($1, $2) returning *`;
-      const sentEmail = [req.user.id, rows[0].id]
-      await db.query(sentQuery, sentEmail);
-
-      // Received Email
-
-      const query = `SELECT * FROM users WHERE email = $1`
-      const receiver = await db.query(query, [req.body.email])
-      console.log(receiver);
-
-      const inboxQuery = `INSERT INTO inbox (receiver_id, message_id) VALUES ($1, $2) returning *`;
-      const inboxEmail = [receiver.rows[0].id, rows[0].id];
-
-      await db.query(inboxQuery, inboxEmail);
-
-      return res.status(201).json({
-        data: rows[0]
-      });
-    } catch (error) {
-      return res.status(400).json(error.message);
+      return res.status(400).json({ error: error.message });
     }
   }
 }
