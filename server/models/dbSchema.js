@@ -8,36 +8,43 @@ const users = `DROP TABLE IF EXISTS users; CREATE TABLE IF NOT EXISTS users (
    last_name VARCHAR(20) NOT NULL,
    email VARCHAR(50) UNIQUE NOT NULL,
    password VARCHAR(150) NOT NULL,
-   role VARCHAR(20) NOT NULL DEFAULT('user'),
    created_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
  );
 `;
 
 const groups = `DROP TABLE IF EXISTS groups; CREATE TABLE IF NOT EXISTS groups (
    id SERIAL PRIMARY KEY,
-   name VARCHAR(20) NOT NULL,
-   role VARCHAR(20) NOT NULL DEFAULT('user'),
+   group_name VARCHAR(50) NOT NULL,
+   created_by INT REFERENCES users (id) ON DELETE CASCADE,
    created_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
  );
 `;
 
-const user_group = `DROP TABLE IF EXISTS user_group; CREATE TABLE IF NOT EXISTS user_group (
+const group_members = `DROP TABLE IF EXISTS group_members; CREATE TABLE IF NOT EXISTS group_members (
    id SERIAL PRIMARY KEY,
    user_id INT REFERENCES users (id) ON DELETE CASCADE,
    group_id INT REFERENCES groups (id) ON DELETE CASCADE,
+   role VARCHAR(20) NOT NULL,
    created_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
  );
 `;
 
-const message = `DROP TABLE IF EXISTS message; DROP TYPE IF EXISTS message_status; CREATE TYPE message_status AS ENUM ('sent', 'draft'); CREATE TABLE IF NOT EXISTS message (
+const message = `DROP TABLE IF EXISTS message; CREATE TABLE IF NOT EXISTS message (
     id SERIAL PRIMARY KEY,
-    subject VARCHAR(80) DEFAULT NULL,
-    message TEXT DEFAULT NULL,
-    created_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    subject VARCHAR(80) NOT NULL,
+    message TEXT NOT NULL,
     parent_message_id INT REFERENCES message (id) ON DELETE CASCADE,
     sender_id INT REFERENCES users (id) ON DELETE CASCADE,
-    is_delete BOOLEAN NOT NULL DEFAULT FALSE,
-    status message_status
+    created_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(80) NOT NULL
+ );
+`;
+
+const sent = `DROP TABLE IF EXISTS sent; CREATE TABLE IF NOT EXISTS sent (
+    id SERIAL PRIMARY KEY,
+    sender_id INT REFERENCES users (id) ON DELETE CASCADE,
+    message_id INT REFERENCES message (id) ON DELETE CASCADE,
+    created_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
  );
 `;
 
@@ -45,18 +52,11 @@ const inbox = `DROP TABLE IF EXISTS inbox; CREATE TABLE IF NOT EXISTS inbox (
     id SERIAL PRIMARY KEY,
     message_id INT REFERENCES message (id) ON DELETE CASCADE,
     receiver_id INT REFERENCES users (id) ON DELETE CASCADE,
-    receiver_group_id INT REFERENCES user_group (id) ON DELETE CASCADE,
-    is_read BOOLEAN NOT NULL DEFAULT FALSE,
-    is_delete BOOLEAN NOT NULL DEFAULT FALSE
+    receiver_group_id INT REFERENCES group_members (id) ON DELETE CASCADE,
+    status VARCHAR(80) NOT NULL DEFAULT 'unread'
  );
 `;
 
-const addAdmin = `INSERT INTO users (first_name, last_name, email, password, role)
-VALUES('rurho', 'nyorere', 'admin@epicmail.com', 'ac1049kupa890', 'admin');`;
-
-const addUser = `INSERT INTO users (first_name, last_name, email, password)
-VALUES('rose', 'nyorere', 'user@epicmail.com', 'dc890kupa1049');`;
-
-const dbTables = `${users} ${groups} ${user_group} ${message} ${inbox} ${addAdmin} ${addUser}`;
+const dbTables = `${users} ${groups} ${group_members} ${message} ${sent} ${inbox}`;
 
 export default dbTables;

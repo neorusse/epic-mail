@@ -11,4 +11,7 @@ router.post('/signup', user.createUser);
 // User Sign in
 router.post('/login', user.userSignin);
 
+// User reset password
+// router.post('/reset', user.passReset);
+
 module.exports = router;
