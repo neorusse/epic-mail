@@ -12,7 +12,7 @@ const users = `CREATE TABLE IF NOT EXISTS users (
  );
 `;
 
-const groups = `DROP TABLE IF EXISTS groups; CREATE TABLE IF NOT EXISTS groups (
+const groups = `CREATE TABLE IF NOT EXISTS groups (
    id SERIAL PRIMARY KEY,
    group_name VARCHAR(50) NOT NULL,
    created_by INT REFERENCES users (id) ON DELETE CASCADE,
@@ -20,7 +20,7 @@ const groups = `DROP TABLE IF EXISTS groups; CREATE TABLE IF NOT EXISTS groups (
  );
 `;
 
-const group_members = `DROP TABLE IF EXISTS group_members; CREATE TABLE IF NOT EXISTS group_members (
+const group_members = `CREATE TABLE IF NOT EXISTS group_members (
    id SERIAL PRIMARY KEY,
    user_id INT REFERENCES users (id) ON DELETE CASCADE,
    group_id INT REFERENCES groups (id) ON DELETE CASCADE,
@@ -29,7 +29,7 @@ const group_members = `DROP TABLE IF EXISTS group_members; CREATE TABLE IF NOT E
  );
 `;
 
-const message = `DROP TABLE IF EXISTS message; CREATE TABLE IF NOT EXISTS message (
+const message = `CREATE TABLE IF NOT EXISTS message (
     id SERIAL PRIMARY KEY,
     subject VARCHAR(80) NOT NULL,
     message TEXT NOT NULL,
@@ -40,7 +40,7 @@ const message = `DROP TABLE IF EXISTS message; CREATE TABLE IF NOT EXISTS messag
  );
 `;
 
-const sent = `DROP TABLE IF EXISTS sent; CREATE TABLE IF NOT EXISTS sent (
+const sent = `CREATE TABLE IF NOT EXISTS sent (
     id SERIAL PRIMARY KEY,
     sender_id INT REFERENCES users (id) ON DELETE CASCADE,
     message_id INT REFERENCES message (id) ON DELETE CASCADE,
@@ -48,7 +48,7 @@ const sent = `DROP TABLE IF EXISTS sent; CREATE TABLE IF NOT EXISTS sent (
  );
 `;
 
-const inbox = `DROP TABLE IF EXISTS inbox; CREATE TABLE IF NOT EXISTS inbox (
+const inbox = `CREATE TABLE IF NOT EXISTS inbox (
     id SERIAL PRIMARY KEY,
     message_id INT REFERENCES message (id) ON DELETE CASCADE,
     receiver_id INT REFERENCES users (id) ON DELETE CASCADE,
