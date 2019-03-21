@@ -12,9 +12,12 @@ import swaggerUI from 'swagger-ui-express';
 import messages from './routes/message';
 import users from './routes/user'
 import groups from './routes/group'
+
+
 import dotenv from 'dotenv';
 
 dotenv.config();
+
 // Initialize the Express App
 const app = new express();
 
