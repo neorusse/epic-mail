@@ -8,7 +8,7 @@ chai.use(chaiHttp);
 
 const payload = {
   group_name: "Java Devs",
-  created_by: "russell"
+  "created_by": "Dev"
 }
 let userToken;
 
@@ -35,13 +35,29 @@ describe('Create token for user', () => {
 describe('/POST messages', () => {
   it('should send an email', (done) => {
     chai.request(app)
-      .post('/api/v1/messages')
+      .post('/api/v1/groups')
       .set('authorization', userToken)
       .send(payload)
       .end((err, res) => {
         expect(res).to.have.status(201);
+        expect(res.body).to.have.property('status').equal(201);
+        expect(res.body).to.have.property('message').to.be.a('string');
+        expect(res.body).to.have.property('message').equal('Group Created successfully');
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('data').to.be.an('object');
+        done();
+      });
+  });
+});
+
+// Get all groups
+describe('/GET messages', () => {
+  it('retrieve all created groups', (done) => {
+    chai.request(app)
+      .get('/api/v1/groups')
+      .set('authorization', userToken)
+      .end((err, res) => {
+        expect(res.body).to.be.an('object');
         done();
       });
   });

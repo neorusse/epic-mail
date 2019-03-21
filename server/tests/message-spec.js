@@ -43,6 +43,7 @@ describe('/POST messages', () => {
       .send(payload)
       .end((err, res) => {
         expect(res).to.have.status(201);
+        expect(res.body).to.have.property('status').equal(201);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('data').to.be.an('object');
       done();
@@ -58,6 +59,9 @@ describe('/GET messages', () => {
       .set('authorization', userToken)
       .end((err, res) => {
         expect(res).to.have.status(200);
+        expect(res.body).to.have.property('status').equal(200);
+        expect(res.body).to.have.property('message').to.be.a('string');
+        expect(res.body).to.have.property('message').equal('All received emails retrieved');
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('data').to.be.an('array');
       done();
@@ -74,9 +78,10 @@ describe('/GET unread messages', () => {
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
-        // expect(res.body).to.have.property('success').to.be.a('string');
-        // expect(res.body).to.have.property('message').to.be.a('string');
-        //expect(res.body).to.have.property('data').to.be.an('array');
+        expect(res.body).to.have.property('status').equal(200);
+        expect(res.body).to.have.property('message').to.be.a('string');
+        expect(res.body).to.have.property('message').equal('Email retrieved successfully');
+        expect(res.body).to.have.property('data').to.be.an('object');
       done();
       });
   });
@@ -91,9 +96,10 @@ describe('/GET sent messages', () => {
       .end((err, res) => {
         expect(res).to.have.status(200);
         expect(res.body).to.be.an('object');
-        // expect(res.body).to.have.property('success').to.be.a('string');
-        // expect(res.body).to.have.property('message').to.be.a('string');
-        // expect(res.body).to.have.property('data').to.be.an('array');
+        expect(res.body).to.have.property('status').equal(200);
+        expect(res.body).to.have.property('message').to.be.a('string');
+        expect(res.body).to.have.property('message').equal('All sent emails retrieved');
+        expect(res.body).to.have.property('data').to.be.an('array');
       done();
       });
   });
@@ -107,10 +113,10 @@ describe('/GET/:id a sent message', () => {
       .set('authorization', userToken)
       .end((err, res) => {
         expect(res).to.have.status(200);
-        // expect(res.body).to.be.an('object');
-        // expect(res.body).to.have.property('success').to.be.a('string');
-        // expect(res.body).to.have.property('message').to.be.a('string');
-        // expect(res.body).to.have.property('data').to.be.an('object');
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('status').equal(200);
+        expect(res.body).to.have.property('message').to.be.a('string');
+        expect(res.body).to.have.property('message').equal('Email retrieved successfully');
       done();
       });
   });
@@ -120,9 +126,8 @@ describe('/GET/:id a sent message', () => {
       .get('/api/v1/messages/u')
       .set('authorization', userToken)
       .end((err, res) => {
-        // expect(res).to.have.status(404);
-        // expect(res.body).to.be.an('object');
-        // expect(res.body).to.have.property('error').equal('Message not found in database');
+        expect(res).to.have.status(400);
+        expect(res.body).to.have.property('error');
         done();
       });
   });
@@ -135,8 +140,7 @@ describe('/DELETE/:id a message', () => {
       .delete('/api/v1/messages/1')
       .set('authorization', userToken)
       .end((err, res) => {
-        // expect(res).to.have.status(204);
-        // expect(res.body).to.be.an('object');
+        expect(res.body).to.be.an('object');
       done();
       });
   });
@@ -147,8 +151,8 @@ describe('/DELETE/:id a message', () => {
       .set('authorization', userToken)
       .end((err, res) => {
         expect(res).to.have.status(404);
-        //expect(res.body).to.be.an('object');
-        //expect(res.body).to.have.property('error').equal('Message not found in database');
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('error').equal('Email not found in database');
         done();
       });
   });
