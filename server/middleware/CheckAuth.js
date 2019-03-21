@@ -11,7 +11,7 @@ class CheckAuth {
   */
   static async verifyToken(req, res, next) {
     // check Authorization header for token
-    const token = req.headers.authorization.split(' ')[1];
+    const token = req.headers.authorization || req.body.token;
     if (!token) {
       return res.status(403).send({ auth: false, message: 'No token provided' });
     }
@@ -19,11 +19,6 @@ class CheckAuth {
       // verifies token using secret
       const decodedToken = await jwt.verify(token, process.env.JWT_KEY);
 
-      const retrieveId = 'SELECT * FROM users WHERE id = $1';
-      const { rows } = await db.query(retrieveId, [decodedToken.userId]);
-      if (!rows[0]) {
-        return res.status(400).send({ auth: false, message: 'Failed to authenticate token' });
-      }
       // if everything is good, save to request for use in other routes
       req.user = {
         id: decodedToken.userId,
