@@ -28,7 +28,7 @@ describe('Create token for user', () => {
       .send(signinPayload)
       .end((err, res) => {
         expect(res).to.have.status(200);
-        userToken = `Bearer ` + res.body.token;
+        userToken = res.body.token;
         done();
       });
   });
