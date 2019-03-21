@@ -41,6 +41,7 @@ const Message = {
       const draftQuery = `INSERT INTO message (subject, message, parent_message_id, sender_id, status) VALUES ($1, $2, $3, $4, $5) returning *`
       const { rows } = await db.query(draftQuery, values);
       return res.status(201).json({
+        status: 201,
         data: rows
       });
     }
@@ -75,6 +76,7 @@ const Message = {
     await db.query(inboxQuery, inboxEmail);
 
     return res.status(201).json({
+      status: 201,
       data: rows[0]
     });
     } catch (error) {
@@ -91,12 +93,12 @@ const Message = {
 
   async allReceivedEmails(req, res) {
 
-    const receiveQuery = `SELECT * FROM message JOIN inbox ON message.id = inbox.message_id WHERE receiver_id = $1`;
+    const receiveQuery = `SELECT * FROM message LEFT JOIN inbox ON message.id = inbox.message_id WHERE receiver_id = $1`;
 
     try {
       const { rows, rowCount } = await db.query(receiveQuery, [req.user.id]);
       return res.status(200).json({
-        success: 'true',
+        status: 200,
         message: 'All received emails retrieved',
         data: rows,
         count: rowCount
@@ -115,7 +117,7 @@ const Message = {
 
   async allUnreadEmails(req, res) {
 
-    const unreadQuery = `SELECT * FROM message JOIN inbox ON message.id = inbox.message_id WHERE (inbox.receiver_id, message.status) = ($1, $2)`;
+    const unreadQuery = `SELECT * FROM message LEFT JOIN inbox ON message.id = inbox.message_id WHERE (inbox.receiver_id, message.status) = ($1, $2)`;
 
     try {
       const { rows } = await db.query(unreadQuery, [req.user.id, 'sent']);
@@ -123,7 +125,7 @@ const Message = {
         return res.status(404).json({ 'message': 'None found in database' });
       }
       return res.status(200).json({
-        success: 'true',
+        status: 200,
         message: 'Email retrieved successfully',
         data: rows[0],
       });
@@ -141,12 +143,12 @@ const Message = {
 
   async allSentEmails(req, res) {
 
-    const sentQuery = `SELECT * FROM message JOIN sent ON message.id = sent.message_id WHERE sent.sender_id = $1`;
+    const sentQuery = `SELECT * FROM message LEFT JOIN sent ON message.id = sent.message_id WHERE sent.sender_id = $1`;
 
     try {
       const { rows, rowCount } = await db.query(sentQuery, [req.user.id]);
       return res.status(200).json({
-        success: 'true',
+        status: 200,
         message: 'All sent emails retrieved',
         data: rows,
         count: rowCount
@@ -174,7 +176,7 @@ const Message = {
         return res.status(404).json({ 'message': 'Email not found in database' });
       }
       return res.status(200).json({
-        success: 'true',
+        status: 200,
         message: 'Email retrieved successfully',
         data: rows[0],
       });
@@ -191,7 +193,11 @@ const Message = {
   */
   async deleteEmail(req, res) {
 
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
+
+    if (typeof id !== Number) {
+      return res.status(404).json({ error: 'Email not found in database' });
+    }
 
     try {
       // delete from sent box
@@ -208,7 +214,7 @@ const Message = {
       const deleteQuery = 'DELETE FROM message WHERE (sender_id, id) = ($1, $2) returning *';
       const deletedmessage = await db.query(deleteQuery, [req.user.id, id]);
       if (deletedmessage.rows[0]) {
-        return res.status(200).json({
+        return res.status(204).json({
           success: 'true',
           'message': 'Email deleted successfully'
         });

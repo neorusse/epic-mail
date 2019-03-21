@@ -6,22 +6,22 @@ const router = express.Router();
 
 // Message Routes
 
-// Send an email - protected route, requires req.headers.authorization
+// Create a mail
 router.post('/', CheckAuth.verifyToken, MessageController.sendEmail);
 
 // Get all received emails
 router.get('/', CheckAuth.verifyToken, MessageController.allReceivedEmails);
 
-// Get all unread emails
+// Get all unread mails
 router.get('/unread', CheckAuth.verifyToken, MessageController.allUnreadEmails);
 
-// Get all sent emails
+// Get all sent mails
 router.get('/sent', CheckAuth.verifyToken, MessageController.allSentEmails);
 
-// Get a single sent email
-router.get('/:id', CheckAuth.verifyToken, MessageController.getASentMail);
+// Get a single sent mail
+router.get('/:id', CheckAuth.verifyToken,  MessageController.getASentMail);
 
-// delete an email
+// delete a product
 router.delete('/:id', CheckAuth.verifyToken, MessageController.deleteEmail);
 
 module.exports = router;

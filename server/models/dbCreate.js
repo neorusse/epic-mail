@@ -1,9 +1,14 @@
 import { Pool } from 'pg';
 import dbTableSchema from './dbSchema';
-import dbConfig from './dbConfig'
+//import dbConfig from './dbConfig'
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Connect with database
-const pool = new Pool(dbConfig);
+const connectionString = process.env.DATABASE_URL;
+const pool = new Pool({ connectionString });
+console.log(process.env.DATABASE_URL, '+++++++++++++++++++++++++++++');
 
 // Table Creation
 const createTables = () => {
@@ -12,9 +17,10 @@ const createTables = () => {
       client.query(dbTableSchema)
         .then((res) => {
           console.log(res);
+          client.end();
         })
         .catch((err) => {
-          client.release();
+          client.end()
           console.log(err)
         });
     });

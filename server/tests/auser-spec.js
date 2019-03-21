@@ -8,16 +8,15 @@ chai.use(chaiHttp);
 
 // Payload for user signup POST route
 const signupPayload = {
-  firstName: 'Russell',
-  lastName: 'Nyorere',
-  email: 'ruscom@gmail.com',
-  password: 'internet12',
-  mobileNumber: '08068908852'
+  first_name: 'Russell',
+  last_name: 'Nyorere',
+  email: 'belrusc@gmail.com',
+  password: 'internet12'
 }
 
 // Payload for user signin POST route
 const signinPayload = {
-  email: 'ruscom@gmail.com',
+  email: 'belrusc@gmail.com',
   password: 'internet12'
 }
 
@@ -30,6 +29,7 @@ describe('Testing user signup and signin routes', () => {
       .end((err, res) => {
         expect(res).to.have.status(201);
         expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('status');
         expect(res.body).to.have.property('message').to.be.a('string');
         expect(res.body).to.have.property('token').to.be.a('string');
       done();

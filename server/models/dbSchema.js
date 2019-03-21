@@ -2,7 +2,7 @@
  * Table creation Query
  */
 
-const users = `DROP TABLE IF EXISTS users; CREATE TABLE IF NOT EXISTS users (
+const users = `CREATE TABLE IF NOT EXISTS users (
    id SERIAL PRIMARY KEY,
    first_name VARCHAR(20) NOT NULL,
    last_name VARCHAR(20) NOT NULL,
@@ -52,11 +52,24 @@ const inbox = `DROP TABLE IF EXISTS inbox; CREATE TABLE IF NOT EXISTS inbox (
     id SERIAL PRIMARY KEY,
     message_id INT REFERENCES message (id) ON DELETE CASCADE,
     receiver_id INT REFERENCES users (id) ON DELETE CASCADE,
-    receiver_group_id INT REFERENCES group_members (id) ON DELETE CASCADE,
     status VARCHAR(80) NOT NULL DEFAULT 'unread'
  );
 `;
 
-const dbTables = `${users} ${groups} ${group_members} ${message} ${sent} ${inbox}`;
+/**
+ * Drop table Query
+ *
+ */
+
+const dropTables = `
+                    DROP TABLE IF EXISTS group_members;
+                    DROP TABLE IF EXISTS groups;
+                    DROP TABLE IF EXISTS inbox;
+                    DROP TABLE IF EXISTS sent;
+                    DROP TABLE IF EXISTS message;
+                    DROP TABLE IF EXISTS users;
+                    `;
+
+const dbTables = `${dropTables} ${users} ${groups} ${group_members} ${message} ${sent} ${inbox}`;
 
 export default dbTables;

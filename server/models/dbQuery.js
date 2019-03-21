@@ -1,8 +1,11 @@
 import { Pool } from 'pg';
-import dbConfig from './dbConfig'
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Connect with database
-const pool = new Pool(dbConfig);
+const connectionString = process.env.DATABASE_URL;
+const pool = new Pool({ connectionString });
 
 export default {
   /**

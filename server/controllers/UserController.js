@@ -35,6 +35,7 @@ const User = {
       const { rows } = await db.query(createQuery, values);
       const token = Helper.generateToken(rows[0].id);
       return res.status(201).json({
+        status: 201,
         message: 'User registration successful',
         token: token
       });
@@ -79,7 +80,8 @@ const User = {
       }
 
       const token = Helper.generateToken(rows[0].id);
-      return res.status(201).json({
+      return res.status(200).json({
+        status: 200,
         message: 'Authentication Successful',
         token: token
       });
