@@ -14,7 +14,7 @@ const User = {
     // Validate information entered by user
     const dataValidator = Helper.infoValidator(req.body);
     if (dataValidator.error) {
-      return Helper.dataMsgValidator(res, dataValidator.error);
+      return Helper.validatorMsg(res, dataValidator.error);
     }
 
     // Hash password
@@ -56,7 +56,7 @@ const User = {
   async userSignin(req, res) {
 
     if (!req.body.email || !req.body.password) {
-      return res.status(400).json({ message: 'Some values are missing' });
+      return res.status(400).json({ message: 'Please enter your login details' });
     }
 
     const emailObject = { email: req.body.email };

@@ -14,7 +14,6 @@
     "clean": "rimraf ./build",
     "babel-build": "babel -d ./build ./server -s",
     "build": "npm-run-all clean babel-build",
-    "start": "npm-run-all build prod",
     "watch": "nodemon",
     "dev": "babel-node ./server/bin/www",
     "createTables": "babel-node ./server/models/dbCreate createTables --exit"

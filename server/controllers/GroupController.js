@@ -67,10 +67,14 @@ const Group = {
     const updateQuery = `SELECT * FROM groups WHERE groups.id = $1 AND created_by = $2`;
 
     try {
-      const { rows} = await db.query(updateQuery, [req.params.id, req.user.id]);
+      const { rows } = await db.query(updateQuery, [req.params.id, req.user.id]);
 
-      if (rows[0]) {
-
+      if (rows.length === 0) {
+        return res.status(400).json({
+          status: 400,
+          error: 'Group does not exist'
+        });
+      }
         const values = [req.body.group_name, req.params.id]
         const updateGroupQuery = `UPDATE groups SET group_name = $1 WHERE groups.Id = $2 RETURNING *`;
 
@@ -79,7 +83,7 @@ const Group = {
           status: 200,
           data: update.rows[0],
         });
-      }
+
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
@@ -91,6 +95,13 @@ const Group = {
 
     try {
       const { rows } = await db.query(deleteQuery, [req.params.id, req.user.id]);
+
+      if (rows.length === 0) {
+        return res.status(400).json({
+          status: 400,
+          error: 'Group does not exist'
+        });
+      }
 
       if (rows[0]) {
         return res.status(200).json({
@@ -111,19 +122,21 @@ const Group = {
    * @returns {object} object
    */
   async addUser(req, res) {
-    if (!req.body.group_name || !req.body.role) {
-      return res.status(400).send({ message: 'enter a group name' });
-    }
-    const addQuery = `INSERT INTO group_members (group_name, role, user_id) VALUES ($1, $2, $3) returning *`;
-
-    const values = [
-      req.body.group_name,
-      req.body.role,
-      req.user.id
-    ];
+    const { group_id } = req.params;
 
     try {
-      const { rows } = await db.query(addQuery, values);
+      const userQuery = `SELECT * FROM users WHERE email = $1`;
+      const user = await db.query(userQuery, [req.body.email]);
+      console.log(user)
+      if(!user) {
+        return res.status(404).json({
+          status: 404,
+          error: 'User does not exist'
+        });
+      }
+
+      const addQuery = `INSERT INTO group_members (group_id, user_id, role) VALUES ($1, $2, $3) returning *`;
+      const { rows } = await db.query(addQuery, [group_id, user.rows[0].id, req.body.role]);
       return res.status(201).json({
         status: 201,
         message: 'User added successfully',
