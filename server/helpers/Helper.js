@@ -72,12 +72,11 @@ class Helper {
    * Error Handler
    */
 
-  static dataMsgValidator(res, error) {
+  static validatorMsg(res, error) {
     // send a 400 (Bad Request) error response if validation fails
     res.status(400).json({
-      status: 'error',
-      message: 'Please enter valid data in fields',
-      error: error.details[0].message,
+      status: 400,
+      error: 'Please enter valid data in fields',
     });
   }
 }
