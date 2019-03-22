@@ -81,7 +81,7 @@ describe('/GET unread messages', () => {
         expect(res.body).to.have.property('status').equal(200);
         expect(res.body).to.have.property('message').to.be.a('string');
         expect(res.body).to.have.property('message').equal('Email retrieved successfully');
-        expect(res.body).to.have.property('data').to.be.an('object');
+        expect(res.body).to.have.property('data').to.be.an('array');
       done();
       });
   });
@@ -147,12 +147,12 @@ describe('/DELETE/:id a message', () => {
 
   it('should return error for invalid message id', (done) => {
     chai.request(app)
-      .delete('/api/v1/messages/a')
+      .delete('/api/v1/messages/5')
       .set('authorization', userToken)
       .end((err, res) => {
         expect(res).to.have.status(404);
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('error').equal('Email not found in database');
+        expect(res.body).to.have.property('error').equal('Message not found');
         done();
       });
   });
