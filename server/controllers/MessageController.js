@@ -1,6 +1,6 @@
 import db from '../models/dbQuery';
 
-const Message = {
+class MessageController {
 
   /**
    * send an Email
@@ -9,7 +9,7 @@ const Message = {
    * @returns {object} created object
    */
 
-  async sendEmail(req, res) {
+  static async sendEmail(req, res) {
     const { subject, message } = req.body;
     if (!subject) {
       return res.status(400).json({
@@ -30,8 +30,12 @@ const Message = {
     const usersQuery = `SELECT * FROM users WHERE email = $1`;
     const recipient = await db.query(usersQuery, [req.body.email])
 
+    // check if receiver exist in database
     if (!recipient.rows[0]) {
-      return res.status(400).json({ error: 'User not a registered member'})
+      return res.status(404).json({
+        status: 404,
+        error: 'Recipient is not a registered member'
+      })
     }
 
     const values = [
@@ -44,11 +48,6 @@ const Message = {
 
     const messageQuery = `INSERT INTO message (subject, message, parent_message_id, sender_id, status) VALUES ($1, $2, $3, $4, $5) returning *`;
     const { rows } = await db.query(messageQuery, values);
-
-    // Persist message to Sent box
-    const sentQuery = `INSERT INTO sent (sender_id, message_id) VALUES ($1, $2) returning *`;
-    const sentEmail = [req.user.id, rows[0].id]
-    await db.query(sentQuery, sentEmail);
 
     // Persist message to Inbox
     const inboxQuery = `INSERT INTO inbox (receiver_id, message_id) VALUES ($1, $2) returning *`;
@@ -63,7 +62,7 @@ const Message = {
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
-  },
+  }
 
   /**
    * Get all received emails
@@ -72,9 +71,9 @@ const Message = {
    * @returns {object} List of all received emails
    */
 
-  async allReceivedEmails(req, res) {
+  static async allReceivedEmails(req, res) {
 
-    const receiveQuery = `SELECT * FROM message LEFT JOIN inbox ON message.id = inbox.message_id WHERE receiver_id = $1`;
+    const receiveQuery = `SELECT message.id, message.subject, message.message, message.parent_message_id, message.sender_id, message.created_date, message.status FROM message LEFT JOIN inbox ON message.id = inbox.message_id WHERE inbox.receiver_id = $1`;
 
     try {
       const { rows, rowCount } = await db.query(receiveQuery, [req.user.id]);
@@ -87,7 +86,7 @@ const Message = {
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
-  },
+  }
 
   /**
    * Get all unread emails
@@ -96,12 +95,12 @@ const Message = {
    * @returns {object} List of all unread emails
    */
 
-  async allUnreadEmails(req, res) {
+  static async allUnreadEmails(req, res) {
 
-    const unreadQuery = `SELECT * FROM message LEFT JOIN inbox ON message.id = inbox.message_id WHERE (inbox.receiver_id, message.status) = ($1, $2)`;
+    const unreadQuery = `SELECT message.id, message.subject, message.message, message.parent_message_id, message.sender_id, message.created_date, inbox.status FROM message LEFT JOIN inbox ON message.id = inbox.message_id WHERE inbox.receiver_id = $1`;
 
     try {
-      const { rows } = await db.query(unreadQuery, [req.user.id, 'sent']);
+      const { rows } = await db.query(unreadQuery, [req.user.id]);
       if (!rows) {
         return res.status(404).json({ 'message': 'None found in database' });
       }
@@ -113,7 +112,7 @@ const Message = {
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
-  },
+  }
 
   /**
    * Get all sent emails
@@ -122,9 +121,9 @@ const Message = {
    * @returns {object} List of all sent emails
    */
 
-  async allSentEmails(req, res) {
+  static async allSentEmails(req, res) {
 
-    const sentQuery = `SELECT * FROM message LEFT JOIN sent ON message.id = sent.message_id WHERE sent.sender_id = $1`;
+    const sentQuery = `SELECT * FROM message WHERE sender_id = $1`;
 
     try {
       const { rows, rowCount } = await db.query(sentQuery, [req.user.id]);
@@ -137,7 +136,7 @@ const Message = {
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
-  },
+  }
 
   /**
    * Get a specific sent email
@@ -145,27 +144,30 @@ const Message = {
    * @param {object} res
    * @returns {object} one sent
    */
-  async getASentMail(req, res) {
+  static async getASpecificMail(req, res) {
 
     // validate user input
     const { id } = req.params;
 
-    const sentQuery = `SELECT * FROM message WHERE id = $1 AND sender_id = $2`;
+    const sentQuery = `SELECT message.id, message.subject, message.message, message.parent_message_id, message.sender_id, message.created_date, message.status, inbox.receiver_id FROM message LEFT JOIN inbox ON message.id = inbox.message_id WHERE message.id = $1`;
 
     try {
-      const { rows } = await db.query(sentQuery, [id, req.user.id]);
-      if (!rows[0]) {
-        return res.status(404).json({ 'message': 'Email not found in database' });
+      const { rows } = await db.query(sentQuery, [id]);
+
+      if (rows[0].receiver_id === req.user.id) {
+        const queryStrings = 'UPDATE message SET status = $1 WHERE id = $2 returning *';
+        const updatedMessage = await db.query(queryStrings, ['read', rows[0].id]);
+        return res.status(200).json({
+          status: 200,
+          message: 'Email retrieved successfully',
+          data: updatedMessage.rows[0],
+        });
       }
-      return res.status(200).json({
-        status: 200,
-        message: 'Email retrieved successfully',
-        data: rows[0],
-      });
+
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
-  },
+  }
 
   /**
   * Delete an Email
@@ -173,28 +175,11 @@ const Message = {
   * @param {object} res
   * @returns {void} status code 204
   */
-  async deleteEmail(req, res) {
+  static async deleteEmail(req, res) {
     // validate user input
     const { id } = req.params;
 
     try {
-      // delete from sent box
-      const deleteSentQuery = 'DELETE FROM sent WHERE (sender_id, message_id) = ($1, $2) returning *';
-      const deleteSent = await db.query(deleteSentQuery, [req.user.id, id]);
-
-      if (deleteSent.rows.length === 0) {
-        return res.status(404).json({
-          status: 404,
-          error: 'Message not found'
-        });
-      }
-
-      if (deleteSent.rows[0].sender_id === id) {
-        return res.status(200).json({
-          status: 200,
-          message: 'Email deleted successfully'
-        });
-      }
 
       // delete from inbox
       const deleteInbox = 'DELETE FROM inbox WHERE message_id = $1 returning *';
@@ -210,9 +195,12 @@ const Message = {
         });
       }
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json({
+        status: 400,
+        error: error.message
+      });
     }
   }
 }
 
-export default Message;
+export default MessageController;

@@ -19,9 +19,9 @@ router.get('/unread', CheckAuth.verifyToken, MessageController.allUnreadEmails);
 router.get('/sent', CheckAuth.verifyToken, MessageController.allSentEmails);
 
 // Get a single sent mail
-router.get('/:id', CheckAuth.verifyToken,  MessageController.getASentMail);
+router.get('/:id', CheckAuth.verifyToken, MessageController.getASpecificMail);
 
 // delete a product
 router.delete('/:id', CheckAuth.verifyToken, MessageController.deleteEmail);
 
-module.exports = router;
+export default router;

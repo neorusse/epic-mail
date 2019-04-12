@@ -2,12 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "description": "A web app that helps people exchange messages/information over the internet",
-  "main": "www.js",
+  "main": "bin/www",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "npm run createTables && mocha --timeout 10000 server/tests/**/*spec.js --require @babel/register --exit",
+    "test": "npm run createTables && nyc mocha --timeout 10000 server/tests/**/*spec.js --require @babel/register --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "start": "node ./build/bin/www",
