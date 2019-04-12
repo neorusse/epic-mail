@@ -1,7 +1,7 @@
 import db from '../models/dbQuery';
 import Helper from '../helpers/Helper';
 
-const User = {
+class UserController {
 
   /**
   * Create a User
@@ -9,7 +9,7 @@ const User = {
   * @param {object} res
   * @returns {object} User object and token
   */
-  async createUser(req, res) {
+  static async createUser(req, res) {
 
     // Validate information entered by user
     const dataValidator = Helper.infoValidator(req.body);
@@ -25,8 +25,8 @@ const User = {
 
     // values for db query
     const values = [
-      req.body.first_name,
-      req.body.last_name,
+      req.body.firstName,
+      req.body.lastName,
       req.body.email,
       hashPassword,
     ];
@@ -41,11 +41,14 @@ const User = {
       });
     } catch(error) {
       if (error.routine === '_bt_check_unique') {
-        return res.status(400).json({ message: 'User with that EMAIL already exist' });
+        return res.status(409).json({
+          status: 409,
+          error: 'User with that EMAIL already exist'
+        });
       }
       return res.status(400).json(error.message);
     }
-  },
+  }
 
   /**
   * User Login
@@ -53,30 +56,42 @@ const User = {
   * @param {object} res
   * @returns {object} User object and token
   */
-  async userSignin(req, res) {
+  static async userSignin(req, res) {
 
     if (!req.body.email || !req.body.password) {
-      return res.status(400).json({ message: 'Please enter your login details' });
+      return res.status(404).json({
+        status: 404,
+        error: 'Please enter your login details'
+      });
     }
 
     const emailObject = { email: req.body.email };
     const emailValidator = Helper.emailValidator(emailObject);
 
     if (emailValidator.error) {
-      return res.status(400).json({ message: 'Please enter a valid email address' });
+      return res.status(404).json({
+        status: 404,
+        error: 'Please enter a valid email address'
+      });
     }
 
-    const retrieveEmail = 'SELECT * FROM users WHERE email = $1';
-
     try {
+      // check if user exists
+      const retrieveEmail = 'SELECT * FROM users WHERE email = $1';
       const { rows } = await db.query(retrieveEmail, [req.body.email]);
 
       if (!rows[0]) {
-        return res.status(400).json({ message: 'Authentication failed' });
+        return res.status(404).json({
+          status: 404,
+          error: 'User is not a registered member'
+        });
       }
 
       if (!Helper.comparePassword(rows[0].password, req.body.password)) {
-        return res.status(400).json({ message: 'Authentication failed' });
+        return res.status(404).json({
+          status: 404,
+          error: 'Authentication failed'
+        });
       }
 
       const token = Helper.generateToken(rows[0].id);
@@ -86,9 +101,12 @@ const User = {
         token: token
       });
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(500).json({
+          status: 500,
+          error: 'Internal Server error'
+        });
     }
   }
 }
 
-export default User;
+export default UserController;

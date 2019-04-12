@@ -47,8 +47,8 @@ class Helper {
    */
   static infoValidator(data) {
     const schema = Joi.object().keys({
-      first_name: Joi.string().required(),
-      last_name: Joi.string().required(),
+      firstName: Joi.string().required(),
+      lastName: Joi.string().required(),
       email: Joi.string().email().required(),
       password: Joi.string().required(),
     });

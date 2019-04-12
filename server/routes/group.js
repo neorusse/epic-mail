@@ -13,18 +13,18 @@ router.post('/', CheckAuth.verifyToken, GroupController.createGroup);
 router.get('/', CheckAuth.verifyToken, GroupController.allGroups);
 
 // Update a group
-router.patch('/:id', CheckAuth.verifyToken, GroupController.updateGroup);
+router.patch('/:groupId', CheckAuth.verifyToken, GroupController.updateGroup);
 
 // Delete a group
-router.delete('/:id', CheckAuth.verifyToken, GroupController.deleteGroup);
+router.delete('/:groupId', CheckAuth.verifyToken, GroupController.deleteGroup);
 
 // Add user to a group
-router.post('/:id/users', CheckAuth.verifyToken, GroupController.addUser);
+router.post('/:groupId/users', CheckAuth.verifyToken, GroupController.addUserToGroup);
 
 // delete a user from a group
-router.delete('/:id/users/:id', CheckAuth.verifyToken, GroupController.deleteMember);
+router.delete('/:groupId/users/:userId', CheckAuth.verifyToken, GroupController.deleteUserFromGroup);
 
 // Send an email to a group
-router.post('/:id/messages', CheckAuth.verifyToken, GroupController.sendGroupEmail);
+router.post('/:groupId/messages', CheckAuth.verifyToken, GroupController.sendGroupEmail);
 
-module.exports = router;
+export default router;

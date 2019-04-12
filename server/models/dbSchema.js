@@ -14,7 +14,7 @@ const users = `CREATE TABLE IF NOT EXISTS users (
 
 const groups = `CREATE TABLE IF NOT EXISTS groups (
    id SERIAL PRIMARY KEY,
-   group_name VARCHAR(50) NOT NULL,
+   name VARCHAR(50) NOT NULL,
    created_by INT REFERENCES users (id) ON DELETE CASCADE,
    created_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
  );
@@ -22,7 +22,7 @@ const groups = `CREATE TABLE IF NOT EXISTS groups (
 
 const group_members = `CREATE TABLE IF NOT EXISTS group_members (
    id SERIAL PRIMARY KEY,
-   user_id INT REFERENCES users (id) ON DELETE CASCADE,
+   member_id INT REFERENCES users (id) ON DELETE CASCADE,
    group_id INT REFERENCES groups (id) ON DELETE CASCADE,
    role VARCHAR(20) NOT NULL,
    created_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -40,18 +40,11 @@ const message = `CREATE TABLE IF NOT EXISTS message (
  );
 `;
 
-const sent = `CREATE TABLE IF NOT EXISTS sent (
-    id SERIAL PRIMARY KEY,
-    sender_id INT REFERENCES users (id) ON DELETE CASCADE,
-    message_id INT REFERENCES message (id) ON DELETE CASCADE,
-    created_date DATE NOT NULL DEFAULT CURRENT_TIMESTAMP
- );
-`;
-
 const inbox = `CREATE TABLE IF NOT EXISTS inbox (
     id SERIAL PRIMARY KEY,
     message_id INT REFERENCES message (id) ON DELETE CASCADE,
     receiver_id INT REFERENCES users (id) ON DELETE CASCADE,
+    group_members_id INT REFERENCES group_members (id) ON DELETE CASCADE,
     status VARCHAR(80) NOT NULL DEFAULT 'unread'
  );
 `;
@@ -62,14 +55,13 @@ const inbox = `CREATE TABLE IF NOT EXISTS inbox (
  */
 
 const dropTables = `
+                    DROP TABLE IF EXISTS inbox;
                     DROP TABLE IF EXISTS group_members;
                     DROP TABLE IF EXISTS groups;
-                    DROP TABLE IF EXISTS inbox;
-                    DROP TABLE IF EXISTS sent;
                     DROP TABLE IF EXISTS message;
                     DROP TABLE IF EXISTS users;
                     `;
 
-const dbTables = `${dropTables} ${users} ${groups} ${group_members} ${message} ${sent} ${inbox}`;
+const dbTables = `${dropTables} ${users} ${groups} ${group_members} ${message} ${inbox}`;
 
 export default dbTables;
