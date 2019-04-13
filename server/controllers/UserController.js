@@ -1,5 +1,6 @@
 import db from '../models/dbQuery';
-import Helper from '../helpers/Helper';
+import Validator from '../helpers/Validator';
+import Authenticate from '../helpers/Authenticate';
 
 class UserController {
 
@@ -11,14 +12,19 @@ class UserController {
   */
   static async createUser(req, res) {
 
-    // Validate information entered by user
-    const dataValidator = Helper.infoValidator(req.body);
-    if (dataValidator.error) {
-      return Helper.validatorMsg(res, dataValidator.error);
+    // Validate signup information entered by user
+    const { error } = Validator.signupValidate(req.body);
+
+    if (error) {
+      // return errors
+      return res.status(400).json({
+        status: 400,
+        error: error.message
+      });
     }
 
     // Hash password
-    const hashPassword = Helper.hashPassword(req.body.password);
+    const hashPassword = Authenticate.hashPassword(req.body.password);
 
     // db query statement
     const createQuery = `INSERT INTO users (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) returning id, first_name, last_name, email`;
@@ -28,12 +34,12 @@ class UserController {
       req.body.firstName,
       req.body.lastName,
       req.body.email,
-      hashPassword,
+      hashPassword
     ];
 
     try {
       const { rows } = await db.query(createQuery, values);
-      const token = Helper.generateToken(rows[0].id);
+      const token = Authenticate.generateToken(rows[0].id);
       return res.status(201).json({
         status: 201,
         message: 'User registration successful',
@@ -58,20 +64,14 @@ class UserController {
   */
   static async userSignin(req, res) {
 
-    if (!req.body.email || !req.body.password) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Please enter your login details'
-      });
-    }
+    // Validate signup information entered by user
+    const { error } = Validator.loginValidate(req.body);
 
-    const emailObject = { email: req.body.email };
-    const emailValidator = Helper.emailValidator(emailObject);
-
-    if (emailValidator.error) {
-      return res.status(404).json({
-        status: 404,
-        error: 'Please enter a valid email address'
+    if (error) {
+      // return errors
+      return res.status(400).json({
+        status: 400,
+        error: error.message
       });
     }
 
@@ -80,21 +80,14 @@ class UserController {
       const retrieveEmail = 'SELECT * FROM users WHERE email = $1';
       const { rows } = await db.query(retrieveEmail, [req.body.email]);
 
-      if (!rows[0]) {
+      if (!rows[0] || !Authenticate.comparePassword(rows[0].password, req.body.password)) {
         return res.status(404).json({
           status: 404,
           error: 'User is not a registered member'
         });
       }
 
-      if (!Helper.comparePassword(rows[0].password, req.body.password)) {
-        return res.status(404).json({
-          status: 404,
-          error: 'Authentication failed'
-        });
-      }
-
-      const token = Helper.generateToken(rows[0].id);
+      const token = Authenticate.generateToken(rows[0].id);
       return res.status(200).json({
         status: 200,
         message: 'Authentication Successful',
