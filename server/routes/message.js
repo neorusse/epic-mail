@@ -1,13 +1,27 @@
 import express from 'express';
 import MessageController from '../controllers/MessageController';
 import CheckAuth from '../middleware/CheckAuth';
+import { sanitizeBody } from 'express-validator/filter';
 
 const router = express.Router();
 
 // Message Routes
 
 // Create a mail
-router.post('/', CheckAuth.verifyToken, MessageController.sendEmail);
+router.post(
+  '/',
+  [
+    sanitizeBody('subject')
+      .trim()
+      .escape(),
+    sanitizeBody('email')
+      .normalizeEmail()
+      .trim()
+      .escape()
+  ],
+  CheckAuth.verifyToken,
+  MessageController.sendEmail
+);
 
 // Get all received emails
 router.get('/', CheckAuth.verifyToken, MessageController.allReceivedEmails);

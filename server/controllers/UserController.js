@@ -1,5 +1,5 @@
 import db from '../models/dbQuery';
-import Validator from '../helpers/Validator';
+import Validator from '../helpers/UserValidator';
 import Authenticate from '../helpers/Authenticate';
 
 class UserController {
@@ -43,7 +43,8 @@ class UserController {
       return res.status(201).json({
         status: 201,
         message: 'User registration successful',
-        token: token
+        token: token,
+        r: rows[0]
       });
     } catch(error) {
       if (error.routine === '_bt_check_unique') {
@@ -64,17 +65,6 @@ class UserController {
   */
   static async userSignin(req, res) {
 
-    // Validate signup information entered by user
-    const { error } = Validator.loginValidate(req.body);
-
-    if (error) {
-      // return errors
-      return res.status(400).json({
-        status: 400,
-        error: error.message
-      });
-    }
-
     try {
       // check if user exists
       const retrieveEmail = 'SELECT * FROM users WHERE email = $1';
@@ -83,7 +73,7 @@ class UserController {
       if (!rows[0] || !Authenticate.comparePassword(rows[0].password, req.body.password)) {
         return res.status(404).json({
           status: 404,
-          error: 'User is not a registered member'
+          error: 'Invalid password or email'
         });
       }
 
