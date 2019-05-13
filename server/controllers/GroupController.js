@@ -1,4 +1,5 @@
 import db from '../models/dbQuery';
+import Validator from '../helpers/GroupValidator'
 
 class GroupController {
   /**
@@ -8,10 +9,14 @@ class GroupController {
    * @returns {object} group
    */
   static async createGroup(req, res) {
-    if (!req.body.name) {
+    // Validate signup information entered by user
+    const { error } = Validator.validateGroupName(req.body);
+
+    if (error) {
+      // return errors
       return res.status(400).json({
         status: 400,
-        error: 'All fields are required'
+        error: error.message
       });
     }
 
@@ -76,9 +81,18 @@ class GroupController {
 
   static async updateGroup(req, res) {
 
-    const id = parseInt(req.params.groupId);
+    const id = req.params.groupId;
 
-    try {
+    // Validate user input
+    const { value, error } = Validator.validateParams(id);
+
+    if (!value) {
+      // return errors
+      return res.status(403).json({
+        status: 403,
+        error: error.message
+      });
+    }
 
       const updateQuery = `SELECT * FROM group_members WHERE (group_id, member_id, role) = ($1, $2, $3)`;
       const { rows } = await db.query(updateQuery, [id, req.user.id, 'admin']);
@@ -90,6 +104,8 @@ class GroupController {
           error: 'Invalid Group ID Supplied/Only Admin can update Group',
         });
       }
+
+    try {
 
       const values = [req.body.name, id]
       const updateGroupQuery = `UPDATE groups SET name = $1 WHERE id = $2 RETURNING *`;
@@ -107,7 +123,10 @@ class GroupController {
       }
 
     } catch(error) {
-    return res.status(400).json({ error: error.message });
+        return res.status(500).json({
+          status: 500,
+          error: error.message
+        });
     }
   }
 
@@ -118,7 +137,18 @@ class GroupController {
    */
   static async deleteGroup(req, res) {
 
-    const id = parseInt(req.params.groupId);
+    const id = req.params.groupId;
+
+    // Validate user input
+    const { value, error } = Validator.validateParams(id);
+
+    if (!value) {
+      // return errors
+      return res.status(403).json({
+        status: 403,
+        error: error.message
+      });
+    }
 
       const selectQuery = `SELECT * FROM group_members WHERE (group_id, member_id, role) = ($1, $2, $3)`;
       const { rows } = await db.query(selectQuery, [id, req.user.id, 'admin']);
@@ -162,7 +192,18 @@ class GroupController {
    */
   static async addUserToGroup(req, res) {
 
-    const id = parseInt(req.params.groupId);
+    const id = req.params.groupId;
+
+    // Validate user input
+    const { value, error } = Validator.validateParams(id);
+
+    if (!value) {
+      // return errors
+      return res.status(403).json({
+        status: 403,
+        error: error.message
+      });
+    }
 
     const selectQuery = 'SELECT * FROM group_members WHERE (group_id, member_id) = ($1, $2)';
     const { rows } = await db.query(selectQuery, [id, req.user.id]);
@@ -252,8 +293,6 @@ class GroupController {
         });
       }
 
-    try {
-
       const userExistQuery = 'SELECT * FROM group_members WHERE (group_id, member_id) = ($1, $2)';
       const userExist = await db.query(userExistQuery, [id, req.params.userId]);
       // check if user is member of the group
@@ -264,7 +303,7 @@ class GroupController {
         });
       }
 
-
+    try {
 
       // Deletes member from a group
       const delQuery = `DELETE FROM group_members WHERE (group_id, member_id) = ($1, $2) returning *`;

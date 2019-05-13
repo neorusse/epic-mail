@@ -1,4 +1,5 @@
 import db from '../models/dbQuery';
+import Validator from '../helpers/MessageValidator'
 
 class MessageController {
 
@@ -10,22 +11,17 @@ class MessageController {
    */
 
   static async sendEmail(req, res) {
-    const { subject, message } = req.body;
-    if (!subject) {
+
+    // Validate signup information entered by user
+    const { error } = Validator.validateMessage(req.body);
+
+    if (error) {
+      // return errors
       return res.status(400).json({
-        success: 'false',
-        message: 'Subject is required',
+        status: 400,
+        error: error.message
       });
     }
-    if (!message) {
-      return res.status(400).json({
-        success: 'false',
-        message: 'Message is required',
-      });
-    }
-
-
-  try {
 
     const usersQuery = `SELECT * FROM users WHERE email = $1`;
     const recipient = await db.query(usersQuery, [req.body.email])
@@ -37,6 +33,8 @@ class MessageController {
         error: 'Recipient is not a registered member'
       })
     }
+
+  try {
 
     const values = [
       req.body.subject,
@@ -60,7 +58,10 @@ class MessageController {
       data: rows[0]
     });
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json({
+        status: 400,
+        error: error.message
+      });
     }
   }
 
@@ -146,12 +147,23 @@ class MessageController {
    */
   static async getASpecificMail(req, res) {
 
-    // validate user input
+    // Validate user input
+    const { error } = Validator.validateParams(req.params);
+
+    if (error) {
+      // return errors
+      return res.status(400).json({
+        status: 400,
+        error: error.message
+      });
+    }
+
     const { id } = req.params;
 
-    const sentQuery = `SELECT message.id, message.subject, message.message, message.parent_message_id, message.sender_id, message.created_date, message.status, inbox.receiver_id FROM message LEFT JOIN inbox ON message.id = inbox.message_id WHERE message.id = $1`;
-
     try {
+
+      const sentQuery = `SELECT message.id, message.subject, message.message, message.parent_message_id, message.sender_id, message.created_date, message.status, inbox.receiver_id FROM message LEFT JOIN inbox ON message.id = inbox.message_id WHERE message.id = $1`;
+
       const { rows } = await db.query(sentQuery, [id]);
 
       if (rows[0].receiver_id === req.user.id) {
@@ -165,7 +177,10 @@ class MessageController {
       }
 
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error'
+      });
     }
   }
 
@@ -176,7 +191,17 @@ class MessageController {
   * @returns {void} status code 204
   */
   static async deleteEmail(req, res) {
-    // validate user input
+    // Validate user input
+    const { error } = Validator.validateParams(req.params);
+
+    if (error) {
+      // return errors
+      return res.status(400).json({
+        status: 400,
+        error: error.message
+      });
+    }
+
     const { id } = req.params;
 
     try {
@@ -195,9 +220,9 @@ class MessageController {
         });
       }
     } catch (error) {
-      return res.status(400).json({
-        status: 400,
-        error: error.message
+      return res.status(500).json({
+        status: 500,
+        error: 'Internal server error'
       });
     }
   }
